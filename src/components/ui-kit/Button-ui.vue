@@ -22,5 +22,8 @@
     background: #C1C1C1;
     cursor: pointer;
   }
+  &:active{
+    background: #8E8E8E;
+  }
 }
 </style>

@@ -1,20 +1,45 @@
 <script setup>
 
+const props = defineProps({
+    text : {
+        type: String,
+        required: true
+    },
+    Size : {
+        type: String,
+        default: "18px"
+    }
+    
+})
+
 </script>
 
 <template>
-  <a href="#" class="link-ui">рецепты</a>
+  <div class="wrapper-link">
+    <a href="#"
+    class="wrapper-link__link-ui"
+    :style="{fontSize: Size}">{{ text }}</a>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.link-ui{
-    color: #000000;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 22px;
-    transition: 0.5s;
-    &:hover{
-        text-decoration: underline;
-    }
+.wrapper-link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: 0.5s;
+  &__link-ui{
+      color: #000000;
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 22px;
+  }
+  &:hover{
+          border-bottom: 2px solid #00000080;
+      }
+  &:active{
+    border-bottom: 2px solid #000000;
+  }
 }
 </style>
