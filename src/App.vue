@@ -3,8 +3,9 @@
   import Button from './components/ui-kit/Button-ui.vue'
   import Link from './components/ui-kit/Link-ui.vue'
   import NavbarFooterMobile from './components/navbar-footer-mobile.vue'
-
+  import searchIngredients from './components/search-ingredients.vue'
   import {ref} from 'vue';
+
 
   const elements = ref([
         {
@@ -18,13 +19,14 @@
 <template>
 <Navbar></Navbar>
 <main class="main">
+  <searchIngredients></searchIngredients>
   <div class="ui-kit">
     <Button></Button>
     <Link
     v-for="item of elements"
                 :key="item.id"
                 :text="item.text"
-                :Size="item.Size"></Link>
+                Size="item.Size"></Link>
   </div>
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
