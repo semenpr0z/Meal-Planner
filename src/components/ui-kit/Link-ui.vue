@@ -32,7 +32,7 @@ const props = defineProps({
   &__link-ui{
       color: #000000;
       text-decoration: none;
-      font-size: 18px;
+      
       line-height: 22px;
   }
   &:hover{

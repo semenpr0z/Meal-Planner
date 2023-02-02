@@ -6,23 +6,19 @@ import Link from './ui-kit/Link-ui.vue'
 const menu = ref([
         {
             id: 1,
-            text: 'главная',
-            Size: '18px'
+            text: 'главная'
         },
         {
             id: 2,
-            text: 'меню',
-            Size: '18px'
+            text: 'меню'
         },
         {
             id: 3,
-            text: 'рецепты',
-            Size: '18px'
+            text: 'рецепты'
         },
         {
             id: 4,
             text: 'список покупок',
-            Size: '18px'
         }
     ]);
 
@@ -38,7 +34,7 @@ const menu = ref([
                 v-for="item of menu"
                     :key="item.id"
                     :text="item.text"
-                    :Size="item.Size"></Link>
+                    ></Link>
             <div class="navbar-profile navbar-profile-desktop">
                 <img src="/svg/logo-profile.svg" alt="profile-logo" srcset="">
             </div>
