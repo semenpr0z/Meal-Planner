@@ -8,17 +8,20 @@ const props = defineProps({
     Size : {
         type: String,
         default: "18px"
+    },
+    Link : {
+        type: String,
+        default: "/main"
     }
-    
 })
 
 </script>
 
 <template>
   <div class="wrapper-link">
-    <a href="#"
+    <router-link :to="Link"
     class="wrapper-link__link-ui"
-    :style="{fontSize: Size}">{{ text }}</a>
+    :style="{fontSize: Size}">{{ text }}</router-link>
   </div>
 </template>
 
@@ -32,7 +35,6 @@ const props = defineProps({
   &__link-ui{
       color: #000000;
       text-decoration: none;
-      
       line-height: 22px;
   }
   &:hover{
