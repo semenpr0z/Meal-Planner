@@ -19,6 +19,7 @@
 <template>
 <Navbar></Navbar>
 <main class="main">
+  <h1>Типа страница регистрации</h1>
   <searchIngredients></searchIngredients>
   <div class="ui-kit">
     <Button></Button>
@@ -34,6 +35,7 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/global.scss';
 .ui-kit{
   width: 250px;
   height: 170px;

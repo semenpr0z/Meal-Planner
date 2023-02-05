@@ -2,6 +2,7 @@
 
 import {ref} from 'vue';
 import Link from './ui-kit/Link-ui.vue'
+import IconMenuUi from './ui-kit/Icon-menu-ui.vue';
 
 const menu = ref([
         {
@@ -40,9 +41,7 @@ const menu = ref([
                     :text="item.text"
                     :Link="item.Link"
                     ></Link>
-            <div class="navbar-profile navbar-profile-desktop">
-                <img src="/svg/logo-profile.svg" alt="profile-logo" srcset="">
-            </div>
+            <IconMenuUi Link="/profile" src="/svg/logo-profile.svg" alt="Профиль"></IconMenuUi>
         </nav>
     </header>
 </template>
