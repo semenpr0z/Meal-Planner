@@ -32,9 +32,9 @@ const menu = ref([
 <template>
     <header class="header">
         <nav class="navbar navbar-desktop">
-            <a href="#" class="navbar-logo__link"><div class="navbar-logo">
+            <router-link to="/main" class="navbar-logo__link"><div class="navbar-logo">
                 <span class="navbar-logo__span">Логотип</span>
-            </div></a>
+            </div></router-link>
             <Link class="menu-items-desktop"
                 v-for="item of menu"
                     :key="item.id"
