@@ -16,7 +16,6 @@
   border: none;
   background: #D9D9D9;
   transition: 0.5s;
-  width: 180px;
   height: 57px;
   &:hover{
     background: #C1C1C1;

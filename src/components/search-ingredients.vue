@@ -1,26 +1,45 @@
 <script setup>
-
+    import ButtonUi from '@/components/ui-kit/Button-ui.vue';
 </script>
 
 <template>
     <div class="search-ingridients-wrapper">
-        <div></div>
-        <div class="search-ingridients-wrapper__input">
-            <label for="input">Введите названия ингридиентов по одному</label>
-            <input type="text">
+        <input type="text" class="search-ingridients-wrapper__input" placeholder="Введите название рецепта">
+        <ButtonUi class="search-ingridients-wrapper__margin-button"></ButtonUi>
+        <div class="search-ingridients-wrapper__icon-wrapper">
+            <img class="search-ingridients-wrapper__icon-wrapper_item" src="/svg/icon-filters.svg" alt="">
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .search-ingridients-wrapper{
-    width: 834px;
-    height: 208px;
-    border: 2px dashed #9747FF;
-    border-radius: 5px;
+    display: flex;
+    align-items: center;
     &__input{
-        display: flex;
-        flex-direction: column  ;
+        height: 55px;
+        width: 731px;
+        border: none;
+        background-color: #EEEEEE;
+        border-radius: 6px;
+        line-height: 21px;
+        font-size: 18px;
+        &::placeholder{
+            padding: 18px 32px;
+            color: #00000026;
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+    &__margin-button{
+        margin-left: -10px;
+    }
+    &__icon-wrapper{
+        margin-left: 13px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
     }
 }
 </style>

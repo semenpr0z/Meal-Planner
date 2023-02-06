@@ -1,12 +1,13 @@
 <script setup>
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
+  import searchIngredients from '../components/Search-ingredients.vue';
 </script>
 
 <template>
 <Navbar></Navbar>
 <main class="main">
-  <h1>Типа страница рецептов</h1>
+    <searchIngredients></searchIngredients>
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 

@@ -20,7 +20,6 @@
 <Navbar></Navbar>
 <main class="main">
   <h1>Типа страница регистрации</h1>
-  <searchIngredients></searchIngredients>
   <div class="ui-kit">
     <Button></Button>
     <Link
