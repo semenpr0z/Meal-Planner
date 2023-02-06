@@ -2,12 +2,21 @@
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
   import searchIngredients from '../components/Search-ingredients.vue';
+  import RecipeСardVue from '../components/Recipe-сard.vue';
 </script>
 
 <template>
 <Navbar></Navbar>
 <main class="main">
     <searchIngredients></searchIngredients>
+    <div class="wrapper-recipes-list">
+      <RecipeСardVue/>
+      <RecipeСardVue/>
+      <RecipeСardVue/>
+      <RecipeСardVue/>
+      <RecipeСardVue/>
+      <RecipeСardVue/>
+    </div>
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 
@@ -15,14 +24,10 @@
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
-.ui-kit{
-  width: 250px;
-  height: 170px;
-  border: 2px dashed #9747FF;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+.wrapper-recipes-list{
+  margin-top: 58px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 </style>

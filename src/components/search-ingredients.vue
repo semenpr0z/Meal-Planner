@@ -17,15 +17,14 @@
     display: flex;
     align-items: center;
     &__input{
-        height: 55px;
-        width: 731px;
+        width: 667px;
         border: none;
         background-color: #EEEEEE;
         border-radius: 6px;
         line-height: 21px;
         font-size: 18px;
+        padding: 18px 32px;
         &::placeholder{
-            padding: 18px 32px;
             color: #00000026;
         }
         &:focus{
