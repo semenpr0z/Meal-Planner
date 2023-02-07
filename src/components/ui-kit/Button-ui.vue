@@ -1,9 +1,16 @@
 <script setup>
 
+const props = defineProps({
+    text : {
+        type: String,
+        default: 'Найти рецепт'
+    }
+})
+
 </script>
 
 <template>
-  <button class="button-ui">Найти рецепт</button>
+  <button class="button-ui">{{ text }}</button>
 </template>
 
 <style lang="scss" scoped>

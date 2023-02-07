@@ -1,8 +1,9 @@
 <script setup>
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
-  import searchIngredients from '../components/Search-ingredients.vue';
-  import RecipeСardVue from '../components/Recipe-сard.vue';
+  import searchIngredients from '@/components/Search-ingredients.vue';
+  import RecipeСardVue from '@/components/Recipe-сard.vue';
+  import ButtonUi from '@/components/ui-kit/Button-ui.vue';
 </script>
 
 <template>
@@ -14,9 +15,8 @@
       <RecipeСardVue/>
       <RecipeСardVue/>
       <RecipeСardVue/>
-      <RecipeСardVue/>
-      <RecipeСardVue/>
     </div>
+    <ButtonUi class="button-more-recipes" text="Посмотреть еще"></ButtonUi>
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 
@@ -29,5 +29,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+}
+.button-more-recipes{
+  margin-top: 46px;
 }
 </style>
