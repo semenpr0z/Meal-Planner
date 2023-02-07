@@ -18,7 +18,7 @@
     align-items: center;
     &__input{
         width: 667px;
-        border: none;
+        border: 1px solid transparent;
         background-color: #EEEEEE;
         border-radius: 6px;
         line-height: 21px;
@@ -29,6 +29,9 @@
         }
         &:focus{
             outline: none;
+            border: 1px solid #000000;
+            background-color: transparent;
+            color: #000000D9;
         }
     }
     &__margin-button{

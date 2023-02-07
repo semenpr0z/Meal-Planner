@@ -4,6 +4,7 @@
   import searchIngredients from '@/components/Search-ingredients.vue';
   import RecipeСardVue from '@/components/Recipe-сard.vue';
   import ButtonUi from '@/components/ui-kit/Button-ui.vue';
+
 </script>
 
 <template>
@@ -11,6 +12,8 @@
 <main class="main">
     <searchIngredients></searchIngredients>
     <div class="wrapper-recipes-list">
+      <RecipeСardVue/>
+      <RecipeСardVue/>
       <RecipeСardVue/>
       <RecipeСardVue/>
       <RecipeСardVue/>

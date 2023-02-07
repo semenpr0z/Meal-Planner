@@ -28,6 +28,10 @@ const props = defineProps({
     background: #C1C1C1;
     cursor: pointer;
   }
+  &:focus{
+    background: #C1C1C1;
+    outline: none;
+  }
   &:active{
     background: #8E8E8E;
   }
