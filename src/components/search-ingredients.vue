@@ -17,13 +17,13 @@
     display: flex;
     align-items: center;
     &__input{
-        width: 667px;
-        border: 1px solid transparent;
+        width: 665px;
+        border: 1px solid #EEEEEE;
         background-color: #EEEEEE;
         border-radius: 6px;
         line-height: 21px;
         font-size: 18px;
-        padding: 18px 32px;
+        padding: 17px 32px;
         &::placeholder{
             color: #00000026;
         }
