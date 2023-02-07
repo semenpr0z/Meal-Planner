@@ -35,8 +35,8 @@ const properties = ref([
             </div>
         </div>
         <div class="wrapper-recipe__img">
-            <img class="wrapper-recipe__img_img-background" src="img/img-recipe-card.png" alt="фотография блюда">
-            <img class="wrapper-recipe__img_img-button" src="svg/icon-add-recipe-button.svg" alt="добавить">
+            <img class="wrapper-recipe__img_img-background" src="/img/img-recipe-card.png" alt="фотография блюда">
+            <img class="wrapper-recipe__img_img-button" src="/svg/icon-add-recipe-button.svg" alt="добавить">
         </div>
     </div>
 </template>
