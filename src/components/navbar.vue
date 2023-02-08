@@ -33,7 +33,8 @@ const menu = ref([
     <header class="header">
         <nav class="navbar navbar-desktop">
             <router-link to="/main" class="navbar-logo__link"><div class="navbar-logo">
-                <span class="navbar-logo__span">Логотип</span>
+                <img src="/logo.svg" alt="">
+                <span class="navbar-logo__span">планировщик<br> меню</span>
             </div></router-link>
             <Link class="menu-items-desktop"
                 v-for="item of menu"
@@ -48,7 +49,6 @@ const menu = ref([
 
 <style lang="scss" scoped>
 .header{
-    background: #D9D9D9;
     display: flex;
     justify-content: center;
 }
@@ -62,7 +62,6 @@ const menu = ref([
     &-logo{
         width: 155px;
         height: 39px;
-        background: #EEEEEE;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -70,9 +69,9 @@ const menu = ref([
             text-decoration: none;
         }
         &__span{
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-            line-height: 15px;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
             color: #000000;
         }
     }

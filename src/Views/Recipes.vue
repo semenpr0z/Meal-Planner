@@ -16,8 +16,6 @@
       <RecipeСardVue/>
       <RecipeСardVue/>
       <RecipeСardVue/>
-      <RecipeСardVue/>
-      <RecipeСardVue/>
     </div>
     <ButtonUi class="button-more-recipes" text="Посмотреть еще"></ButtonUi>
 </main>

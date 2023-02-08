@@ -1,26 +1,37 @@
 <script setup>
 
 import {ref} from 'vue';
+import IconMenuUi from './ui-kit/Icon-menu-ui.vue';
 
-const menu = ref([
+    const menu = ref([
         {
             id: 1,
+            alt: 'главная',
+            Link: '/main',
             src: '/svg/logo-main.svg'
         },
         {
             id: 2,
+            alt: 'меню',
+            Link: '/menu',
             src: '/svg/logo-burger.svg'
         },
         {
             id: 3,
+            alt: 'рецепты',
+            Link: '/recipes',
             src: '/svg/logo-calendar.svg'
         },
         {
             id: 4,
+            alt: 'список покупок',
+            Link: '/shopping-list',
             src: '/svg/logo-menu.svg'
         },
         {
             id: 5,
+            alt: 'профиль',
+            Link: '/profile',
             src: '/svg/logo-profile.svg'
         }
     ]);
@@ -30,10 +41,11 @@ const menu = ref([
 <template>
     <footer class="footer-mobile">
         <nav class="footer-mobile__navbar">
-            <img class="footer-mobile__navbar-icon"
-                v-for="item of menu"
-                    :key="item.id"
-                    :src="item.src">
+            <IconMenuUi v-for="item of menu"
+            :key="item.id"
+            :Link="item.Link" 
+            :src="item.src" 
+            :alt="item.alt"></IconMenuUi>
         </nav>
     </footer>
 </template>
