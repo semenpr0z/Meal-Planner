@@ -27,7 +27,7 @@ export default {
     <div class="modal-recipe-card">
       <div class="modal-recipe-card-top">
         <h3 class="modal-recipe-card-top__h3">{{ item.name }}</h3>
-        <button class="modal-recipe-card-top__btn-close-modal" @click="closeModalRecipeCard"><img src="svg/icon-close.svg" alt="Закрыть"></button>
+        <button class="modal-recipe-card-top__btn-close-modal" @click="closeModalRecipeCard"><img src="/svg/icon-close.svg" alt="Закрыть"></button>
       </div>
       <div class="modal-recipe-card-middle">
         <div class="modal-recipe-card-middle__information">
