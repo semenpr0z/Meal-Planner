@@ -3,7 +3,6 @@
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
   import LoginForm from '@/components/Login-form.vue';
   import RegistrationForm from '@/components/Registration-form.vue';
-
 export default {
     data() {
     return {
@@ -28,7 +27,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <template>
