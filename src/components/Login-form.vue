@@ -2,7 +2,6 @@
 import Button from '@/components/ui-kit/Button-ui.vue'
 import UserDataService from '../services/UserDataService'
 import router from '@/router.js'
-import axios from 'axios'
 
 export default {
     data() {
