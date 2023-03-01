@@ -5,6 +5,7 @@ import Menu from '@/Views/Menu.vue';
 import Recipes from '@/Views/Recipes.vue';
 import shoppingList from '@/Views/Shopping-list.vue';
 import Profile from '@/Views/Profile.vue'
+import Page404 from '@/Views/Page404.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -39,6 +40,11 @@ const router = createRouter({
             path: '/profile',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: '404',
+            component: Page404
         }
     ]
 })

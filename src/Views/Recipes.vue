@@ -14,7 +14,33 @@ export default {
     return {
         localInfo: [],
         indexOfRecipe: 0,
-        isModalRecipeCardVisible: false
+        isModalRecipeCardVisible: false,
+        Navigation: [
+          {
+              id: 1,
+              text: 'Главная',
+              Link: '/main',
+              active: false
+          },
+          {
+              id: 2,
+              text: 'Меню',
+              Link: '/menu',
+              active: false
+          },
+          {
+              id: 3,
+              text: 'Рецепты',
+              Link: '/recipes',
+              active: true
+          },
+          {
+              id: 4,
+              text: 'Список покупок',
+              Link: '/shopping-list',
+              active: false
+          }
+      ]
     };
   },
   components: {
@@ -45,7 +71,7 @@ export default {
 </script>
 
 <template>
-<Navbar></Navbar>
+<Navbar :menu="Navigation"></Navbar>
 <main class="main">
     <Transition name="fade">
       <ModalRecipeCard v-if="isModalRecipeCardVisible"

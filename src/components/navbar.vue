@@ -1,48 +1,98 @@
-<script setup>
+<script >
 
-import {ref} from 'vue';
+// import {ref} from 'vue';
 import Link from './ui-kit/Link-ui.vue'
 import IconMenuUi from './ui-kit/Icon-menu-ui.vue';
 
-const menu = ref([
-        {
-            id: 1,
-            text: 'главная',
-            Link: '/main'
-        },
-        {
-            id: 2,
-            text: 'меню',
-            Link: '/menu'
-        },
-        {
-            id: 3,
-            text: 'рецепты',
-            Link: '/recipes'
-        },
-        {
-            id: 4,
-            text: 'список покупок',
-            Link: '/shopping-list'
-        }
-    ]);
+// const menu = ref([
+//         {
+//             id: 1,
+//             text: 'Главная',
+//             Link: '/main'
+//         },
+//         {
+//             id: 2,
+//             text: 'Меню',
+//             Link: '/menu'
+//         },
+//         {
+//             id: 3,
+//             text: 'Рецепты',
+//             Link: '/recipes'
+//         },
+//         {
+//             id: 4,
+//             text: 'Список покупок',
+//             Link: '/shopping-list'
+//         }
+//     ]);
 
+export default {
+  data() {
+    return {
+    };
+  },
+  components: {
+    Link,
+    IconMenuUi
+  },
+  methods: {
+    
+  },
+  props: {
+    menu: {
+        type: Array,
+        default: [
+            {
+                id: 1,
+                text: 'Главная',
+                Link: '/main',
+                active: false
+            },
+            {
+                id: 2,
+                text: 'Меню',
+                Link: '/menu',
+                active: false
+            },
+            {
+                id: 3,
+                text: 'Рецепты',
+                Link: '/recipes',
+                active: false
+            },
+            {
+                id: 4,
+                text: 'Список покупок',
+                Link: '/shopping-list',
+                active: false
+            }
+        ]
+    }
+  }
+};
 </script>
 
 <template>
     <header class="header">
         <nav class="navbar navbar-desktop">
-            <router-link to="/main" class="navbar-logo__link"><div class="navbar-logo">
-                <img src="/logo.svg" alt="">
-                <span class="navbar-logo__span">планировщик<br> меню</span>
-            </div></router-link>
-            <Link class="menu-items-desktop"
-                v-for="item of menu"
-                    :key="item.id"
-                    :text="item.text"
-                    :Link="item.Link"
-                    ></Link>
-            <IconMenuUi Link="/profile" src="/svg/logo-profile.svg" alt="Профиль"></IconMenuUi>
+            <router-link to="/main" class="navbar-logo__link">
+                <div class="navbar-logo">
+                    <img src="/svg/icon-logo.svg" alt="">
+                    <span class="navbar-logo__span">PlanMenu</span>
+                </div>
+            </router-link>
+            <div class="navbar-links">
+                <Link class="menu-items-desktop"
+                    v-for="item of menu"
+                        :key="item.id"
+                        :text="item.text"
+                        :Link="item.Link"
+                        :active="item.active"/>
+            </div>
+            <router-link to="/profile">
+                <img src="/svg/logo-profile.svg" alt="Профиль" class="navbar-profile">
+            </router-link>
         </nav>
     </header>
 </template>
@@ -59,9 +109,10 @@ const menu = ref([
     height: 39px;
     width: 1160px;
     padding: 16px 30px;
+    gap: 20px;
     &-logo{
-        width: 155px;
-        height: 39px;
+        width: 166px;
+        height: 48px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -69,23 +120,31 @@ const menu = ref([
             text-decoration: none;
         }
         &__span{
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 21px;
-            color: #000000;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 29px;
+            color: #1B1B1A;
+            &_orange{
+                color: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);
+            }
         }
     }
     &-links{
         display: flex;
         justify-content: space-between;
-        width: 392px;
-        height: 15px;
+        width: 100%;
+        max-width: 644px;
+        height: 25px;
     }
     &-profile{
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        width: 24px;
+        height: 24px;
     }
 }
 

@@ -15,15 +15,14 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .button-ui{
-  color: #000000;
+  color: #FFFFFF;
   font-size: 18px;
   line-height: 21px;
-  padding: 18px 32px;
-  border-radius: 6px;
+  padding: 16px 28px;
+  border-radius: 30px;
   border: none;
-  background: #D9D9D9;
+  background: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);
   transition: 0.5s;
-  height: 57px;
   &:hover{
     background: #C1C1C1;
     cursor: pointer;

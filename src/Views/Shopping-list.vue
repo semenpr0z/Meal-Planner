@@ -1,10 +1,50 @@
-<script setup>
+<script>
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
+
+  export default {
+  data() {
+    return {
+        Navigation: [
+          {
+              id: 1,
+              text: 'Главная',
+              Link: '/main',
+              active: false
+          },
+          {
+              id: 2,
+              text: 'Меню',
+              Link: '/menu',
+              active: false
+          },
+          {
+              id: 3,
+              text: 'Рецепты',
+              Link: '/recipes',
+              active: false
+          },
+          {
+              id: 4,
+              text: 'Список покупок',
+              Link: '/shopping-list',
+              active: true
+          }
+      ]
+    };
+  },
+  components: {
+    Navbar,
+    NavbarFooterMobile
+  },
+  methods: {
+    
+  }
+};
 </script>
 
 <template>
-<Navbar></Navbar>
+<Navbar :menu="Navigation"></Navbar>
 <main class="main">
   <h1>Типа страница списка покупок</h1>
 </main>
