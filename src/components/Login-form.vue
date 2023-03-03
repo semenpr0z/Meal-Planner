@@ -2,7 +2,6 @@
 import Button from '@/components/ui-kit/Button-ui.vue'
 import UserDataService from '../services/UserDataService'
 import router from '@/router.js'
-import axios from 'axios'
 
 export default {
     data() {
@@ -34,50 +33,76 @@ export default {
 </script>
 
 <template>
-    <div class="login-form">
-        <h2 class="login-form__h2">Войти в аккаунт</h2>
-        <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email"
-            v-model="email" @keydown.enter="auth">
-        <input class="login-form__input login-form__input_password" type="password" placeholder="Пароль" name="password"
-            v-model="password" @keydown.enter="auth">
-        <Button class="login-form__button" text="Войти" type="submit" @click="auth"></Button>
-        <!-- <p v-if="user">{{ user }}</p>
-        <p v-else>Пользователь не найден</p> -->
-    </div>
-
-    <div class="registration-offer">
-        <h3 class="registration-offer__h3">Еще не зарегистрированы?</h3>
-        <Button class="registration-offer__button" @click="showRegistration" text="Зарегистрироваться"></Button>
+    <div class="wrapper-text-and-login-form">
+        <div class="text">
+            <h1 class="text__h1">PlanMenu</h1>
+            <h3 class="text__h3">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
+        </div>
+        <div class="login-form">
+            <h2 class="login-form__h2">Вход</h2>
+            <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email"
+                    v-model="email" @keydown.enter="auth">
+            <input class="login-form__input login-form__input_password" type="password" placeholder="Пароль" name="password"
+                    v-model="password" @keydown.enter="auth">
+            <Button class="login-form__button" text="Продолжить" type="submit" @click="auth"></Button>
+            <h2 class="text_h3">Нет аккаунта? <span class="login-form__h2 login-form__h2_btn" @click="showRegistration">Регистрация</span></h2>
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
 
+.wrapper-text-and-login-form{
+    display: flex;
+    gap: 47px;
+    margin-top: 199px;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+    width: 517px;
+    &__h1{
+        font-weight: 500;
+        font-size: 60px;
+        line-height: 90px;
+        color: #FF8A00;
+    }
+    &__h3{
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #1B1B1A;
+    }
+}
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 153px;
-
+    gap: 24px;
+    padding: 16.5px;
     &__h2 {
-        font-weight: 400;
-        font-size: 40px;
-        line-height: 47px;
-        color: #000000CC;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #FF8A00;
+        &_btn{
+            cursor: pointer;
+        }
     }
 
     &__input {
-        width: 385px;
-        height: 35px;
-        background-color: #E2E2E2;
+        background-color: #FFDCB3;
         border: 1px solid transparent;
-        border-radius: 10px;
-        font-weight: 400;
-        font-size: 27px;
-        line-height: 34px;
-        padding: 18px 28px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+        padding: 18px 32px;
         transition: 0.3s;
+        width: 357px;
 
         &::placeholder {
             color: #00000026;
@@ -89,18 +114,9 @@ export default {
             background-color: transparent;
             color: #000000D9;
         }
-
-        &_email {
-            margin-top: 102px;
-        }
-
-        &_password {
-            margin-top: 26px;
-        }
     }
 
     &__button {
-        margin-top: 59px;
         width: max-content;
     }
 }

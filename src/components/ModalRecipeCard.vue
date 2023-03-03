@@ -62,7 +62,7 @@ export default {
         <div class="modal-recipe-card-middle__information modal-recipe-card-middle__information_right">
               <span class="modal-recipe-card-middle__information__text__item__span">Ингридиенты (на 4 порции)</span>
               <ol class="modal-recipe-card-middle__information__text__ingredients-wrapper">
-                <li class="modal-recipe-card-middle__information__text__item__span modal-recipe-card-middle__information__text__item__span_ingredient" v-for="item in item.ingridients">- {{ item.name }} - {{ item.amount }}</li>
+                <li class="modal-recipe-card-middle__information__text__item__span modal-recipe-card-middle__information__text__item__span_ingredient" v-for="item in item.ingredients">- {{ item.name }} - {{ item.amount }}</li>
               </ol>
         </div>
       </div>

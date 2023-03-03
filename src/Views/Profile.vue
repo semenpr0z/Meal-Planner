@@ -1,12 +1,22 @@
 <script setup>
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
+
+  import {useUserStore} from '@/stores/UserStore.js'
+
+
+  const userStore = useUserStore()
 </script>
 
 <template>
 <Navbar></Navbar>
-<main class="main">
+<main class="main" v-for="user of userStore.user">
   <h1>Типа страница профиля</h1>
+  <p>Имя: {{ user.firstName }}</p>
+  <p>Электронная почта: {{ user.email }}</p>
+  <p>Пол: {{ user.sex == 'male' ? 'Мужской' : 'Женский'}}</p>
+  <p>Возраст: {{ user.age }}</p>
+  <p>Дата регистрации: {{ new Date(user.creationDate).toLocaleDateString() }}</p>
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 
@@ -14,14 +24,5 @@
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
-.ui-kit{
-  width: 250px;
-  height: 170px;
-  border: 2px dashed #9747FF;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
+
 </style>

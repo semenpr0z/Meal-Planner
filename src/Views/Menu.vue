@@ -23,12 +23,6 @@
               text: 'Рецепты',
               Link: '/recipes',
               active: false
-          },
-          {
-              id: 4,
-              text: 'Список покупок',
-              Link: '/shopping-list',
-              active: false
           }
       ]
     };
@@ -54,14 +48,5 @@
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
-.ui-kit{
-  width: 250px;
-  height: 170px;
-  border: 2px dashed #9747FF;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
+
 </style>

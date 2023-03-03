@@ -1,31 +1,6 @@
-<script >
-
-// import {ref} from 'vue';
+<script>
 import Link from './ui-kit/Link-ui.vue'
 import IconMenuUi from './ui-kit/Icon-menu-ui.vue';
-
-// const menu = ref([
-//         {
-//             id: 1,
-//             text: 'Главная',
-//             Link: '/main'
-//         },
-//         {
-//             id: 2,
-//             text: 'Меню',
-//             Link: '/menu'
-//         },
-//         {
-//             id: 3,
-//             text: 'Рецепты',
-//             Link: '/recipes'
-//         },
-//         {
-//             id: 4,
-//             text: 'Список покупок',
-//             Link: '/shopping-list'
-//         }
-//     ]);
 
 export default {
   data() {
@@ -59,12 +34,6 @@ export default {
                 id: 3,
                 text: 'Рецепты',
                 Link: '/recipes',
-                active: false
-            },
-            {
-                id: 4,
-                text: 'Список покупок',
-                Link: '/shopping-list',
                 active: false
             }
         ]
@@ -107,7 +76,8 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 39px;
-    width: 1160px;
+    max-width: 1132px;
+    width: 100%;
     padding: 16px 30px;
     gap: 20px;
     &-logo{

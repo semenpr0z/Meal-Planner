@@ -33,12 +33,6 @@ export default {
               text: 'Рецепты',
               Link: '/recipes',
               active: true
-          },
-          {
-              id: 4,
-              text: 'Список покупок',
-              Link: '/shopping-list',
-              active: false
           }
       ]
     };

@@ -29,7 +29,7 @@ export default {
     <div class="wrapper-recipe">
         <div class="wrapper-recipe__information" @click="showModalRecipeCard">
             <h3 class="wrapper-recipe__information_h3">{{ item.name }}</h3>
-            <p class="wrapper-recipe__information_p">{{ item.ingridients[0].name }}, {{ item.ingridients[1].name.toLowerCase() }} и т.д.</p>
+            <p class="wrapper-recipe__information_p">{{ item.ingredients[0].name }}, {{ item.ingredients[1].name.toLowerCase() }} и т.д.</p>
             <div class="wrapper-recipe__information_wrapper-properties">
                 <RecipeCardProperties
                 :calorific="item.properties.calorific"

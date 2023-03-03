@@ -17,22 +17,23 @@ const props = defineProps({
 .button-ui{
   color: #FFFFFF;
   font-size: 18px;
-  line-height: 21px;
-  padding: 16px 28px;
+  padding: 14px 58px;
   border-radius: 30px;
-  border: none;
-  background: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);
+  border: 3px solid transparent;
+  background: #FF8A00;
   transition: 0.5s;
+  font-weight: 600;
+  line-height: 22px;
   &:hover{
-    background: #C1C1C1;
+    background: transparent;
     cursor: pointer;
+    color: #FF8A00;
+    border: 3px solid #FF8A00;
   }
-  &:focus{
-    background: #C1C1C1;
-    outline: none;
-  }
+  
   &:active{
-    background: #8E8E8E;
+    background: #FFDCB3;
+    border: 3px solid transparent;
   }
 }
 </style>
