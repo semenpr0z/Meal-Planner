@@ -1,7 +1,12 @@
 <script>
 import Button from '@/components/ui-kit/Button-ui.vue'
+import InputUi from '@/components/ui-kit/Input-ui.vue';
+
+
 import UserDataService from '../services/UserDataService'
 import router from '@/router.js'
+import {useUserStore} from '@/stores/UserStore.js'
+
 
 export default {
     data() {
@@ -12,7 +17,14 @@ export default {
         };
     },
     components: {
-        Button
+        Button,
+        InputUi
+    },
+    setup(){
+        const userStore = useUserStore();
+        return {
+            userStore
+        }
     },
     methods: {
         showRegistration() {
@@ -22,12 +34,24 @@ export default {
             let tempUser = await (await UserDataService.getAll()).data.find(currentUser => (currentUser.email == this.email && currentUser.password == this.password))
             this.user = tempUser
             if(this.user){
+                this.userStore.changeUser(this.user)
+                localStorage.setItem('user', JSON.stringify(this.user))
                 router.push('/profile')
+                
             }else{
                 alert('пошел нахуй')
             }
+        },
+        valueGet(value, type) {
+            if(type === 'email') {
+                this.email = value
+            }
+            if(type === 'password') {
+                this.password = value
+            }
         }
-    }
+    },
+    emits: ['showRegistration']
 }
 
 </script>
@@ -40,10 +64,12 @@ export default {
         </div>
         <div class="login-form">
             <h2 class="login-form__h2">Вход</h2>
-            <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email"
+            <!-- <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email"
                     v-model="email" @keydown.enter="auth">
             <input class="login-form__input login-form__input_password" type="password" placeholder="Пароль" name="password"
-                    v-model="password" @keydown.enter="auth">
+                    v-model="password" @keydown.enter="auth"> -->
+            <InputUi @valueGet="valueGet" @auth="auth" type="email" method="auth"/>
+            <InputUi @valueGet="valueGet" @auth="auth" type="password" method="auth"/>
             <Button class="login-form__button" text="Продолжить" type="submit" @click="auth"></Button>
             <h2 class="text_h3">Нет аккаунта? <span class="login-form__h2 login-form__h2_btn" @click="showRegistration">Регистрация</span></h2>
         </div>
@@ -82,7 +108,7 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    padding: 16.5px;
+    padding: 0 16.5px;
     &__h2 {
         font-weight: 600;
         font-size: 24px;
@@ -92,30 +118,6 @@ export default {
             cursor: pointer;
         }
     }
-
-    &__input {
-        background-color: #FFDCB3;
-        border: 1px solid transparent;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 30px;
-        padding: 18px 32px;
-        transition: 0.3s;
-        width: 357px;
-
-        &::placeholder {
-            color: #00000026;
-        }
-
-        &:focus {
-            outline: none;
-            border: 1px solid #000000;
-            background-color: transparent;
-            color: #000000D9;
-        }
-    }
-
     &__button {
         width: max-content;
     }

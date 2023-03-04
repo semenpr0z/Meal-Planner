@@ -75,7 +75,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 39px;
+   
     max-width: 1132px;
     width: 100%;
     padding: 16px 30px;
@@ -106,7 +106,7 @@ export default {
         justify-content: space-between;
         width: 100%;
         max-width: 644px;
-        height: 25px;
+        height: 24px;
     }
     &-profile{
         display: flex;

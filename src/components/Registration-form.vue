@@ -1,6 +1,7 @@
 <script>
 import Button from '@/components/ui-kit/Button-ui.vue'
 import UserDataService from '../services/UserDataService'
+import InputUi from '@/components/ui-kit/Input-ui.vue';
 
 export default {
     data() {
@@ -11,11 +12,13 @@ export default {
                 firstName: '',
                 age: '',
                 sex: '',
-                validState: false
+                validState: false,
+                text: ''
         };
     },
     components: {
-        Button
+        Button,
+        InputUi
     },
     methods: {
         showLogin() {
@@ -29,7 +32,15 @@ export default {
             };
 
             UserDataService.create(user)
-            this.showLogin()}
+            }
+        },
+        valueGet(value, type) {
+            if(type === 'email') {
+                this.email = value
+            }
+            if(type === 'password') {
+                this.password = value
+            }
         }
     },
     watch: {
@@ -54,7 +65,8 @@ export default {
                 this.validState = false
             }
         }
-    }
+    },
+    emits: ['showLogin']
 }
 
 </script>
@@ -62,20 +74,24 @@ export default {
 <template>
     <div class="registration-form">
         <h2 class="registration-form__h2">Зарегистрироваться</h2>
-        <span v-if="validState">Неправильно введены данные</span>
+        <!-- <span v-if="validState">Неправильно введены данные</span> -->
         <input class="registration-form__input registration-form__input_email"  type="email"
             placeholder="Электронная почта" name="email" v-model="email">
         <input class="registration-form__input registration-form__input_password"  type="password"
             placeholder="Пароль" name="password" v-model="password">
+        div.
         <input class="registration-form__input registration-form__input_password" type="text"
             placeholder="Имя" v-model="firstName">
         <input class="registration-form__input registration-form__input_password"  type="number"
             placeholder="Возраст" v-model="age">
+
         <select class="registration-form__input registration-form__input_password select" v-model="sex">
             <option value="" disabled selected>Пол</option>
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
         </select>
+        <InputUi @valueGet="valueGet" type="email"/>
+        <p>{{ text }}</p>
         <Button class="registration-form__button" text="Зарегистрироваться" type="submit" value="Save"
             @click="saveUser"></Button>
     </div>

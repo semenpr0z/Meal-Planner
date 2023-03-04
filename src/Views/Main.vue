@@ -68,11 +68,11 @@
   </div>
   <LoginForm 
   v-if="loginFormVisible"
-  @showRegistration="showRegistration" class="LoginForm"/>
+  @show-registration="showRegistration" class="LoginForm"/>
 
   <RegistrationForm 
   v-if="registrationFormVisible"
-  @showLogin="showLogin"/>
+  @show-login="showLogin"/>
 
   <div class="background-images">
     <div class="background-images__img-wrapper">
@@ -86,25 +86,25 @@
   </div>
   <div class="benefits">
     <div class="benefits__benefit">
+      <img class="background-images__img" src="/img/img-convenience.png" alt="Удобство">
       <div class="benefits__benefit-text">
       <p class="benefits__benefit-text-p">Удобный календарь на неделю</p>
       <p class="benefits__benefit-text-p-min">Собирайте план сразу из готовых блюд.<br>Календарь нагляден и всегда под рукой!</p>
       </div>
-      <img class="background-images__img" src="/svg/icon-planning.svg">
     </div>
     <div class="benefits__benefit">
-      <img class="background-images__img" src="/svg/icon-food.svg">
       <div class="benefits__benefit-text">
         <p class="benefits__benefit-text-p">Сбалансированные рецепты</p>
-        <p class="benefits__benefit-text-p-min">Рецепты подобраны с учетом принципов здорового<br> питания и отображением КБЖУ. Готовые блюда<br> позволят питаться правильно легко!</p>
+        <p class="benefits__benefit-text-p-min">Рецепты подобраны с учетом принципов<br> здорового питания и отображением КБЖУ.<br> Готовые блюда позволят питаться правильно легко!</p>
       </div>
+      <img class="background-images__img" src="/img/img-balance.png">
     </div>
     <div class="benefits__benefit">
+      <img class="background-images__img" src="/img/img-optimize.png">
       <div class="benefits__benefit-text">
         <p class="benefits__benefit-text-p">Оптимизируем расходы</p>
         <p class="benefits__benefit-text-p-min">Уменьшаем еженедельные стихийные траты<br> на продукты за счет грамотного планирования</p>
       </div>
-      <img class="background-images__img" src="/svg/icon-bags.svg">
     </div>
   </div>
 </main>
@@ -179,39 +179,31 @@
         }
       }
     }
-    &__donut{
-      
-    }
   }
 }
 
 .benefits{
-  margin-top: 234px;
+  margin-top: 76px;
   padding-bottom: 233px;
-  width: 90%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
+  gap: 60px;
   &__benefit{
     display: flex;
-    gap: 64px;
-    width: 100%;
-    &:nth-child(2n){
-    justify-content: flex-end;
-    gap: 78px;}
-    &:nth-child(3n){
-      gap: 104px;
+    gap: 32px;
+    justify-content: center;
+    &:nth-child(odd){
+      justify-content: flex-start;
     }
     &-text{
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      gap: 12px;
+      justify-content: center;
+      gap: 12.5px;
       &-p{
-        font-weight: 500;
-        font-size: 27px;
-        line-height: 34px;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
         color: #1B1B1A;
         &-min{
           font-weight: 400;

@@ -10,13 +10,14 @@
 
 <template>
 <Navbar></Navbar>
-<main class="main" v-for="user of userStore.user">
+<main class="main">
   <h1>Типа страница профиля</h1>
-  <p>Имя: {{ user.firstName }}</p>
-  <p>Электронная почта: {{ user.email }}</p>
-  <p>Пол: {{ user.sex == 'male' ? 'Мужской' : 'Женский'}}</p>
-  <p>Возраст: {{ user.age }}</p>
-  <p>Дата регистрации: {{ new Date(user.creationDate).toLocaleDateString() }}</p>
+  <p>Имя: {{ userStore.user.firstName }}</p>
+  <p>Электронная почта: {{ userStore.user.email }}</p>
+  <p>Пол: {{ userStore.user.sex == 'male' ? 'Мужской' : 'Женский'}}</p>
+  <p>Возраст: {{ userStore.user.age }}</p>
+  <p>Дата регистрации: {{ new Date(userStore.user.creationDate).toLocaleDateString() }}</p>
+  
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 
