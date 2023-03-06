@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import Login from '@/Views/Login.vue';
+import Start from '@/Views/Start.vue';
 import Main from '@/Views/Main.vue';
 import Menu from '@/Views/Menu.vue';
 import Recipes from '@/Views/Recipes.vue';
@@ -12,8 +12,8 @@ const router = createRouter({
         {
             path:'/',
             alias: '/users',
-            name: 'Login',
-            component: Login
+            name: 'Start',
+            component: Start
         },
         {
             path: '/main',

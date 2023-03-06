@@ -3,9 +3,11 @@
 export default {
     data() {
         return {
-            text: '',
+            firstName: '',
             email: '',
-            password: ''
+            password: '',
+            age: '',
+            sex: ''
         };
     },
     props: {
@@ -30,26 +32,36 @@ export default {
             this.$emit('auth');
         },
         saveUser(){
-
+            this.$emit('saveUser');
+        },
+        showNextStep(){
+            this.$emit('showNextStep');
         },
         determinate(){
             if(this.method === 'auth'){
-                alert('ok')
                 this.auth()
-            }else{
+            }else if(this.method === 'saveUser'){
                 this.saveUser()
+            }else if(this.method === 'showNextStep'){
+                this.showNextStep()
             }
         }
     },
     watch: {
-        text() {
-            this.valueGet(this.text, 'text')
+        firstName() {
+            this.valueGet(this.firstName, 'firstName')
         },
         email() {
             this.valueGet(this.email, 'email')
         },
         password() {
             this.valueGet(this.password, 'password')
+        },
+        age() {
+            this.valueGet(this.age, 'age')
+        },
+        sex() {
+            this.valueGet(this.sex, 'sex')
         }
     }
 }
@@ -57,15 +69,31 @@ export default {
 </script>
 
 <template>
-    <input class="input"  type="text" :placeholder="placeholder" name="text" v-model="text"
-    v-if="type == 'text'">
+    <div class="input-form" v-if="type == 'text'">
+        <input class="input" type="text" placeholder="Имя" name="text" v-model="firstName" @keydown.enter="determinate">
+        <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
+    </div>
+
     <div class="input-form" v-else-if="type == 'email'">
         <input class="input" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
+
     <div class="input-form" v-else-if="type == 'password'">
         <input class="input" type="password" placeholder="Пароль" name="password" v-model="password" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
+    </div>
+
+    <div class="input-form" v-else-if="type == 'age'">
+        <input class="input" type="number" min="1" max="100" placeholder="Возраст" name="age" v-model="age" @keydown.enter="determinate">
+        <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
+    </div>
+    <div class="input-form" v-else-if="type == 'sex'">
+        <select class="input input-select" v-model="sex" @keydown.enter="determinate">
+            <option value="" disabled selected>Пол</option>
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+        </select>
     </div>
 </template>
 
@@ -80,6 +108,13 @@ export default {
     font-weight: 600;
     font-size: 24px;
     line-height: 36px;
+    -webkit-appearance: none;
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {                //для браузеров поддерживающих webkit
+            -webkit-appearance: none;
+        }
+        &[type='number'] {                                                          // для Firefox
+            -moz-appearance: textfield;
+        }
         &-form{
             display: flex;
             flex-direction: column;
@@ -91,6 +126,16 @@ export default {
             font-weight: 500;
             font-size: 14px;
             line-height: 21px;
+        }
+        &-select{
+            width: 423px;
+            &:selected{
+                color: #8D8D8C;
+            }
+            option{
+                background-color: #FFDCB3;
+                transition: 0.3s;
+            }
         }
         &::placeholder {
             color: #8D8D8C;

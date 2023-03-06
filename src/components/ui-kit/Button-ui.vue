@@ -1,16 +1,42 @@
-<script setup>
+<script>
 
-const props = defineProps({
-    text : {
+export default {
+    data() {
+        return {
+            firstName: '',
+            email: '',
+            password: '',
+            age: '',
+            sex: ''
+        };
+    },
+    props: {
+      text : {
         type: String,
         default: 'Найти рецепт'
+      },
+      method: {
+        type: String,
+        required: false
+      }
+    },
+    methods: {
+        showNextStep(){
+            this.$emit('showNextStep');
+        },
+        determinate(){
+          alert('ok')
+          if(this.method === 'showNextStep'){
+                this.showNextStep()
+          }
+        }
     }
-})
+}
 
 </script>
 
 <template>
-  <button class="button-ui">{{ text }}</button>
+  <button class="button-ui" @keydown.enter="determinate">{{ text }}</button>
 </template>
 
 <style lang="scss" scoped>

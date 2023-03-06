@@ -2,6 +2,8 @@
 import Button from '@/components/ui-kit/Button-ui.vue'
 import UserDataService from '../services/UserDataService'
 import InputUi from '@/components/ui-kit/Input-ui.vue';
+import {useUserStore} from '@/stores/UserStore.js'
+import router from '@/router.js'
 
 export default {
     data() {
@@ -13,8 +15,15 @@ export default {
                 age: '',
                 sex: '',
                 validState: false,
-                text: ''
+                nextStep: true,
+                user: null
         };
+    },
+    setup(){
+        const userStore = useUserStore();
+        return {
+            userStore
+        }
     },
     components: {
         Button,
@@ -24,22 +33,45 @@ export default {
         showLogin() {
             this.$emit('showLogin');
         },
-
-        saveUser() {
-            if(this.email.length != 0 && this.password.length != 0 && this.firstName.length != 0 && this.age.length != 0 && this.sex.length != 0) {let user = {
-                email: this.email, password: this.password,
-                firstName: this.firstName, age: this.age, sex: this.sex
-            };
-
-            UserDataService.create(user)
-            }
+        showNextStep(){
+            this.nextStep = false
+        },
+        async saveUser() {
+            if(this.email.length != 0 && this.password.length != 0 && this.firstName.length != 0 && this.age.length != 0 && this.sex.length != 0) {
+                this.user = {
+                            email: this.email,
+                            password: this.password,
+                            firstName: this.firstName,
+                            age: this.age,
+                            sex: this.sex
+                };
+                UserDataService.create(this.user)
+                this.userStore.changeUser(this.user)
+                if((await UserDataService.getAll()).status == 200){
+                    let tempUser = await (await UserDataService.getAll()).data.find(currentUser => (currentUser.email == this.userStore.user.email && currentUser.password == this.userStore.user.password))
+                    this.user = tempUser
+                    this.userStore.changeUser(this.user)
+                    localStorage.setItem('user', JSON.stringify(this.user))
+                    router.push('/profile')}else{
+                        console.log('Ошибка регистрации')
+                    }
+                }
         },
         valueGet(value, type) {
             if(type === 'email') {
                 this.email = value
             }
-            if(type === 'password') {
+            else if(type === 'password') {
                 this.password = value
+            }
+            else if(type === 'firstName') {
+                this.firstName = value
+            }
+            else if(type === 'age') {
+                this.age = value
+            }
+            else if(type === 'sex') {
+                this.sex = value
             }
         }
     },
@@ -72,111 +104,70 @@ export default {
 </script>
 
 <template>
-    <div class="registration-form">
-        <h2 class="registration-form__h2">Зарегистрироваться</h2>
-        <!-- <span v-if="validState">Неправильно введены данные</span> -->
-        <input class="registration-form__input registration-form__input_email"  type="email"
-            placeholder="Электронная почта" name="email" v-model="email">
-        <input class="registration-form__input registration-form__input_password"  type="password"
-            placeholder="Пароль" name="password" v-model="password">
-        div.
-        <input class="registration-form__input registration-form__input_password" type="text"
-            placeholder="Имя" v-model="firstName">
-        <input class="registration-form__input registration-form__input_password"  type="number"
-            placeholder="Возраст" v-model="age">
-
-        <select class="registration-form__input registration-form__input_password select" v-model="sex">
-            <option value="" disabled selected>Пол</option>
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
-        </select>
-        <InputUi @valueGet="valueGet" type="email"/>
-        <p>{{ text }}</p>
-        <Button class="registration-form__button" text="Зарегистрироваться" type="submit" value="Save"
-            @click="saveUser"></Button>
+    <div class="wrapper-text-and-registration-form">
+        <div class="text">
+            <h1 class="text__h1">PlanMenu</h1>
+            <h3 class="text__h3">планировщик меню на неделю,<br>где собраны твои любимые рецепты</h3>
+        </div>
+        <div class="registration-form">
+            <h2 class="registration-form__h2">Регистрация</h2>
+            <div class=" registration-form wrapper-first-step" v-if="nextStep">
+                <InputUi @valueGet="valueGet" @auth="showNextStep" type="email" method="showNextStep"/>
+                <InputUi @valueGet="valueGet" @auth="showNextStep" type="password" method="showNextStep"/>
+                <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep" method="showNextStep"/>
+            </div>
+            <div class="registration-form wrapper-second-step" v-else>
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser"/>
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="age" method="saveUser"/>
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser"/>
+                <Button class="registration-form__button" text="Личный кабинет" type="submit" value="Save" @click="saveUser"/>
+            </div>
+        </div>
     </div>
-    <div class="login-offer">
+    <!-- <div class="login-offer">
         <h3 class="login-offer__h3">Вернуться к авторизации</h3>
         <Button class="login-offer__button" @click="showLogin" text="Авторизация"></Button>
-    </div>
+    </div> -->
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
 
-.registration-form {
+.wrapper-text-and-registration-form{
+    display: flex;
+    gap: 47px;
+    margin-top: 199px;
+}
+.text{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 153px;
-
-    &__h2 {
-        font-weight: 400;
-        font-size: 40px;
-        line-height: 47px;
-        color: #000000CC;
+    justify-content: center;
+    gap: 32px;
+    width: 517px;
+    &__h1{
+        font-weight: 500;
+        font-size: 60px;
+        line-height: 90px;
+        color: #FF8A00;
     }
-
-    &__input {
-        width: 385px;
-        height: 35px;
-        background-color: #E2E2E2;
-        border: 1px solid transparent;
-        border-radius: 10px;
-        font-weight: 400;
-        font-size: 27px;
-        line-height: 34px;
-        padding: 18px 28px 16px;
-        transition: 0.3s;
-
-        &::placeholder {
-            color: #00000026;
-        }
-
-        &:focus {
-            outline: none;
-            border: 1px solid #000000;
-            background-color: transparent;
-            color: #000000D9;
-        }
-
-        &_email {
-            margin-top: 102px;
-        }
-
-        &_password {
-            margin-top: 26px;
-        }
-    }
-
-    &__button {
-        margin-top: 59px;
-        width: max-content;
+    &__h3{
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #1B1B1A;
     }
 }
 
-.login-offer {
-    margin-top: 50px;
+.registration-form{
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    &__h3 {
-        font-weight: 400;
-        font-size: 30px;
-        line-height: 40px;
-        color: #000000CC;
+    gap: 24px;
+    &__h2{
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #FF8A00;
     }
-
-    &__button {
-        margin-top: 25px;
-    }
-}
-
-.select{
-    height: auto;
-    display: block;
-    appearance: none;
-    width: 385px;
 }
 </style>

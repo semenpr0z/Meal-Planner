@@ -16,7 +16,6 @@ export default {
       userLoaded() {
         if(JSON.parse(localStorage.getItem('user'))){
           this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
-          
         }
       }
     },

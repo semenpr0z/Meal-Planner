@@ -2,9 +2,11 @@
   import Navbar from '@/components/navbar.vue';
   import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue'
   import Button from '@/components/ui-kit/Button-ui.vue'
-  import InputUi from '@/components/ui-kit/Input-ui.vue';
   import LoginForm from '@/components/Login-form.vue';
   import RegistrationForm from '@/components/Registration-form.vue';
+
+  import {useUserStore} from '@/stores/UserStore.js'
+  import router from '@/router.js'
 
   export default {
   data() {
@@ -34,6 +36,12 @@
       registrationFormVisible: false
     };
   },
+  setup(){
+    const userStore = useUserStore();
+    return {
+      userStore
+      }
+  },
   components: {
     Navbar,
     NavbarFooterMobile,
@@ -42,6 +50,13 @@
     RegistrationForm
   },
   methods: {
+    loggedIn(){
+      if(this.userStore.user) {
+        router.push('/menu')
+      }else{
+        this.showLogin()
+      }
+    },
     showLogin() {
       this.startFormVisible = false;
       this.loginFormVisible = true;
@@ -62,7 +77,7 @@
       <h1 class="start__text-button__h1">PlanMenu</h1>
       <h3 class="start__text-button__h3">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
       <p class="start__text-button__p">Cпланируем твое меню на неделю? </p>
-      <Button class="start__text-button__btn" text="Спланировать меню" @click="showLogin"/>
+      <Button class="start__text-button__btn" text="Спланировать меню" @click="loggedIn"/>
     </div>
     <img src="/img/img-iPhone-main.png" class="start__img">
   </div>

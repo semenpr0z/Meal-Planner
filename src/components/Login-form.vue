@@ -64,10 +64,6 @@ export default {
         </div>
         <div class="login-form">
             <h2 class="login-form__h2">Вход</h2>
-            <!-- <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email"
-                    v-model="email" @keydown.enter="auth">
-            <input class="login-form__input login-form__input_password" type="password" placeholder="Пароль" name="password"
-                    v-model="password" @keydown.enter="auth"> -->
             <InputUi @valueGet="valueGet" @auth="auth" type="email" method="auth"/>
             <InputUi @valueGet="valueGet" @auth="auth" type="password" method="auth"/>
             <Button class="login-form__button" text="Продолжить" type="submit" @click="auth"></Button>
