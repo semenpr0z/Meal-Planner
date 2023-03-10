@@ -39,17 +39,17 @@ const props = defineProps({
   transition: 0.5s;
   height: 24px;
   &__link-ui{
-      color: #1B1B1A;
+      color: var(--Black);
       text-decoration: none;
       font-weight: 500;
       line-height: 22px;
       transition: 0.5s;
       &:hover{
-        color: #FF8A00;
+        color: var(--Orange);
       }
   }
   &:hover{
-          border-bottom: 2px solid #FF8A00;
+          border-bottom: 2px solid var(--Orange);
       }
   &:active{
     border-bottom: 2px solid #000000;
@@ -57,9 +57,9 @@ const props = defineProps({
 }
 
 .active{
-  color: #FF8A00;
+  color: var(--Orange);
   &-wrapper{
-    border-bottom: 2px solid #FF8A00;
+    border-bottom: 2px solid var(--Orange);
   }
 }
 </style>

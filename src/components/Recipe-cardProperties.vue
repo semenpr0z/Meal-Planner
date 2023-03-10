@@ -44,12 +44,14 @@ export default {
  align-items: center;
  height: 16px;
  &__img{
-    
+    height: 16px;
+    width: 16px
  }
  &__span{
-    font-size: 12px;
-    line-height: 14px;
-    color: #000000;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--Black);
     padding-left: 8px;
  }
 }

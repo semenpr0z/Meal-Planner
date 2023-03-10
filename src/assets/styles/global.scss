@@ -1,10 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --Black: #1B1B1A;
+    --Gray: #ECECEC;
+    --White: #FFFFFF;
+    --Orange: #FF8A00;
+    --Light_orange_2: #FFE8CC;
+    --Light_orange: #FFDCB3;
+    --Text_gray: #8D8D8C;
+}
 
 *{
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 5px;
+        background-color: var(--Gray);
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: var(--Light_orange);
+    }
+    // &::-webkit-scrollbar-track {
+    //     // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    //     // border-radius: 5px;
+    //     // background-color: #EEEEEE;
+    // }
 }
 body{
     margin: 0;
@@ -17,9 +41,20 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 23px 66px;
+    padding: 0 64px;
     margin: 0 auto;
 }
 .app{
   height: 100vh;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 960px){
+    .main{
+        padding: 0 32px;
+        width: auto;
+    }
 }

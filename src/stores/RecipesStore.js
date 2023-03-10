@@ -1,7 +1,13 @@
 import { defineStore } from "pinia"
 
 export const useRecipesStore = defineStore("RecipesStore", {
-  state: () => ({}),
+  state: () => ({
+    recipes: []
+  }),
   getters: {},
-  actions: {},
+  actions: {
+    loadRecipes(data) {
+      this.recipes = data
+    }
+  },
 })

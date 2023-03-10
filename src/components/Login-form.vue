@@ -67,7 +67,7 @@ export default {
             <InputUi @valueGet="valueGet" @auth="auth" type="email" method="auth"/>
             <InputUi @valueGet="valueGet" @auth="auth" type="password" method="auth"/>
             <Button class="login-form__button" text="Продолжить" type="submit" @click="auth"></Button>
-            <h2 class="text_h3">Нет аккаунта? <span class="login-form__h2 login-form__h2_btn" @click="showRegistration">Регистрация</span></h2>
+            <h2 class="text_h2">Нет аккаунта? <span class="login-form__h2 login-form__h2_btn" @click="showRegistration">Регистрация</span></h2>
         </div>
     </div>
 </template>
@@ -90,13 +90,13 @@ export default {
         font-weight: 500;
         font-size: 60px;
         line-height: 90px;
-        color: #FF8A00;
+        color: var(--Orange);
     }
     &__h3{
         font-weight: 600;
         font-size: 24px;
         line-height: 36px;
-        color: #1B1B1A;
+        color: var(--Black);
     }
 }
 .login-form {
@@ -105,11 +105,12 @@ export default {
     align-items: center;
     gap: 24px;
     padding: 0 16.5px;
+    width: 421px;
     &__h2 {
         font-weight: 600;
         font-size: 24px;
         line-height: 36px;
-        color: #FF8A00;
+        color: var(--Orange);
         &_btn{
             cursor: pointer;
         }
@@ -119,21 +120,34 @@ export default {
     }
 }
 
-.registration-offer {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    &__h3 {
-        font-weight: 400;
-        font-size: 30px;
-        line-height: 40px;
-        color: #000000CC;
-    }
+@media screen and (max-width: 960px){
 
-    &__button {
-        margin-top: 50px;
+    .wrapper-text-and-login-form{
+        justify-content: space-between;
+        gap: 0;
+        width: 100%;
     }
+  .text{
+    width: 407px;
+    &__h1{
+        font-size: 45px;
+        line-height: 68px;
+    }
+    &__h3{
+        font-size: 22px;
+        line-height: 33px;
+    }
+  }
+
+  .login-form {
+    padding: 0;
+    width: auto;
+    &__h2 {
+        font-size: 22px;
+        line-height: 33px;
+    }
+}
+
 }
 </style>

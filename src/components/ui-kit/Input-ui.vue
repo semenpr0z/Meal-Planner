@@ -99,7 +99,7 @@ export default {
 
 <style lang="scss" scoped>
 .input{
-    background-color: #FFDCB3;
+    background-color: var(--Light_orange);
     border: 1px solid transparent;
     border-radius: 6px;
     padding: 18px 32px;
@@ -130,19 +130,19 @@ export default {
         &-select{
             width: 423px;
             &:selected{
-                color: #8D8D8C;
+                color: var(--Text_gray);
             }
             option{
-                background-color: #FFDCB3;
+                background-color: var(--Light_orange);
                 transition: 0.3s;
             }
         }
         &::placeholder {
-            color: #8D8D8C;
+            color: var(--Text_gray);
         }
         &:focus {
             outline: none;
-            border: 1px solid #FFDCB3;
+            border: 1px solid var(--Light_orange);
             background-color: transparent;
             color: #000000D9;
         }

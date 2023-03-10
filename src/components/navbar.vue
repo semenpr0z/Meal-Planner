@@ -76,9 +76,9 @@ export default {
     align-items: center;
     justify-content: space-between;
    
-    max-width: 1132px;
-    width: 100%;
-    padding: 16px 30px;
+    width: 1132px;
+    // width: 100%;
+    padding: 16px 64px;
     gap: 20px;
     &-logo{
         width: 166px;
@@ -95,7 +95,7 @@ export default {
             font-weight: 500;
             font-size: 24px;
             line-height: 29px;
-            color: #1B1B1A;
+            color: var(--Black);
             &_orange{
                 color: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);
             }
@@ -105,7 +105,7 @@ export default {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        max-width: 644px;
+        max-width: 442px;
         height: 24px;
     }
     &-profile{
@@ -117,6 +117,12 @@ export default {
         height: 24px;
     }
 }
+@media screen and (max-width: 960px){
+    .navbar{
+    gap: 110px;
+    }
+}
+
 
 @media screen and (max-width: 650px) {
     .menu-items-desktop{

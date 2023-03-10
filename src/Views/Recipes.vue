@@ -4,17 +4,19 @@
   import searchIngredients from '@/components/Search-ingredients.vue';
   import RecipeСardVue  from '@/components/Recipe-сard.vue';
   import ButtonUi from '@/components/ui-kit/Button-ui.vue';
-  import ModalRecipeCard from '@/components/ModalRecipeCard.vue';
+  import addToMenu from '@/components/addToMenu.vue';
+  import RecipeCardOpened from '@/components/Recipe-cardOpened.vue'
 
-
-  import axios from 'axios'
+  import {useRecipesStore} from '@/stores/RecipesStore.js'
+  import RecipesDataService from '@/services/RecipesDataService'
 
 export default {
   data() {
     return {
-        localInfo: [],
+        localRecipes: [],
         indexOfRecipe: 0,
-        isModalRecipeCardVisible: false,
+        isRecipeCardVisible: false,
+        isAddToMenuVisible: false,
         Navigation: [
           {
               id: 1,
@@ -34,54 +36,115 @@ export default {
               Link: '/recipes',
               active: true
           }
-      ]
+      ],
+      search: '',
+      visibleRecipes: 6
     };
   },
+    setup(){
+        const recipesStore = useRecipesStore();
+        return {
+            recipesStore
+        }
+    },
   components: {
     Navbar,
     NavbarFooterMobile,
     searchIngredients,
     RecipeСardVue,
     ButtonUi,
-    ModalRecipeCard
+    addToMenu,
+    RecipeCardOpened
   },
   beforeMount() {
-    axios
-      .get('https://63f0ad9c5703e063fa4a4a59.mockapi.io/api/recipes')
-      .then(response => (this.localInfo = response.data));
+    this.updateRecipes()
   },
   methods: {
     showModalRecipeCard (id) {
-      this.indexOfRecipe = this.localInfo.findIndex(x => x.id == id);
-      this.isModalRecipeCardVisible = true;
+      this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
+      this.isRecipeCardVisible = true;
       document.body.style.overflowY = 'hidden';
     },
-    closeModalRecipeCard() {
-      this.isModalRecipeCardVisible = false;
+    closeRecipeCard() {
+      this.isRecipeCardVisible = false;
       document.body.style.removeProperty("overflow-y")
+    },
+    async updateRecipes(){
+      if(this.recipesStore.recipes.length === 0){
+        this.recipesStore.loadRecipes(await (await RecipesDataService.getAll()).data)
+        this.localRecipes = this.recipesStore.recipes
+      }else{
+        this.localRecipes = this.recipesStore.recipes
+      }
+    },
+    searchGet(value){
+      if(value === '' && this.search === '') {
+        console.log('error')
+      }else{
+        this.search = value
+      }
+    },
+    moreRecipes(){
+      this.visibleRecipes += 6
+      if(this.visibleRecipes >= this.localRecipes.length){
+        console.log('Рецептов больше нет!')
+      }
+    },
+    showAddToMenu(id){
+      console.log(id)
+      this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
+      this.isAddToMenuVisible = true
+      document.body.style.overflowY = 'hidden';
+    },
+    closeAddToMenu(){
+      this.isAddToMenuVisible = false;
+      document.body.style.removeProperty("overflow-y")
+    }
+  },
+  computed: {
+    recipesList(){
+      return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1)).slice(0, this.visibleRecipes)
     }
   }
 };
 </script>
 
 <template>
-<Navbar :menu="Navigation"></Navbar>
-<main class="main">
-    <Transition name="fade">
-      <ModalRecipeCard v-if="isModalRecipeCardVisible"
-      :item="localInfo[indexOfRecipe]"
-      @closeModalRecipeCard="closeModalRecipeCard"/>
+  <Transition name="fade">
+      <addToMenu v-if="isAddToMenuVisible"
+      :item="localRecipes[indexOfRecipe]"
+      @closeAddToMenu="closeAddToMenu"/>
     </Transition>
-    <searchIngredients></searchIngredients>
+<Navbar :menu="Navigation"></Navbar>
+<main class="main" v-if="isRecipeCardVisible">
+  <RecipeCardOpened
+      :item="localRecipes[indexOfRecipe]"
+      @closeRecipeCard="closeRecipeCard"/>
+</main>
+<main class="main" v-if="!isRecipeCardVisible">
+    <searchIngredients
+      class="search"
+      @search-get="searchGet"
+      />
     <div class="wrapper-recipes-list">
       <TransitionGroup name="list">
-        <RecipeСardVue v-for="item in localInfo"
+        <RecipeСardVue v-for="item in recipesList"
         :item="item"
         :key="item.id"
-        @showModalRecipeCard="showModalRecipeCard"/>
+        @showModalRecipeCard="showModalRecipeCard"
+        @showAddToMenu="showAddToMenu"
+        />
       </TransitionGroup>
     </div>
-    <ButtonUi class="button-more-recipes" text="Посмотреть еще"></ButtonUi>
+    <ButtonUi
+      class="button-more-recipes"
+      text="Посмотреть еще"
+      color="gray"
+      method="moreRecipes"
+      @more-recipes="moreRecipes"
+      @click="moreRecipes"
+      v-if="recipesList.length < localRecipes.length"
+    />
 </main>
 <NavbarFooterMobile></NavbarFooterMobile>
 
@@ -89,6 +152,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
+
+.search{
+  margin-top: 32px;
+}
+
 .wrapper-recipes-list{
   margin-top: 58px;
   display: grid;
@@ -96,7 +164,7 @@ export default {
   gap: 24px;
 }
 .button-more-recipes{
-  margin-top: 46px;
+  margin-top: 32px;
 }
 
 .list-enter-active,
