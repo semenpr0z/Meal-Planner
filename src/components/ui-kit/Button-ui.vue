@@ -13,7 +13,7 @@ export default {
     props: {
       text : {
         type: String,
-        default: 'Найти рецепт'
+        default: 'Найти блюдо'
       },
       method: {
         type: String,
@@ -22,6 +22,10 @@ export default {
       color: {
         type: String,
         default: 'orange'
+      },
+      shortButton: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
@@ -47,18 +51,15 @@ export default {
 
 <template>
   <button
-    :class="['button-ui', {'button-ui_orange' : color == 'orange'},{'button-ui_gray' : color == 'gray'}]"
+    :class="['button-ui', {'button-ui_orange' : color == 'orange'},{'button-ui_gray' : color == 'gray'}, 'button', {'button-ui_short' : shortButton == true}]"
     @keydown.enter="determinate">{{ text }}</button>
 </template>
 
 <style lang="scss" scoped>
 .button-ui{
-  font-size: 18px;
   padding: 14px 58px;
   border-radius: 30px;
   transition: 0.5s;
-  font-weight: 600;
-  line-height: 22px;
   &_orange{
     background: var(--Orange);
     border: 3px solid var(--Orange);
@@ -87,6 +88,9 @@ export default {
       border: 3px solid var(--Text_gray);
       color: var(--White);
     }
+  }
+  &_short{
+    padding: 14px 24px;
   }
 
   &:hover{

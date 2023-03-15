@@ -107,11 +107,11 @@ export default {
 <template>
     <div :class="['wrapper-text-and-registration-form', { 'wrapper-text-and-registration-form_margin': !nextStep }]">
         <div class="text">
-            <h1 class="text__h1">PlanMenu</h1>
-            <h3 class="text__h3">планировщик меню на неделю,<br>где собраны твои любимые рецепты</h3>
+            <h1 class="text__h1 h-main">PlanMenu</h1>
+            <h3 class="text__h3 h-1">планировщик меню на неделю,<br>где собраны твои любимые рецепты</h3>
         </div>
         <div class="registration-form">
-            <h2 class="registration-form__h2">Регистрация</h2>
+            <h2 class="registration-form__h2 h-1">Регистрация</h2>
             <div class=" registration-form wrapper-first-step" v-if="nextStep">
                 <InputUi @valueGet="valueGet" @auth="showNextStep" type="email" method="showNextStep" />
                 <InputUi @valueGet="valueGet" @auth="showNextStep" type="password" method="showNextStep" />
@@ -164,18 +164,10 @@ export default {
     justify-content: center;
     gap: 32px;
     width: 517px;
-
     &__h1 {
-        font-weight: 500;
-        font-size: 60px;
-        line-height: 90px;
         color: var(--Orange);
     }
-
     &__h3 {
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 36px;
         color: var(--Black);
     }
 }
@@ -185,11 +177,7 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 24px;
-
     &__h2 {
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 36px;
         color: var(--Orange);
     }
 }</style>

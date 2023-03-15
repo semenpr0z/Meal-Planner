@@ -15,6 +15,10 @@ export default {
         type: Object,
         required: true,
         default: {}
+    },
+    short: {
+        type: Boolean,
+        default: false
     }
   },
   methods: {
@@ -31,10 +35,10 @@ export default {
 
 <template>
     <div class="wrapper-recipe-wrapper">
-        <div class="wrapper-recipe">
+        <div :class="['wrapper-recipe', {'short-recipe' : short == true} ]">
             <div class="wrapper-recipe__information" @click="showModalRecipeCard">
-                <h3 class="wrapper-recipe__information_h3">{{ item.name }}</h3>
-                <p class="wrapper-recipe__information_p">{{ ingredients.length > 21 ? ingredients.slice(0, 21) + "..." :  ingredients}}</p>
+                <h3 class="wrapper-recipe__information_h3 p-1">{{ item.name }}</h3>
+                <p class="wrapper-recipe__information_p p-2">{{ ingredients.length > 21 ? ingredients.slice(0, 21) + "..." :  ingredients}}</p>
                 <div class="wrapper-recipe__information_wrapper-properties">
                     <RecipeCardProperties
                     :calorific="item.properties.calorific"
@@ -62,7 +66,7 @@ export default {
         display: flex;
     }
     &__information{
-        padding: 24px;
+        padding: 16px 24px;
         width: 346px;
         display: flex;
         flex-direction: column;
@@ -71,18 +75,13 @@ export default {
             }
         &_h3{
             margin: 0;
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 22px;
             color: var(--Black);
-            
+            width: 252px;
+            padding-right: 18px;
         }
         &_p{
             margin: 0;
             margin-top: 4px;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 22px;
             color: var(--Black);
         }
         &_wrapper-properties{
@@ -90,12 +89,12 @@ export default {
             flex-direction: column;
             margin: 0;
             gap: 8px;
-            margin-top: 12.5px;
+            margin-top: 12px;
         }
     }
     &__img{
         width: 175px;
-        height: 100%;
+        height: 181px;
         object-fit: cover;
         object-position: 30% 50%;
         border-radius: 40px;
@@ -117,5 +116,9 @@ export default {
             border: 2px solid transparent;
         }
     }
+}
+
+.short-recipe{
+    width: 445px;
 }
 </style>

@@ -5,10 +5,6 @@ const props = defineProps({
         type: String,
         required: true
     },
-    Size : {
-        type: String,
-        default: "18px"
-    },
     Link : {
         type: String,
         default: "/main"
@@ -24,8 +20,7 @@ const props = defineProps({
 <template>
   <div :class="['wrapper-link', {'active-wrapper' : active === true}]">
     <router-link :to="Link"
-    :class="['wrapper-link__link-ui', {'active' : active === true}]"
-    :style="{fontSize: Size}">{{ text }}</router-link>
+    :class="['wrapper-link__link-ui', {'active' : active === true}, 'p-1']">{{ text }}</router-link>
   </div>
 </template>
 
@@ -41,8 +36,6 @@ const props = defineProps({
   &__link-ui{
       color: var(--Black);
       text-decoration: none;
-      font-weight: 500;
-      line-height: 22px;
       transition: 0.5s;
       &:hover{
         color: var(--Orange);

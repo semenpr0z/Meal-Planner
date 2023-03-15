@@ -34,6 +34,12 @@ export default {
                 this.prevSearch = prevValue
             }
         }
+    },
+    props: {
+        button: {
+            type: Boolean,
+            default: false
+        }
     }
 };
 
@@ -43,15 +49,15 @@ export default {
     <div>
         <div class="search-ingridients-wrapper">
             <input type="text"
-            :class="['search-ingridients-wrapper__input', {'invalid' : validSearch == false}]"
-                placeholder="Введите название рецепта"
+            :class="['search-ingridients-wrapper__input', {'invalid' : validSearch == false}, 'span-1']"
+                placeholder="Введите название блюда"
                 v-model="search">
-            <ButtonUi class="search-ingridients-wrapper__margin-button" @click="validatingSearch"></ButtonUi>
+            <ButtonUi :class="[{'search-ingridients-wrapper__margin-button': button == false}, {'search-ingridients-wrapper__margin-button-short': button == true}]" @click="validatingSearch" :short-button="button"></ButtonUi>
             <div class="search-ingridients-wrapper__icon-wrapper">
                 <img class="search-ingridients-wrapper__icon-wrapper_item" src="/svg/icon-filters.svg" alt="">
             </div>
         </div>
-        <span v-if="validSearch == false" class="input-span">Поле заполнено неверно, попробуйте снова</span>
+        <span v-if="validSearch == false" class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>
 
@@ -59,15 +65,14 @@ export default {
 .search-ingridients-wrapper{
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     &__input{
-        width: 665px;
+        width: 70%;
         background-color: transparent;
         border: 2px solid var(--Gray);
         border-right: 2px solid transparent;
         border-radius: 30px 0 0 30px;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
         padding: 16px 24px;
         transition: 0.5s;
         color: var(--Black);
@@ -88,6 +93,9 @@ export default {
     }
     &__margin-button{
         margin-left: -30px;
+        &-short{
+            margin-left: -100px;
+        }
     }
     &__icon-wrapper{
         margin-left: 13px;
@@ -102,9 +110,6 @@ export default {
     border-right: 2px solid transparent;
 }
 .input-span{
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 21px;
     color: #D02500;
     text-align: left;
 }

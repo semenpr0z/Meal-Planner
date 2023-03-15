@@ -1,38 +1,30 @@
 <script>
-import {useUserStore} from '@/stores/UserStore.js'
-import {useRecipesStore} from '@/stores/RecipesStore.js'
-
+import { useUserStore } from '@/stores/UserStore.js'
+import { useRecipesStore } from '@/stores/RecipesStore.js'
 import RecipesDataService from '@/services/RecipesDataService'
 
 export default {
-    data() {
-        return {
-        };
-    },
-    setup(){
-        const userStore = useUserStore();
-        const recipesStore = useRecipesStore();
-        return {
-            userStore,
-            recipesStore
-        }
-    },
-    methods: {
-      userLoaded() {
-        if(JSON.parse(localStorage.getItem('user'))){
-          this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
-        }
-      },
-      async recipesLoad() {
-        if(this.recipesStore.recipes.length === 0){
-          this.recipesStore.loadRecipes(await (await RecipesDataService.getAll()).data)
-        }
-      }
-    },
-    beforeMount(){
-      this.userLoaded()
-      this.recipesLoad()
+  data() {
+    return {
+    };
+  },
+  setup() {
+    const userStore = useUserStore();
+    return {
+      userStore
     }
+  },
+  methods: {
+    userLoaded() {
+      console.log('ok')
+      if (JSON.parse(localStorage.getItem('user'))) {
+        this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
+      }
+    }
+  },
+  beforeMount(){
+    this.userLoaded()
+  }
 }
 </script>
 

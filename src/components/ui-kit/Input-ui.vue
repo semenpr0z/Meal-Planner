@@ -70,26 +70,26 @@ export default {
 
 <template>
     <div class="input-form" v-if="type == 'text'">
-        <input class="input" type="text" placeholder="Имя" name="text" v-model="firstName" @keydown.enter="determinate">
+        <input class="input h-2" type="text" placeholder="Имя" name="text" v-model="firstName" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'email'">
-        <input class="input" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
+        <input class="input h-2" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'password'">
-        <input class="input" type="password" placeholder="Пароль" name="password" v-model="password" @keydown.enter="determinate">
+        <input class="input h-2" type="password" placeholder="Пароль" name="password" v-model="password" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'age'">
-        <input class="input" type="number" min="1" max="100" placeholder="Возраст" name="age" v-model="age" @keydown.enter="determinate">
+        <input class="input h-2" type="number" min="1" max="100" placeholder="Возраст" name="age" v-model="age" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
     <div class="input-form" v-else-if="type == 'sex'">
-        <select class="input input-select" v-model="sex" @keydown.enter="determinate">
+        <select class="input h-2 input-select" v-model="sex" @keydown.enter="determinate">
             <option value="" disabled selected>Пол</option>
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
@@ -105,9 +105,6 @@ export default {
     padding: 18px 32px;
     transition: 0.3s;
     width: 357px;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 36px;
     -webkit-appearance: none;
         &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {                //для браузеров поддерживающих webkit
             -webkit-appearance: none;

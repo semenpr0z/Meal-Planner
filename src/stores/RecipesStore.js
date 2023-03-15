@@ -1,4 +1,5 @@
 import { defineStore } from "pinia"
+import RecipeDataService from '@/services/RecipesDataService'
 
 export const useRecipesStore = defineStore("RecipesStore", {
   state: () => ({
@@ -6,8 +7,9 @@ export const useRecipesStore = defineStore("RecipesStore", {
   }),
   getters: {},
   actions: {
-    loadRecipes(data) {
-      this.recipes = data
+    async updateRecipes() {
+      const response = await RecipeDataService.getAll()
+      this.recipes = response.data
     }
   },
 })

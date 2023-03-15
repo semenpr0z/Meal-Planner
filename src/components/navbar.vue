@@ -48,7 +48,7 @@ export default {
             <router-link to="/main" class="navbar-logo__link">
                 <div class="navbar-logo">
                     <img src="/svg/icon-logo.svg" alt="">
-                    <span class="navbar-logo__span">PlanMenu</span>
+                    <span class="navbar-logo__span logotype">PlanMenu</span>
                 </div>
             </router-link>
             <div class="navbar-links">
@@ -75,9 +75,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
     width: 1132px;
-    // width: 100%;
     padding: 16px 64px;
     gap: 20px;
     &-logo{
@@ -90,11 +88,6 @@ export default {
             text-decoration: none;
         }
         &__span{
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 29px;
             color: var(--Black);
             &_orange{
                 color: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);

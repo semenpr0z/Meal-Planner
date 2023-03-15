@@ -76,9 +76,9 @@ export default {
       <TransitionGroup appear name="fade">
         <div class="start" v-if="startFormVisible">
           <div class="start__text-button">
-            <h1 class="start__text-button__h1">PlanMenu</h1>
-            <h3 class="start__text-button__h3">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
-            <p class="start__text-button__p">Cпланируем твое меню на неделю? </p>
+            <h1 class="start__text-button__h1 h-main">PlanMenu</h1>
+            <h3 class="start__text-button__h3 h-1">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
+            <p class="start__text-button__p h-2">Cпланируем твое меню на неделю? </p>
             <Button class="start__text-button__btn" text="Спланировать меню" @click="loggedIn" />
           </div>
           <img src="/img/img-iPhone-main.png" class="start__img">
@@ -103,15 +103,15 @@ export default {
       <div class="benefits__benefit">
         <img class="benefits__benefit__img-convenience" src="/img/img-convenience.png" alt="Удобство">
         <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p">Удобный календарь на неделю</p>
-          <p class="benefits__benefit-text-p-min">Собирайте план сразу из готовых блюд.<br>Календарь нагляден и всегда под
+          <p class="benefits__benefit-text-p h-1">Удобный календарь на неделю</p>
+          <p class="p-2">Собирайте план сразу из готовых блюд.<br>Календарь нагляден и всегда под
             рукой!</p>
         </div>
       </div>
       <div class="benefits__benefit">
         <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p">Сбалансированные рецепты</p>
-          <p class="benefits__benefit-text-p-min">Рецепты подобраны с учетом принципов<br> здорового питания и
+          <p class="benefits__benefit-text-p h-1">Сбалансированные рецепты</p>
+          <p class="p-2">Рецепты подобраны с учетом принципов<br> здорового питания и
             отображением КБЖУ.<br> Готовые блюда позволят питаться правильно легко!</p>
         </div>
         <img class="benefits__benefit__img-balance" src="/img/img-balance.png">
@@ -119,8 +119,8 @@ export default {
       <div class="benefits__benefit">
         <img class="benefits__benefit__img-optimize" src="/img/img-optimize.png">
         <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p">Оптимизируем расходы</p>
-          <p class="benefits__benefit-text-p-min">Уменьшаем еженедельные стихийные траты<br> на продукты за счет
+          <p class="benefits__benefit-text-p h-1">Оптимизируем расходы</p>
+          <p class="p-2">Уменьшаем еженедельные стихийные траты<br> на продукты за счет
             грамотного планирования</p>
         </div>
       </div>
@@ -148,26 +148,14 @@ export default {
 
   &__text-button {
     margin-top: 87px;
-
     &__h1 {
       color: var(--Orange);
-      font-weight: 500;
-      font-size: 60px;
-      line-height: 73px;
     }
-
     &__h3 {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 36px;
       color: var(--Black);
       margin-top: 32px;
     }
-
     &__p {
-      font-weight: 600;
-      font-size: 20px;
-      line-height: 30px;
       display: flex;
       align-items: center;
       color: var(--Black);
@@ -238,16 +226,7 @@ export default {
       gap: 12.5px;
 
       &-p {
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 36px;
         color: var(--Black);
-
-        &-min {
-          font-weight: 400;
-          font-size: 18px;
-          line-height: 27px;
-        }
       }
     }
   }
