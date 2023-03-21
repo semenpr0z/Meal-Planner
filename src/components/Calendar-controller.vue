@@ -1,7 +1,9 @@
 <script>
 import moment from 'moment';
 import { getMonthWeeks } from '@/utils/datesUtils.js';
+import { useUserStore } from '@/stores/UserStore.js';
 
+import MiniMeal from '@/components/MiniMeal.vue';
 export default {
     data() {
 
@@ -31,11 +33,50 @@ export default {
             previousMonth,
             currentMonth,
             futureMonth,
-            exportWeek: null
+            exportWeek: null,
+            indexOfSelectedDay: 0,
+            meals: [
+                {
+                    'name': 'Завтрак',
+                    'mealsId': 1
+                },
+                {
+                    'name': 'Перекус',
+                    'mealsId': 2
+                },
+                {
+                    'name': 'Обед',
+                    'mealsId': 3
+                },
+                {
+                    'name': 'Полдник',
+                    'mealsId': 4
+                },
+                {
+                    'name': 'Ужин',
+                    'mealsId': 5
+                }
+            ]
+        }
+    },
+    components: {
+        MiniMeal
+    },
+    setup() {
+
+        const userStore = useUserStore();
+        return {
+            userStore
         }
     },
     props: {
-
+        miniCalendar: {
+            type: Boolean,
+            default: false
+        },
+        dishesId: {
+            default: 0
+        }
     },
     methods: {
         CapitalizedMonth(indexOfMonth) {
@@ -57,17 +98,19 @@ export default {
                 this.toNextMonth()
                 console.log('следующий месяц')
             }
-
+            this.indexOfSelectedDay = 0
         },
         previous() {
-            if (this.indexOfWeek < this.month[this.indexOfMonth].length - 1 && this.indexOfWeek > 0) {
+            if (this.indexOfWeek <= this.month[this.indexOfMonth].length - 1 && this.indexOfWeek > 0) {
                 this.toPreviousWeek()
                 console.log('прошлая неделя')
             } else {
+                // console.log(this.indexOfWeek + '<' + (this.month[this.indexOfMonth].length - 1) + '&&' + this.indexOfWeek + '>' + 0)
                 this.toPreviousMonth()
                 console.log('прошлый месяц')
-            }
 
+            }
+            this.indexOfSelectedDay = 0
         },
         toNextMonth() {
             if (this.indexOfMonth == 2) {
@@ -115,23 +158,74 @@ export default {
                 }
             }
         },
-        exportThisWeek(){
+        exportThisWeek() {
             this.$emit('exportThisWeek', this.exportWeek)
+        },
+        capitalizeFirstLetter(word) {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        },
+        selectDay(index) {
+            this.indexOfSelectedDay = index
+        },
+        moveToSuccess(){
+            this.$emit('moveToSuccess')
         }
     },
-    emits: ['exportThisWeek'],
+    emits: ['exportThisWeek', 'moveToSuccess'],
     mounted() {
         this.getCurrentWeek()
         this.exportThisWeek()
     },
-    computed:{
-        showCurrentWeek(){
+    computed: {
+        showCurrentWeek() {
             this.exportWeek = this.month[this.indexOfMonth][this.indexOfWeek];
             return this.month[this.indexOfMonth][this.indexOfWeek]
+        },
+        showSelectedDay() {
+            console.log('формируем неделю')
+            const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const formattedDate = formatter.format(this.month[this.indexOfMonth][this.indexOfWeek][this.indexOfSelectedDay]).replace(/\./g, "-");
+            const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
+            if (order.length > 0) {
+                let mappedMeals = this.meals.map(meal => {
+                    let mealsId = order.filter(order => meal.mealsId == order.mealsId)
+                    if (mealsId.length) {
+                        return {
+                            'name': meal.name,
+                            'mealsId': meal.mealsId,
+                            'amount': mealsId.length,
+                            'date': formattedDate,
+                            'dishesId': this.dishesId
+                        }
+                    } else {
+                        return {
+                            'name': meal.name,
+                            'mealsId': meal.mealsId,
+                            'date': formattedDate,
+                            'dishesId': this.dishesId
+                        }
+                    }
+                })
+
+
+                return mappedMeals
+
+            } else {
+                let mappedMeals = this.meals.map(meal => {
+                    return {
+                        'name': meal.name,
+                        'mealsId': meal.mealsId,
+                        'date': formattedDate,
+                        'dishesId': this.dishesId
+                    }
+                }
+                )
+                return mappedMeals
+            }
         }
     },
     watch: {
-        exportWeek(){
+        exportWeek() {
             this.exportThisWeek()
         }
     }
@@ -139,7 +233,7 @@ export default {
 </script>
 
 <template>
-    <div class="calendar-controller">
+    <div class="calendar-controller" v-if="!miniCalendar">
         <div class="calendar-controller__header">
             <button class="calendar-controller__header-btn" @click="previous">
                 <img src="/svg/icon-left.svg" alt="Влево">
@@ -154,8 +248,7 @@ export default {
         <div class="calendar-controller__footer">
             <ul class="calendar-controller__footer_ul">
                 <TransitionGroup appear name="fade">
-                    <li v-for="day in showCurrentWeek" :key="day"
-                        class="calendar-controller__footer_ul_li">
+                    <li v-for="day in showCurrentWeek" :key="day" class="calendar-controller__footer_ul_li">
                         <span class="span-2">{{ new Intl.DateTimeFormat("ru", {
                             weekday:
                                 "short"
@@ -165,6 +258,41 @@ export default {
                         }).format(day) }}</p>
                     </li>
                 </TransitionGroup>
+            </ul>
+        </div>
+    </div>
+    <div class="calendar-controller-mini" v-else="miniCalendar">
+        <div class="calendar-controller-mini__header">
+            <button class="calendar-controller-mini__header-btn" @click="previous">
+                <img src="/svg/icon-left-mini.svg" alt="Влево">
+            </button>
+            <Transition appear name="fade">
+                <h2 class="p-1">{{ CapitalizedMonth(indexOfMonth) }}</h2>
+            </Transition>
+            <button class="calendar-controller-mini__header-btn" @click="next">
+                <img src="/svg/icon-right-mini.svg" alt="Вправо">
+            </button>
+        </div>
+        <div class="calendar-controller-mini__footer">
+            <ul class="calendar-controller-mini__footer_ul">
+                <TransitionGroup appear name="fade">
+                    <li v-for="(day, index) in showCurrentWeek" :key="day" class="calendar-controller-mini__footer_ul_li"
+                        @click="() => { selectDay(index) }">
+                        <span
+                            :class="['span-3', 'calendar-controller-mini__footer_ul_li-span', { 'active': indexOfSelectedDay == index }]">{{
+                                capitalizeFirstLetter(new
+                                    Intl.DateTimeFormat("ru", {
+                                        weekday:
+                                            "short"
+                                    }).format(day)) }}</span>
+                        <p class="span-3">{{ new Intl.DateTimeFormat("ru", {
+                            day: "numeric"
+                        }).format(day) }}</p>
+                    </li>
+                </TransitionGroup>
+            </ul>
+            <ul class="calendar-controller-mini__day-meals">
+                <MiniMeal v-for="meal in showSelectedDay" :meal="meal" @move-to-success="moveToSuccess"/>
             </ul>
         </div>
     </div>
@@ -211,6 +339,85 @@ export default {
                 width: 22px;
             }
         }
+    }
+}
+
+.calendar-controller-mini {
+    padding: 18px 24px;
+    background: transparent;
+    border-radius: 40px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-btn {
+            background: transparent;
+            border: none;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__footer {
+        padding-top: 9px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+
+        &_ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            width: 230px;
+            overflow: hidden;
+            gap: 1px;
+
+            &_li {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                width: 32px;
+
+                &-span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                }
+
+                &:hover>&-span {
+                    background-color: var(--Light_orange_2);
+                    border-radius: 50%;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .active {
+        background-color: var(--Light_orange_2);
+        border-radius: 50%;
+    }
+
+    &__day-meals {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 }
 

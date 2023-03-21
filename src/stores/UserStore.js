@@ -3,11 +3,15 @@ import {defineStore} from 'pinia';
 export const useUserStore = defineStore('userStore', {
     state: () => ({
         user: null,
-        userInLocalStorage: localStorage.getItem('user')
+        userInLocalStorage: localStorage.getItem('user'),
+        userOrders: []
     }),
     actions: {
         async changeUser(user) {
             this.user = await user
+        },
+        async loadOrders(orders) {
+            this.userOrders = orders
         }
     }
 })

@@ -8,7 +8,9 @@ import addToMenu from '@/components/addToMenu.vue';
 import RecipeCardOpened from '@/components/Recipe-cardOpened.vue'
 
 import { useRecipesStore } from '@/stores/RecipesStore.js'
+import { useUserStore } from '@/stores/UserStore.js'
 import RecipesDataService from '@/services/RecipesDataService'
+import OrderDataService from '@/services/OrderDataService'
 
 export default {
   data() {
@@ -43,8 +45,10 @@ export default {
   },
   setup() {
     const recipesStore = useRecipesStore();
+    const userStore = useUserStore();
     return {
-      recipesStore
+      recipesStore,
+      userStore
     }
   },
   components: {
@@ -95,7 +99,7 @@ export default {
       this.isAddToMenuVisible = true
       document.body.style.overflowY = 'hidden';
     },
-    closeAddToMenu() {
+    async closeAddToMenu() {
       this.isAddToMenuVisible = false;
       document.body.style.removeProperty("overflow-y")
     }

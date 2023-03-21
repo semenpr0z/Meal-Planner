@@ -14,7 +14,9 @@ import { getDateRange } from '@/utils/dateUtils.js';
 import { getMonthWeeks } from '@/utils/datesUtils.js';
 import moment from 'moment';
 import { useRecipesStore } from '@/stores/RecipesStore.js'
+import { useUserStore } from '@/stores/UserStore.js'
 import RecipesDataService from '@/services/RecipesDataService'
+import OrderDataService from '@/services/OrderDataService'
 
 export default {
   data() {
@@ -60,7 +62,9 @@ export default {
       isAddToMenuVisible: false,
       isRecipeCardVisible: false,
       localRecipes: [],
-      search: ''
+      search: '',
+      weekToExport: null,
+      searchValidation: true
     };
   },
   components: {
@@ -93,11 +97,21 @@ export default {
         this.secondIndexOfWeek = true
       }
     },
-    importThisWeek(week) {
-      if (!week) {
+    async importThisWeek(week) {
+      if (this.userStore.user) {
+        if (!week) {
 
+        } else {
+          if (this.userStore.userOrders.length == 0) {
+            let orders = await OrderDataService.getAll()
+            this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
+          }
+          this.week = week
+          this.mappingWeek()
+        }
       } else {
         this.week = week
+        this.mappingWeek()
       }
     },
     capitalizeFirstLetter(word) {
@@ -108,9 +122,12 @@ export default {
       this.isAddToMenuVisible = true
       document.body.style.overflowY = 'hidden';
     },
-    closeAddToMenu() {
+    async closeAddToMenu() {
+      let orders = await OrderDataService.getAll()
+      this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
       this.isAddToMenuVisible = false;
       document.body.style.removeProperty("overflow-y")
+      this.mappingWeek()
     },
     async updateRecipes() {
       if (this.recipesStore.recipes.length === 0) {
@@ -140,9 +157,32 @@ export default {
     searchGet(value) {
       if (value === '' && this.search === '') {
         console.log('error')
+        this.searchValidation = false
       } else {
-        this.search = value
+        this.search = value,
+        this.searchValidation = true
       }
+    },
+    deleteMeal(mealId) {
+      this.userStore.userOrders = this.userStore.userOrders.filter(order => order.id !== mealId)
+      this.mappingWeek()
+      OrderDataService.delete(mealId)
+      console.log('удалили из базы')
+    },
+    mappingWeek() {
+      this.weekToExport = this.week.map(day => {
+        const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const formattedDate = formatter.format(day).replace(/\./g, "-");
+        const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
+        if (order) {
+          return {
+            "day": day,
+            "meals": order
+          }
+        } else {
+          return { "day": day }
+        }
+      })
     }
   },
   async beforeMount() {
@@ -150,8 +190,10 @@ export default {
   },
   setup() {
     const recipesStore = useRecipesStore();
+    const userStore = useUserStore();
     return {
-      recipesStore
+      recipesStore,
+      userStore
     }
   },
   computed: {
@@ -163,9 +205,9 @@ export default {
 </script>
 
 <template>
-  <Transition name="fade">
-    <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
-  </Transition>
+  <!-- <Transition name="fade"> -->
+  <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
+  <!-- </Transition> -->
   <Navbar :menu="Navigation"></Navbar>
   <Transition name="fade">
     <main class="main" v-if="isRecipeCardVisible">
@@ -174,14 +216,15 @@ export default {
   </Transition>
   <main class="main main-menu" v-if="!isRecipeCardVisible">
     <TransitionGroup appear name="fade">
-      <div key="calendat-and-week" class="calendar-and-week">
+      <div key="calendar-and-week" class="calendar-and-week">
         <CalendarController @export-this-week="importThisWeek" />
         <div class="week">
-          <DayOfWeek v-for="day in week" :day="day" />
+          <DayOfWeek v-for="day in weekToExport" :day="day" @showModalRecipeCard="showModalRecipeCard"
+            @deleteMeal="deleteMeal" />
         </div>
       </div>
       <div class="recipes-list" key="recipes-list">
-        <searchIngredients class="search" @search-get="searchGet" :button="true" />
+        <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation"/>
         <div class="list">
           <TransitionGroup name="list">
             <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :short="true"
@@ -204,7 +247,9 @@ export default {
   flex-direction: row;
   gap: 32px;
   align-items: flex-start;
-  height: 100%;
+  height: auto;
+  position: relative;
+  padding-top: 32px;
 }
 
 .wrapper {
@@ -217,8 +262,8 @@ export default {
 .week {
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  margin-top: 36px;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .recipes-list {
@@ -226,7 +271,10 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px;
-  height: 100rem;
+  position: absolute;
+  right: 64px;
+  height: calc(110.8% - 70px);
+  overflow: auto;
 }
 
 .list {
@@ -237,6 +285,7 @@ export default {
   overflow: auto;
   height: auto;
   width: 550px;
+
 }
 
 .fade-enter-active,

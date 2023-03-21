@@ -39,6 +39,10 @@ export default {
         button: {
             type: Boolean,
             default: false
+        },
+        searchValidation:{
+            type: Boolean,
+            default: true
         }
     }
 };
@@ -49,15 +53,15 @@ export default {
     <div>
         <div class="search-ingridients-wrapper">
             <input type="text"
-            :class="['search-ingridients-wrapper__input', {'invalid' : validSearch == false}, 'span-1']"
+            :class="['search-ingridients-wrapper__input', {'invalid' : validSearch == false || searchValidation == false}, 'span-1']"
                 placeholder="Введите название блюда"
                 v-model="search">
-            <ButtonUi :class="[{'search-ingridients-wrapper__margin-button': button == false}, {'search-ingridients-wrapper__margin-button-short': button == true}]" @click="validatingSearch" :short-button="button"></ButtonUi>
+            <ButtonUi :class="[{'search-ingridients-wrapper__margin-button': button == false || searchValidation == false}, {'search-ingridients-wrapper__margin-button-short': button == true}]" @click="validatingSearch" :short-button="button"></ButtonUi>
             <div class="search-ingridients-wrapper__icon-wrapper">
                 <img class="search-ingridients-wrapper__icon-wrapper_item" src="/svg/icon-filters.svg" alt="">
             </div>
         </div>
-        <span v-if="validSearch == false" class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
+        <span v-if="validSearch == false || searchValidation == false" class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>
 

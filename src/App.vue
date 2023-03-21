@@ -2,6 +2,7 @@
 import { useUserStore } from '@/stores/UserStore.js'
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import RecipesDataService from '@/services/RecipesDataService'
+import OrderDataService from '@/services/OrderDataService'
 
 export default {
   data() {
@@ -15,14 +16,14 @@ export default {
     }
   },
   methods: {
-    userLoaded() {
-      console.log('ok')
+    async userLoaded() {
       if (JSON.parse(localStorage.getItem('user'))) {
         this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
+        // this.userStore.loadOrders(filteredOrders)
       }
     }
   },
-  beforeMount(){
+  beforeMount() {
     this.userLoaded()
   }
 }

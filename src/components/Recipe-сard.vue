@@ -58,7 +58,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 465px;
-    height: 175px;
+    height: 195px;
     background-color: transparent;
     border: 3px solid var(--Gray);
     border-radius: 40px;
@@ -66,7 +66,7 @@ export default {
         display: flex;
     }
     &__information{
-        padding: 16px 24px;
+        padding: 24px;
         width: 346px;
         display: flex;
         flex-direction: column;
@@ -77,6 +77,7 @@ export default {
             margin: 0;
             color: var(--Black);
             width: 252px;
+            height: 42px;
             padding-right: 18px;
         }
         &_p{
@@ -94,7 +95,7 @@ export default {
     }
     &__img{
         width: 175px;
-        height: 181px;
+        height: 201px;
         object-fit: cover;
         object-position: 30% 50%;
         border-radius: 40px;

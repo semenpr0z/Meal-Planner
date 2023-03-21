@@ -13,3 +13,10 @@ export default axios.create({
         'Content-Type': 'application/json'
     }
 })
+
+// export default axios.create({
+//     baseURL: "https://cicd-repo-dev.k8s.mgla.dev/",
+//     headers: {
+//         'Content-Type': 'application/json'
+//     }
+// })

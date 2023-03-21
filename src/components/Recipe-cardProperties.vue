@@ -42,7 +42,7 @@ export default {
 .properties-item{
  display: flex;
  align-items: center;
- height: 16px;
+ height: 17px;
  &__img{
     height: 16px;
     width: 16px
