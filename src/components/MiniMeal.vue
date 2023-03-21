@@ -46,7 +46,7 @@ export default {
 <template>
     <li class="meal">
         <p class="p-1">{{ meal.name + (meal.amount ? ' (' + meal.amount + ')' : '') }}</p>
-        <button class="meal-btn" @click="addToMenu" :title="'Добавить блюдо на ' + `${meal.name.toLowerCase()}`"><img src="svg/icon-add.svg" alt="Добавить"></button>
+        <button class="meal-btn" @click="addToMenu" :title="'Добавить блюдо на ' + `${meal.name.toLowerCase()}`"><img src="/svg/icon-add.svg" alt="Добавить"></button>
     </li>
 </template>
 
