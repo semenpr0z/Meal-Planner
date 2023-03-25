@@ -2,43 +2,58 @@
 import Link from './ui-kit/Link-ui.vue'
 import IconMenuUi from './ui-kit/Icon-menu-ui.vue';
 
+import { useUserStore } from '@/stores/UserStore.js'
+import router from '@/router.js'
+
 export default {
-  data() {
-    return {
-    };
-  },
-  components: {
-    Link,
-    IconMenuUi
-  },
-  methods: {
-    
-  },
-  props: {
-    menu: {
-        type: Array,
-        default: [
-            {
-                id: 1,
-                text: 'Главная',
-                Link: '/main',
-                active: false
-            },
-            {
-                id: 2,
-                text: 'Меню',
-                Link: '/menu',
-                active: false
-            },
-            {
-                id: 3,
-                text: 'Рецепты',
-                Link: '/recipes',
-                active: false
+    data() {
+        return {
+        };
+    },
+    setup() {
+        const userStore = useUserStore();
+        return {
+            userStore
+        }
+    },
+    components: {
+        Link,
+        IconMenuUi
+    },
+    methods: {
+        moveToProfile() {
+            if (this.userStore.user) {
+                router.push('/profile')
+            }else{
+                alert('Вы не авторизованы! Авторизуйтесь на главной странице.')
             }
-        ]
+        }
+    },
+    props: {
+        menu: {
+            type: Array,
+            default: [
+                {
+                    id: 1,
+                    text: 'Главная',
+                    Link: '/main',
+                    active: false
+                },
+                {
+                    id: 2,
+                    text: 'Меню',
+                    Link: '/menu',
+                    active: false
+                },
+                {
+                    id: 3,
+                    text: 'Рецепты',
+                    Link: '/recipes',
+                    active: false
+                }
+            ]
+        }
     }
-  }
 };
 </script>
 
@@ -52,56 +67,57 @@ export default {
                 </div>
             </router-link>
             <div class="navbar-links">
-                <Link class="menu-items-desktop"
-                    v-for="item of menu"
-                        :key="item.id"
-                        :text="item.text"
-                        :Link="item.Link"
-                        :active="item.active"/>
+                <Link class="menu-items-desktop" v-for="item of menu" :key="item.id" :text="item.text" :Link="item.Link"
+                    :active="item.active" />
             </div>
-            <router-link to="/profile">
-                <img src="/svg/logo-profile.svg" alt="Профиль" class="navbar-profile">
-            </router-link>
+            <img src="/svg/logo-profile.svg" alt="Профиль" class="navbar-profile" @click="moveToProfile">
         </nav>
     </header>
 </template>
 
 <style lang="scss" scoped>
-.header{
+.header {
     display: flex;
     justify-content: center;
 }
-.navbar{
+
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 1132px;
     padding: 16px 64px;
     gap: 20px;
-    &-logo{
+
+    &-logo {
         width: 166px;
         height: 48px;
         display: flex;
         justify-content: center;
         align-items: center;
-        &__link{
+
+        &__link {
             text-decoration: none;
         }
-        &__span{
+
+        &__span {
             color: var(--Black);
-            &_orange{
+
+            &_orange {
                 color: radial-gradient(110.53% 110.53% at -5.92% 50%, #FF6B00 8.89%, #FF813A 44.82%, #FFAC2F 95.75%);
             }
         }
     }
-    &-links{
+
+    &-links {
         display: flex;
         justify-content: space-between;
         width: 100%;
         max-width: 442px;
         height: 24px;
     }
-    &-profile{
+
+    &-profile {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -110,19 +126,20 @@ export default {
         height: 24px;
     }
 }
-@media screen and (max-width: 960px){
-    .navbar{
-    gap: 110px;
+
+@media screen and (max-width: 960px) {
+    .navbar {
+        gap: 110px;
     }
 }
 
 
 @media screen and (max-width: 650px) {
-    .menu-items-desktop{
+    .menu-items-desktop {
         display: none;
     }
-    .navbar-profile-desktop{
+
+    .navbar-profile-desktop {
         display: none;
     }
-}
-</style>
+}</style>

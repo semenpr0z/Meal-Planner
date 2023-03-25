@@ -35,16 +35,24 @@ export default {
         moreRecipes(){
           this.$emit('moreRecipes');
         },
+        auth(){
+          console.log('ok')
+          this.$emit('auth')
+        },
         determinate(){
+          console.log('ok')
           if(this.method === 'showNextStep'){
             this.showNextStep()
           }
           else if(this.method === 'moreRecipes'){
             this.moreRecipes()
           }
+          else if (this.method === 'auth'){
+            this.auth()
+          }
         }
     },
-    emits: ['showNextStep', 'moreRecipes']
+    emits: ['showNextStep', 'moreRecipes', 'auth']
 }
 
 </script>
@@ -52,7 +60,7 @@ export default {
 <template>
   <button
     :class="['button-ui', {'button-ui_orange' : color == 'orange'},{'button-ui_gray' : color == 'gray'}, 'button', {'button-ui_short' : shortButton == true}]"
-    @keydown.enter="determinate">{{ text }}</button>
+    @keydown.enter="determinate" tabindex="0">{{ text }}</button>
 </template>
 
 <style lang="scss" scoped>

@@ -22,6 +22,9 @@ export default {
             }else{
                 this.searchGet()
             }
+        },
+        openFilters(){
+            alert('Эта функция еще в разработке')
         }
     },
     emits: ['searchGet'],
@@ -57,9 +60,9 @@ export default {
                 placeholder="Введите название блюда"
                 v-model="search">
             <ButtonUi :class="[{'search-ingridients-wrapper__margin-button': button == false || searchValidation == false}, {'search-ingridients-wrapper__margin-button-short': button == true}]" @click="validatingSearch" :short-button="button"></ButtonUi>
-            <div class="search-ingridients-wrapper__icon-wrapper">
+            <button class="search-ingridients-wrapper__icon-wrapper" @click="openFilters">
                 <img class="search-ingridients-wrapper__icon-wrapper_item" src="/svg/icon-filters.svg" alt="">
-            </div>
+            </button>
         </div>
         <span v-if="validSearch == false || searchValidation == false" class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
@@ -106,6 +109,8 @@ export default {
         width: 24px;
         height: 24px;
         cursor: pointer;
+        border: none;
+        background-color: transparent;
     }
 }
 

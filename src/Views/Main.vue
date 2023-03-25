@@ -135,7 +135,7 @@ export default {
 
 .wrapper {
   width: 100%;
-  height: 506px;
+  // height: 506px;
   position: relative;
 }
 
@@ -204,7 +204,7 @@ export default {
 }
 
 .benefits {
-  margin-top: 76px;
+  margin-top: 151px;
   padding-bottom: 233px;
   display: flex;
   flex-direction: column;

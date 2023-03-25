@@ -26,10 +26,6 @@ export default {
   },
   methods: {
     closeAddToMenu() {
-      if (this.userStore.user) {
-        // this.updateMenu()
-        console.log('обновили!')
-      }
       this.$emit('closeAddToMenu')
     },
     async importThisWeek(week) {

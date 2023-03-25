@@ -127,7 +127,8 @@ body .background-modal {
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
-  gap: 32px;
+  gap: 10px;
+  width: 100%;
 
   &__information {
     width: 544px;
@@ -213,17 +214,16 @@ body .background-modal {
 }
 
 .modal-recipe-card-bottom {
-  margin-top: 16px;
+  margin: 16px 0;
   background-color: transparent;
   padding: 24px 32px;
-  height: 432px;
+  height: auto;
   width: calc(100% - 64px);
   display: flex;
   flex-direction: column;
   gap: 10px;
   border-radius: 40px;
   border: 3px solid var(--Gray);
-
   &__to-do-list {
     display: flex;
     flex-direction: column;

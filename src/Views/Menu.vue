@@ -123,8 +123,10 @@ export default {
       document.body.style.overflowY = 'hidden';
     },
     async closeAddToMenu() {
-      let orders = await OrderDataService.getAll()
-      this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
+      if (this.userStore.user) {
+        let orders = await OrderDataService.getAll()
+        this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
+      }
       this.isAddToMenuVisible = false;
       document.body.style.removeProperty("overflow-y")
       this.mappingWeek()
@@ -140,11 +142,9 @@ export default {
     showModalRecipeCard(id) {
       this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
       this.isRecipeCardVisible = true;
-      document.body.style.overflowY = 'hidden';
     },
     closeRecipeCard() {
       this.isRecipeCardVisible = false;
-      document.body.style.removeProperty("overflow-y")
     },
     async updateRecipes() {
       if (this.recipesStore.recipes.length == 0) {
@@ -160,7 +160,7 @@ export default {
         this.searchValidation = false
       } else {
         this.search = value,
-        this.searchValidation = true
+          this.searchValidation = true
       }
     },
     deleteMeal(mealId) {
@@ -210,7 +210,7 @@ export default {
   <!-- </Transition> -->
   <Navbar :menu="Navigation"></Navbar>
   <Transition name="fade">
-    <main class="main" v-if="isRecipeCardVisible">
+    <main class="main main-recipe-card" v-if="isRecipeCardVisible">
       <RecipeCardOpened :item="localRecipes[indexOfRecipe]" @closeRecipeCard="closeRecipeCard" />
     </main>
   </Transition>
@@ -224,7 +224,7 @@ export default {
         </div>
       </div>
       <div class="recipes-list" key="recipes-list">
-        <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation"/>
+        <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
         <div class="list">
           <TransitionGroup name="list">
             <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :short="true"
@@ -247,9 +247,14 @@ export default {
   flex-direction: row;
   gap: 32px;
   align-items: flex-start;
-  height: auto;
+  height: 100vh;
   position: relative;
   padding-top: 32px;
+}
+
+.main-recipe-card {
+  padding: 0 64px 64px;
+
 }
 
 .wrapper {
@@ -273,7 +278,7 @@ export default {
   gap: 16px;
   position: absolute;
   right: 64px;
-  height: calc(110.8% - 70px);
+  height: 100%;
   overflow: auto;
 }
 
@@ -285,7 +290,7 @@ export default {
   overflow: auto;
   height: auto;
   width: 550px;
-
+  padding-bottom: 50px;
 }
 
 .fade-enter-active,

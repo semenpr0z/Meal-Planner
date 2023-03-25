@@ -12,8 +12,8 @@ export default {
         }
     },
     methods: {
-        showModalRecipeCard() {
-            this.$emit('showModalRecipeCard', this.meal.dishesId)
+        showModalRecipeCard(id) {
+            this.$emit('showModalRecipeCard', id)
         },
         deleteMeal(id) {
             this.$emit('deleteMeal', id)
@@ -41,7 +41,7 @@ export default {
                 <p class="p-1 meal__name">{{ meal.name }}</p>
             </div>
             <div class="recipe" v-for="recipe in meal.meals">
-                <p class="p-1 recipe__name" @click="showModalRecipeCard">{{ recipe.recipe }}</p>
+                <p class="p-1 recipe__name" @click="() => {showModalRecipeCard(recipe.dishesId)}">{{ recipe.recipe }}</p>
                 <span class="span-1">100 г</span>
                 <span class="span-2">{{ recipe.calorific }}</span>
                 <button class="meal__btn" @click="() => deleteMeal(recipe.id)"><img src="/svg/icon-delete.svg" alt="Удалить"></button>

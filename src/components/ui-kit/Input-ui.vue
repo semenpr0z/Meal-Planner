@@ -70,26 +70,26 @@ export default {
 
 <template>
     <div class="input-form" v-if="type == 'text'">
-        <input class="input h-2" type="text" placeholder="Имя" name="text" v-model="firstName" @keydown.enter="determinate">
+        <input :class="['input', 'h-2', {'invalid' : valid}]" type="text" placeholder="Имя" name="text" v-model="firstName" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'email'">
-        <input class="input h-2" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
+        <input :class="['input', 'h-2', {'invalid' : valid}]" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'password'">
-        <input class="input h-2" type="password" placeholder="Пароль" name="password" v-model="password" @keydown.enter="determinate">
+        <input :class="['input', 'h-2', {'invalid' : valid}]" type="password" placeholder="Пароль" name="password" v-model="password" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 
     <div class="input-form" v-else-if="type == 'age'">
-        <input class="input h-2" type="number" min="1" max="100" placeholder="Возраст" name="age" v-model="age" @keydown.enter="determinate">
+        <input :class="['input', 'h-2', {'invalid' : valid}]" type="number" min="1" max="100" placeholder="Возраст" name="age" v-model="age" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
     <div class="input-form" v-else-if="type == 'sex'">
-        <select class="input h-2 input-select" v-model="sex" @keydown.enter="determinate">
+        <select :class="['input', 'h-2', 'input-select', {'invalid' : valid}]" v-model="sex" @keydown.enter="determinate">
             <option value="" disabled selected>Пол</option>
             <option value="male">Мужской</option>
             <option value="female">Женский</option>
@@ -99,9 +99,9 @@ export default {
 
 <style lang="scss" scoped>
 .input{
-    background-color: var(--Light_orange);
-    border: 1px solid transparent;
-    border-radius: 6px;
+    background-color: var(--White);
+    border: 2px solid var(--Gray);
+    border-radius: 30px;
     padding: 18px 32px;
     transition: 0.3s;
     width: 357px;
@@ -139,15 +139,18 @@ export default {
         }
         &:focus {
             outline: none;
-            border: 1px solid var(--Light_orange);
-            background-color: transparent;
+            border: 2px solid var(--Light_orange);
             color: #000000D9;
         }
         &:invalid{
-            border: 1px solid #D02500;
+            border: 2px solid #D02500;
         }
         &:invalid:not(:placeholder-shown) + &-span {
             display: block;
         }
+}
+
+.invalid{
+    border: 2px solid #D02500;
 }
 </style>

@@ -67,11 +67,9 @@ export default {
     showModalRecipeCard(id) {
       this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
       this.isRecipeCardVisible = true;
-      document.body.style.overflowY = 'hidden';
     },
     closeRecipeCard() {
       this.isRecipeCardVisible = false;
-      document.body.style.removeProperty("overflow-y")
     },
     async updateRecipes() {
       if (this.recipesStore.recipes.length === 0) {
@@ -150,11 +148,8 @@ export default {
   margin-top: 58px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.button-more-recipes {
-  margin-top: 32px;
+  gap: 16px;
+  padding-bottom: 24px;
 }
 
 .list-enter-active,

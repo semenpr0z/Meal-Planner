@@ -132,18 +132,18 @@ export default {
 
 <template>
     <div class=" day day-hidden" v-if="!hiddenDay">
-        <div class="day-hidden__btn-and-text">
-            <button class="day-hidden__btn-and-text__btn" @click="() => {hiddenDay = true}">
+        <div class="day-hidden__btn-and-text" @click="() => {hiddenDay = true}">
+            <button class="day-hidden__btn-and-text__btn">
                 <img src="/svg/icon-add.svg" alt="Раскрыть">
             </button>
             <h2 class="h-2 day-h2 day-hidden__btn-and-text__h2">{{ capitalizeFirstLetter(new Intl.DateTimeFormat("ru", {
                 weekday: "long"
-            }).format(day.day)) }}</h2>
+            }).format(day.day)) + (day.meals.length ? " (" + day.meals.length + ")" : '') }}</h2>
         </div>
     </div>
     <div class="day" v-else="hiddenDay">
-        <div class="day-hidden__btn-and-text">
-            <button class="day-hidden__btn-and-text__btn" @click="() => {hiddenDay = false}">
+        <div class="day-hidden__btn-and-text" @click="() => {hiddenDay = false}">
+            <button class="day-hidden__btn-and-text__btn">
                 <img src="/svg/icon-remove.svg" alt="Раскрыть">
             </button>
             <h2 class="h-2 day-h2 day-hidden__btn-and-text__h2">{{ capitalizeFirstLetter(new Intl.DateTimeFormat("ru", {
@@ -176,6 +176,9 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            &:hover{
+                    cursor: pointer;
+                }
 
             &__btn {
                 width: 24px;
@@ -184,9 +187,6 @@ export default {
                 left: 0%;
                 border: none;
                 background-color: transparent;
-                &:hover{
-                    cursor: pointer;
-                }
             }
 
             &__h2 {

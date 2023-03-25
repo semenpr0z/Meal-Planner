@@ -58,7 +58,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 465px;
-    height: 195px;
+    height: 189px;
     background-color: transparent;
     border: 3px solid var(--Gray);
     border-radius: 40px;
@@ -95,7 +95,7 @@ export default {
     }
     &__img{
         width: 175px;
-        height: 201px;
+        height: 195px;
         object-fit: cover;
         object-position: 30% 50%;
         border-radius: 40px;
