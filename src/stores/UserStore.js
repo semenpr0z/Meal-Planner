@@ -3,7 +3,6 @@ import {defineStore} from 'pinia';
 export const useUserStore = defineStore('userStore', {
     state: () => ({
         user: null,
-        userInLocalStorage: localStorage.getItem('user'),
         userOrders: []
     }),
     actions: {

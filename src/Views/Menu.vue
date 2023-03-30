@@ -268,7 +268,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 24px;
+  margin: 24px 0;
 }
 
 .recipes-list {

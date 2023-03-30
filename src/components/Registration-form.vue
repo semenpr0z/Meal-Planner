@@ -90,7 +90,6 @@ export default {
             }
         },
         handleKeydown(event) {
-            console.log('ko')
             if (event.keyCode === 13) {
                 if (this.nextStep == true) {
                     this.showNextStep()

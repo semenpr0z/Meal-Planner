@@ -43,7 +43,7 @@ export default {
             if (this.user) {
                 this.userStore.changeUser(this.user)
                 localStorage.setItem('user', JSON.stringify(this.user))
-                router.push('/profile')
+                router.push('/menu')
 
             } else {
                 this.validation = true

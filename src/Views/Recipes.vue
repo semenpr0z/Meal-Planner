@@ -151,6 +151,9 @@ export default {
   gap: 16px;
   padding-bottom: 24px;
 }
+.button-more-recipes{
+  margin-bottom: 20px;
+}
 
 .list-enter-active,
 .list-leave-active {

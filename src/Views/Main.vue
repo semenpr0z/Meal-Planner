@@ -4,6 +4,7 @@ import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue'
 import Button from '@/components/ui-kit/Button-ui.vue'
 import LoginForm from '@/components/Login-form.vue';
 import RegistrationForm from '@/components/Registration-form.vue';
+import FooterPromo from '@/components/FooterPromo.vue';
 
 import { useUserStore } from '@/stores/UserStore.js'
 import router from '@/router.js'
@@ -47,7 +48,8 @@ export default {
     NavbarFooterMobile,
     Button,
     LoginForm,
-    RegistrationForm
+    RegistrationForm,
+    FooterPromo
   },
   methods: {
     loggedIn() {
@@ -127,6 +129,7 @@ export default {
     </div>
     </TransitionGroup>
   </main>
+  <FooterPromo> </FooterPromo>
   <NavbarFooterMobile></NavbarFooterMobile>
 </template>
 
@@ -205,7 +208,7 @@ export default {
 
 .benefits {
   margin-top: 151px;
-  padding-bottom: 233px;
+  padding-bottom: 167px;
   display: flex;
   flex-direction: column;
   gap: 60px;
