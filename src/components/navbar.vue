@@ -42,6 +42,7 @@ export default {
             localStorage.removeItem("user");
             this.userStore.user = null
             router.push('/main')
+            this.modalProfileVisible = false
         },
         handleKeydown(event) {
             if (event.keyCode === 27) {
