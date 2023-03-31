@@ -75,7 +75,7 @@ export default {
     </div>
 
     <div class="input-form" v-else-if="type == 'email'">
-        <input :class="['input', 'h-2', {'invalid' : valid}]" type="email" placeholder="Электронная почта" name="email" v-model="email" @keydown.enter="determinate">
+        <input :class="['input', 'h-2', {'invalid' : valid}]" type="email" placeholder="E-mail" name="email" v-model="email" @keydown.enter="determinate">
         <span class="input-span">Поле заполнено неверно, попробуйте снова</span>
     </div>
 

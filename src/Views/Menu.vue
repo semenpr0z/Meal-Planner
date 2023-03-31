@@ -230,10 +230,6 @@ export default {
             <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :short="true"
               @showModalRecipeCard="showModalRecipeCard" @showAddToMenu="showAddToMenu" />
           </TransitionGroup>
-          <TransitionGroup name="list">
-            <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :short="true"
-              @showModalRecipeCard="showModalRecipeCard" @showAddToMenu="showAddToMenu" />
-          </TransitionGroup>
         </div>
       </div>
     </TransitionGroup>
