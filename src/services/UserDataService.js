@@ -13,13 +13,13 @@ class UserDataService {
         return http.post('/users', user)
     }
 
-/*    update(id, data) {
+    update(id, data) {
         return http.put(`/user/${id}`, data)
     }
 
     delete(id) {
         return http.delete(`/user/${id}`)
-    }*/
+    }
 }
 
 export default new UserDataService()

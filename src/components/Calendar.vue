@@ -1,6 +1,5 @@
 <script>
 import { getDateRange } from '@/utils/dateUtils.js';
-import { sortBy } from 'lodash';
 import moment from 'moment';
 
 export default {

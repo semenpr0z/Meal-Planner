@@ -16,7 +16,8 @@ export default {
             sex: '',
             validState: false,
             nextStep: true,
-            user: null
+            user: null,
+            format: 'yyyy-MM-dd'
         };
     },
     setup() {
@@ -68,7 +69,7 @@ export default {
                 } else {
                     console.log('Ошибка регистрации')
                 }
-            }else{
+            } else {
                 this.validState = true
             }
         },
@@ -93,7 +94,7 @@ export default {
             if (event.keyCode === 13) {
                 if (this.nextStep == true) {
                     this.showNextStep()
-                }else{
+                } else {
                     this.saveUser()
                 }
             }
@@ -136,8 +137,9 @@ export default {
         <div class="registration-form">
             <h2 class="registration-form__h2 h-1">Регистрация</h2>
             <div class=" registration-form wrapper-first-step" v-if="nextStep">
-                <InputUi @valueGet="valueGet" @auth="showNextStep" type="email" method="showNextStep" :valid="validState"/>
-                <InputUi @valueGet="valueGet" @auth="showNextStep" type="password" method="showNextStep" :valid="validState"/>
+                <InputUi @valueGet="valueGet" @auth="showNextStep" type="email" method="showNextStep" :valid="validState" />
+                <InputUi @valueGet="valueGet" @auth="showNextStep" type="password" method="showNextStep"
+                    :valid="validState" />
                 <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep"
                     method="showNextStep"/>
                 <span
@@ -145,9 +147,9 @@ export default {
                     введены неверно, попробуйте снова</span>
             </div>
             <div class="registration-form wrapper-second-step" v-else>
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser" :valid="validState"/>
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser" :valid="validState" />
                 <InputUi @valueGet="valueGet" @auth="saveUser" type="age" method="saveUser" :valid="validState"/>
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser" :valid="validState"/>
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser" :valid="validState" />
                 <Button class="registration-form__button" text="Войти" type="submit" value="Save" @click="saveUser" />
                 <span
                     :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validState }]">Данные
@@ -156,9 +158,9 @@ export default {
         </div>
     </div>
     <!-- <div class="login-offer">
-                        <h3 class="login-offer__h3">Вернуться к авторизации</h3>
-                        <Button class="login-offer__button" @click="showLogin" text="Авторизация"></Button>
-                    </div> -->
+                                <h3 class="login-offer__h3">Вернуться к авторизации</h3>
+                                <Button class="login-offer__button" @click="showLogin" text="Авторизация"></Button>
+                            </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -220,7 +222,8 @@ export default {
     &__text-invalid {
         display: none;
         color: #D02500;
-        &_show{
+
+        &_show {
             display: block;
         }
     }

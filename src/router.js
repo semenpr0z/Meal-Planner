@@ -33,7 +33,10 @@ const router = createRouter({
         {
             path: '/profile',
             name: 'Profile',
-            component: Profile
+            component: Profile,
+            children: {
+                path: '/'
+            }
         },
         {
             path: '/:pathMatch(.*)*',

@@ -87,7 +87,7 @@ export default {
 
 <template>
   <div class="absolute-wrapper">
-    <div class="background-modal" @click="closeAddToMenu" @keydown.esc="closeAddToMenu">
+    <div class="background-modal" @click="closeAddToMenu">
     </div>
     <div class="addToMenu_wrapper">
       <div class="addToMenu">
@@ -128,4 +128,5 @@ export default {
 
 .wrapper-calendar {
   padding: 24px 0;
-}</style>
+}
+</style>

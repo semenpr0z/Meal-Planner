@@ -121,11 +121,6 @@
     border-radius: 5px;
     background-color: var(--Light_orange);
   }
-  // &::-webkit-scrollbar-track {
-  //     // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-  //     // border-radius: 5px;
-  //     // background-color: #EEEEEE;
-  // }
 }
 body {
   margin: 0;
@@ -134,7 +129,6 @@ body {
 .main {
   // height: calc(100vh - 60px);
   max-width: 1132px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

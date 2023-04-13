@@ -19,7 +19,6 @@ export default {
     async userLoaded() {
       if (JSON.parse(localStorage.getItem('user'))) {
         this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
-        // this.userStore.loadOrders(filteredOrders)
       }
     }
   },

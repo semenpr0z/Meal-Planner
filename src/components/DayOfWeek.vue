@@ -132,7 +132,7 @@ export default {
 
 <template>
     <div class=" day day-hidden" v-if="!hiddenDay">
-        <div class="day-hidden__btn-and-text" @click="() => {hiddenDay = true}">
+        <div class="day-hidden__btn-and-text" @click="() => { hiddenDay = true }">
             <button class="day-hidden__btn-and-text__btn">
                 <img src="/svg/icon-add.svg" alt="Раскрыть">
             </button>
@@ -142,7 +142,7 @@ export default {
         </div>
     </div>
     <div class="day" v-else="hiddenDay">
-        <div class="day-hidden__btn-and-text" @click="() => {hiddenDay = false}">
+        <div class="day-hidden__btn-and-text" @click="() => { hiddenDay = false }">
             <button class="day-hidden__btn-and-text__btn">
                 <img src="/svg/icon-remove.svg" alt="Раскрыть">
             </button>
@@ -176,9 +176,10 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            &:hover{
-                    cursor: pointer;
-                }
+
+            &:hover {
+                cursor: pointer;
+            }
 
             &__btn {
                 width: 24px;
@@ -187,11 +188,11 @@ export default {
                 left: 0%;
                 border: none;
                 background-color: transparent;
-            }
 
-            &__h2 {
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
-}
-</style>
+}</style>
