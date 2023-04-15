@@ -1,22 +1,12 @@
 import axios from 'axios'
 
-// export default axios.create({
-//     baseURL: "http://localhost:9090/",
-//     headers: {
-//         'Content-Type': 'application/json'
-//     }
-// })
+const apiUrl = import.meta.env.VITE_API_URL;
+const apiKey = import.meta.env.VITE_API_KEY;
+
 
 export default axios.create({
-    baseURL: "https://63f0ad9c5703e063fa4a4a59.mockapi.io/api/",
+    baseURL: apiUrl,
     headers: {
         'Content-Type': 'application/json'
     }
 })
-
-// export default axios.create({
-//     baseURL: "https://cicd-repo-dev.k8s.mgla.dev/",
-//     headers: {
-//         'Content-Type': 'application/json'
-//     }
-// })

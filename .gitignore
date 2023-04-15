@@ -22,3 +22,8 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+
+.env
+
+.http-common2.js
+.http-common3.js

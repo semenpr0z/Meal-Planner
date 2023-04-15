@@ -1,4 +1,4 @@
-import http from '../http-common2'
+import http from '../http-common'
 
 class OrderDataService {
     getAll() {
