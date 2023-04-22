@@ -6,7 +6,7 @@ import CalendarController from '@/components/Calendar-controller.vue';
 import DayOfWeek from '@/components/DayOfWeek.vue';
 import addToMenu from '@/components/addToMenu.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
-import searchIngredients from '@/components/Search-ingredients.vue'
+import searchIngredients from '@/components/search-ingredients.vue'
 import RecipeCardOpened from '@/components/Recipe-cardOpened.vue'
 
 

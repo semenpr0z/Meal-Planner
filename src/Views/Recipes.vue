@@ -1,7 +1,7 @@
 <script>
 import Navbar from '@/components/navbar.vue';
 import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
-import searchIngredients from '@/components/Search-ingredients.vue';
+import searchIngredients from '@/components/search-ingredients.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
 import ButtonUi from '@/components/ui-kit/Button-ui.vue';
 import addToMenu from '@/components/addToMenu.vue';
