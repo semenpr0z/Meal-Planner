@@ -37,8 +37,8 @@ service:
       name: http
 
 securityContext:
-  runAsUser: 1000
-  runAsGroup: 1000
+  runAsUser: 101
+  runAsGroup: 101
   capabilities:
     drop:
       - ALL
@@ -46,15 +46,15 @@ securityContext:
   runAsNonRoot: true
 
 volumeMounts:
-  - name: cache
-    mountPath: /var/cache/nginx
+  - name: run
+    mountPath: /var/run
   - name: tmp
     mountPath: /tmp/nginx
 
 volumes:
   - name: tmp
     emptyDir: {}
-  - name: cache
+  - name: run
     emptyDir: {}
 
 ingress:
