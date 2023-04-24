@@ -1,0 +1,6 @@
+[submodule ".ci/sh"]
+	path = .ci/sh
+	url = git@gitlab.com:pineapple-practice/devops/sh.git
+[submodule ".ci/charts"]
+	path = .ci/charts
+	url = git@gitlab.com:pineapple-practice/devops/helm-charts.git
