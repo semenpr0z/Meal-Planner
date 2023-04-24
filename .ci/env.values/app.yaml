@@ -48,6 +48,8 @@ securityContext:
 volumeMounts:
   - name: run
     mountPath: /var/run
+  - name: cache
+    mountPath: /var/cache/nginx
   - name: tmp
     mountPath: /tmp/nginx
 
@@ -55,6 +57,8 @@ volumes:
   - name: tmp
     emptyDir: {}
   - name: run
+    emptyDir: {}
+  - name: cache
     emptyDir: {}
 
 ingress:
