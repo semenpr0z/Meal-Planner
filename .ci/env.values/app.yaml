@@ -64,5 +64,5 @@ volumes:
 ingress:
   enabled: true
   tlsEnabled: true
-  servicePort: 9090
+  servicePort: 8080
   ingressClassName: nginx
