@@ -39,7 +39,7 @@ profiles:
             name: &app-release-name "meal-planner-frontend"
             namespace: default
             setValueTemplates:
-              image.name: "{{.IMAGE_FULLY_QUALIFIED_meal_planner_backend}}"
+              image.name: "{{.IMAGE_FULLY_QUALIFIED_meal_planner_frontend}}"
               GIT_REPO: "{{.CI_PROJECT_NAME}}"
               CI_FQDN: "{{.CI_FQDN}}"
             valuesFiles:
