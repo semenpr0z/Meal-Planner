@@ -21,7 +21,7 @@ readinessProbe:
 
 ports:
   - name: http
-    containerPort: 9090
+    containerPort: 8080
     protocol: TCP
 
 resources:
@@ -32,8 +32,8 @@ resources:
 service:
   type: ClusterIP
   ports:
-    - port: 9090
-      targetPort: 9090
+    - port: 8080
+      targetPort: 8080
       name: http
 
 securityContext:
