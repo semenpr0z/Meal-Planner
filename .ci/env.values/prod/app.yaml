@@ -1,5 +1,4 @@
-env: 
-  VITE_API_URL: "api.meal.pnpl.tech"
+env: {}
 
 imagePullSecrets:
   - name: gitlab-cr
