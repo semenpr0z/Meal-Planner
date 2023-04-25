@@ -1,0 +1,68 @@
+nameOverride: meal-planner-frontend
+
+livenessProbe:
+  initialDelaySeconds: 40
+  failureThreshold: 4
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+  httpGet:
+    port: http
+    path: /
+readinessProbe:
+  initialDelaySeconds: 40
+  failureThreshold: 4
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+  httpGet:
+    port: http
+    path: /
+
+ports:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+
+securityContext:
+  runAsUser: 101
+  runAsGroup: 101
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+
+volumeMounts:
+  - name: run
+    mountPath: /var/run
+  - name: cache
+    mountPath: /var/cache/nginx
+  - name: tmp
+    mountPath: /tmp/nginx
+
+volumes:
+  - name: tmp
+    emptyDir: {}
+  - name: run
+    emptyDir: {}
+  - name: cache
+    emptyDir: {}
+
+ingress:
+  enabled: true
+  tlsEnabled: true
+  servicePort: 8080
+  ingressClassName: nginx

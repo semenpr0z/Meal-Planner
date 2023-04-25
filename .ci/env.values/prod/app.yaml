@@ -1,0 +1,14 @@
+env: {}
+
+imagePullSecrets:
+  - name: gitlab-cr
+
+ingress:
+  tlsSecretName: meal-planner-frontend-tls
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 16m
+  hosts:
+    - host: "{{ .Values.CI_FQDN }}"
+      paths:
+        - "/"
