@@ -54,8 +54,8 @@ export default {
                 this.user = {
                     email: this.email,
                     password: this.password,
-                    firstName: this.firstName,
-                    age: this.age,
+                    first_name: this.firstName,
+                    date_of_birth: this.age,
                     sex: this.sex
                 };
                 UserDataService.create(this.user)

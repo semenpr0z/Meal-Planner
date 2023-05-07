@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.ci/
 node_modules
 #dist
 #dist-ssr
@@ -23,7 +24,7 @@ node_modules
 *.sln
 *.sw?
 
-.env
+# .env
 
 .http-common2.js
 .http-common3.js

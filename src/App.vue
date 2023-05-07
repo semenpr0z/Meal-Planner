@@ -3,6 +3,7 @@ import { useUserStore } from '@/stores/UserStore.js'
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import RecipesDataService from '@/services/RecipesDataService'
 import OrderDataService from '@/services/OrderDataService'
+import UserDataService from './services/UserDataService'
 
 export default {
   data() {
@@ -20,6 +21,8 @@ export default {
       if (JSON.parse(localStorage.getItem('user'))) {
         this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
       }
+      const users = (await UserDataService.getAll()).data;
+      console.log(users)
     }
   },
   beforeMount() {

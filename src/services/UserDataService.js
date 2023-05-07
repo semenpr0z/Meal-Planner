@@ -21,5 +21,4 @@ class UserDataService {
         return http.delete(`/user/${id}`)
     }
 }
-
 export default new UserDataService()
