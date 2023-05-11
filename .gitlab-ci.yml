@@ -55,8 +55,8 @@ deploy_prod: &deploy_definition
     - ssh-keyscan -H gitlab.com >> /root/.ssh/known_hosts
     - eval $(ssh-agent -s)
     - ssh-add - <<< $(echo -n ${CI_RSA_KEY_BASE64}|base64 -d)
-    - git submodule update --init
-    - git submodule foreach '( if echo "$sm_path" | grep -E "^.ci/.+$"; then git fetch; git checkout master; git pull; fi  )'
+    - git submodule update --init --remote
+    # - git submodule foreach '( if echo "$sm_path" | grep -E "^.ci/.+$"; then git fetch; git checkout master; git pull; fi  )'
     - export CI_FQDN=`echo $CI_ENVIRONMENT_URL | sed -E 's/^https:\/\/(.+)$/\1/'`
     - export KUBECONFIG="config"
     - printf "$CI_KUBECONFIG_BASE64" | base64 -d > $KUBECONFIG; chmod 600 $KUBECONFIG
@@ -89,8 +89,8 @@ notify_success: &notify_definition
     - ssh-keyscan -H gitlab.com >> /root/.ssh/known_hosts
     - eval $(ssh-agent -s)
     - ssh-add - <<< $(echo -n ${CI_RSA_KEY_BASE64}|base64 -d)
-    - git submodule update --init
-    - git submodule foreach '( if echo "$sm_path" | grep -E "^.ci/.+$"; then git fetch; git checkout master; git pull; fi  )'
+    - git submodule update --init --remote
+    # - git submodule foreach '( if echo "$sm_path" | grep -E "^.ci/.+$"; then git fetch; git checkout master; git pull; fi  )'
     - chmod +x .ci/sh/*
   script:
     - bash .ci/sh/notify.sh success
