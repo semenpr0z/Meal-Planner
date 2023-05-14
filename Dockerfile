@@ -1,4 +1,7 @@
 FROM node:19-alpine as build-stage
+
+ARG VITE_API_URL
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
