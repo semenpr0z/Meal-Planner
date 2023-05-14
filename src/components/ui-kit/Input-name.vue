@@ -18,7 +18,7 @@ export default {
 <template>
     <div class="input-form">
         <span class="span-3 input-name">Имя</span>
-        <input :class="['input', 'span-3']" type="text" placeholder="Например: Аркадий" name="text" v-model="userStore.userDataOnChange.firstName">
+        <input :class="['input', 'span-3']" type="text" placeholder="Например: Аркадий" name="text" v-model="userStore.userDataOnChange.first_name">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>

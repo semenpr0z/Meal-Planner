@@ -12,8 +12,10 @@ export default {
   },
   setup() {
     const userStore = useUserStore();
+    const recipesStore = useRecipesStore();
     return {
-      userStore
+      userStore,
+      recipesStore
     }
   },
   methods: {
@@ -22,11 +24,21 @@ export default {
         this.userStore.changeUser(JSON.parse(localStorage.getItem('user')))
       }
       const users = (await UserDataService.getAll()).data;
-      console.log(users)
+    },
+    async updateRecipes() {
+      if (this.recipesStore.recipes.length === 0) {
+        await this.recipesStore.updateRecipes()
+        this.localRecipes = this.recipesStore.recipes
+        console.log('App')
+
+      } else {
+        this.localRecipes = this.recipesStore.recipes
+      }
     }
   },
   beforeMount() {
     this.userLoaded()
+    this.updateRecipes()
   }
 }
 </script>

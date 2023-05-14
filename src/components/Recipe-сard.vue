@@ -1,125 +1,115 @@
 <script>
 import RecipeCardProperties from "@/components/Recipe-cardProperties.vue"
+import ButtonUI from "@/components/ui-kit/Button-ui.vue"
+import router from '@/router.js'
 
 export default {
-  data() {
-    return {
-        ingredients: `${this.item.ingredients[0].name}, ${this.item.ingredients[1].name.toLowerCase()}`
-    };
-  },
-  components: {
-    RecipeCardProperties
-  },
-  props: {
-    item: {
-        type: Object,
-        required: true,
-        default: {}
+    data() {
+        return {
+            ingredients: `${this.item.ingredients[0].name}, ${this.item.ingredients[1].name.toLowerCase()}`
+        };
     },
-    short: {
-        type: Boolean,
-        default: false
-    }
-  },
-  methods: {
-    showModalRecipeCard() {
-        this.$emit('showModalRecipeCard', this.item.id)
+    components: {
+        RecipeCardProperties,
+        ButtonUI
     },
-    showAddToMenu(){
-        this.$emit('showAddToMenu', this.item.id)
-    }
-  },
-  emits: ['showModalRecipeCard', 'showAddToMenu']
+    props: {
+        item: {
+            type: Object,
+            required: true,
+            default: {}
+        },
+        short: {
+            type: Boolean,
+            default: false
+        },
+        wideCard: {
+            type: Boolean,
+            default: false
+        }
+    },
+    methods: {
+        showModalRecipeCard() {
+            // this.$emit('showModalRecipeCard', this.item.id)
+            router.push({ name: 'Recipe', params: { id: this.item.id } });
+        },
+        showAddToMenu() {
+            this.$emit('showAddToMenu', this.item.id)
+        }
+    },
+    emits: ['showModalRecipeCard', 'showAddToMenu']
 };
 </script>
 
 <template>
-    <div class="wrapper-recipe-wrapper">
-        <div :class="['wrapper-recipe', {'short-recipe' : short == true} ]">
-            <div class="wrapper-recipe__information" @click="showModalRecipeCard">
-                <h3 class="wrapper-recipe__information_h3 p-1">{{ item.name }}</h3>
-                <p class="wrapper-recipe__information_p p-2">{{ ingredients.length > 21 ? ingredients.slice(0, 21) + "..." :  ingredients}}</p>
-                <div class="wrapper-recipe__information_wrapper-properties">
-                    <RecipeCardProperties
-                    :calorific="item.properties.calorific"
-                    :time="item.properties.time"
-                    :complexity="item.properties.complexity"
-                    ></RecipeCardProperties>
-                </div>
+    <div :class="['recipe-card', {'recipe-card_wide' : wideCard == true}]">
+        <header class="recipe-card__header" @click="showModalRecipeCard">
+            <img :src="item.image" alt="Фотография блюда" class="recipe-card__header__image">
+        </header>
+        <main class="recipe-card__main" @click="showModalRecipeCard">
+            <h3 class="p-1">{{ item.name }}</h3>
+            <p class="p-2">{{ ingredients.length > 100 ? ingredients.slice(0, 100) + "..." : ingredients }}</p>
+            <div class="recipe-card__main__recipe-properties">
+                <RecipeCardProperties :wideProperties="wideCard" :calorific="item.properties.calorific" :time="item.properties.time"
+                    :complexity="item.properties.complexity"/>
             </div>
-        </div>
-        <img class="wrapper-recipe__img" :src="item.image" alt="фотография блюда">
-        <button class="wrapper-recipe__add-to-menu" @click="showAddToMenu"><img src="/svg/icon-add-to-menu-btn.svg" alt="Добавить"></button>
+        </main>
+        <footer class="recipe-card__footer">
+            <ButtonUI text="Добавить в меню" :wideButton="true" @click="showAddToMenu"></ButtonUI>
+        </footer>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.wrapper-recipe{
-    display: flex;
-    justify-content: space-between;
-    width: 465px;
-    height: 189px;
-    background-color: transparent;
-    border: 3px solid var(--Gray);
+.recipe-card {
+    width: 356px;
+    background-color: var(--Light_orange_3);
     border-radius: 40px;
-    &-wrapper{
-        display: flex;
-    }
-    &__information{
-        padding: 24px;
-        width: 346px;
-        display: flex;
-        flex-direction: column;
-        &:hover{
-                cursor: pointer;
-            }
-        &_h3{
-            margin: 0;
-            color: var(--Black);
-            width: 252px;
-            height: 42px;
-            padding-right: 18px;
-        }
-        &_p{
-            margin: 0;
-            margin-top: 4px;
-            color: var(--Black);
-        }
-        &_wrapper-properties{
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            gap: 8px;
-            margin-top: 12px;
-        }
-    }
-    &__img{
-        width: 175px;
-        height: 195px;
-        object-fit: cover;
-        object-position: 30% 50%;
-        border-radius: 40px;
-        margin-left: -175px;
-    }
-    &__add-to-menu{
-        background-color: var(--Light_orange_2);
-        border: 2px solid var(--Orange);
-        border-radius: 40px;
-        padding: 71px 16px;
-        margin-left: 12px;
-        transition: 0.5s;
-        &:hover{
-            cursor: pointer;
-            background-color: transparent;
-        }
-        &:active{
-            background: var(--Light_orange);
-            border: 2px solid transparent;
-        }
-    }
-}
 
-.short-recipe{
-    width: 445px;
+    &_wide{
+        width: calc(100% - 32px);
+    }
+
+    &__header {
+        height: 195px;
+        cursor: pointer;
+        &__image {
+            border-radius: 40px 40px 0 0;
+            width: 100%;
+            height: 195px;
+            object-fit: cover;
+            object-position: 30% 50%;
+        }
+    }
+
+    &__main {
+        border-radius: 0 0 40px 40px;
+        padding: 24px 24px 16px;
+        
+
+        h3 {
+            color: var(--Black);
+            height: 42px;
+            cursor: pointer;
+        }
+
+        p {
+            padding-top: 4px;
+            height: 44px;
+            color: var(--Black);
+            cursor: pointer;
+        }
+
+        &__recipe-properties {
+            cursor: pointer;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &__footer{
+        padding: 0px 24px 24px;
+    }
 }
 </style>

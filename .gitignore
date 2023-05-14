@@ -25,6 +25,3 @@ node_modules
 *.sw?
 
 # .env
-
-.http-common2.js
-.http-common3.js

@@ -18,8 +18,8 @@ export default {
 <template>
     <div class="input-form">
         <span class="span-3 input-name">Дата рождения</span>
-        <input :class="['input', 'span-3', {'input-empty' : userStore.userDataOnChange.age.length == 0}]" type="date" name="age" min="1935-01-01" max="2015-12-31"
-            v-model="userStore.userDataOnChange.age">
+        <input :class="['input', 'span-3', {'input-empty' : userStore.userDataOnChange.date_of_birth.length == 0}]" type="date" name="age" min="1935-01-01" max="2015-12-31"
+            v-model="userStore.userDataOnChange.date_of_birth">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>

@@ -26,6 +26,10 @@ export default {
     shortButton: {
       type: Boolean,
       default: false
+    },
+    wideButton: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -59,7 +63,7 @@ export default {
 
 <template>
   <button
-    :class="['button-ui', { 'button-ui_orange': color == 'orange' }, { 'button-ui_gray': color == 'gray' }, { 'button-ui_red': color == 'red' }, { 'button-ui_green': color == 'green' }, 'button', { 'button-ui_short': shortButton == true }]"
+    :class="['button-ui', { 'button-ui_orange': color == 'orange' }, { 'button-ui_gray': color == 'gray' }, { 'button-ui_red': color == 'red' }, { 'button-ui_green': color == 'green' }, 'button', { 'button-ui_short': shortButton == true }, { 'button-ui_wide': wideButton == true }]"
     @keydown.enter="determinate" tabindex="0">{{ text }}</button>
 </template>
 
@@ -140,6 +144,10 @@ export default {
 
   &_short {
     padding: 14px 24px;
+  }
+
+  &_wide{
+    width: 100%;
   }
 
   &:hover {

@@ -7,7 +7,6 @@ import DayOfWeek from '@/components/DayOfWeek.vue';
 import addToMenu from '@/components/addToMenu.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
 import searchIngredients from '@/components/search-ingredients.vue'
-import RecipeCardOpened from '@/components/Recipe-cardOpened.vue'
 
 
 import { getDateRange } from '@/utils/dateUtils.js';
@@ -15,7 +14,6 @@ import { getMonthWeeks } from '@/utils/datesUtils.js';
 import moment from 'moment';
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import { useUserStore } from '@/stores/UserStore.js'
-import RecipesDataService from '@/services/RecipesDataService'
 import OrderDataService from '@/services/OrderDataService'
 
 export default {
@@ -75,8 +73,7 @@ export default {
     DayOfWeek,
     addToMenu,
     RecipeСardVue,
-    searchIngredients,
-    RecipeCardOpened
+    searchIngredients
   },
   methods: {
     previousMonth() {
@@ -131,28 +128,12 @@ export default {
       document.body.style.removeProperty("overflow-y")
       this.mappingWeek()
     },
-    async updateRecipes() {
-      if (this.recipesStore.recipes.length === 0) {
-        this.recipesStore.loadRecipes(await (await RecipesDataService.getAll()).data)
-        this.localRecipes = this.recipesStore.recipes
-      } else {
-        this.localRecipes = this.recipesStore.recipes
-      }
-    },
     showModalRecipeCard(id) {
       this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
       this.isRecipeCardVisible = true;
     },
     closeRecipeCard() {
       this.isRecipeCardVisible = false;
-    },
-    async updateRecipes() {
-      if (this.recipesStore.recipes.length == 0) {
-        await this.recipesStore.updateRecipes()
-        this.localRecipes = this.recipesStore.recipes
-      } else {
-        this.localRecipes = this.recipesStore.recipes
-      }
     },
     searchGet(value) {
       if (value === '' && this.search === '') {
@@ -186,7 +167,7 @@ export default {
     }
   },
   async beforeMount() {
-    await this.updateRecipes()
+      this.localRecipes = this.recipesStore.recipes;
   },
   setup() {
     const recipesStore = useRecipesStore();
@@ -200,6 +181,13 @@ export default {
     recipesList() {
       return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1))
     }
+  },
+  created() {
+    this.recipesStore.$subscribe(store => {
+      console.log('1')
+      this.localRecipes = this.recipesStore.recipes
+
+    })
   }
 };
 </script>
@@ -209,30 +197,23 @@ export default {
   <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
   <!-- </Transition> -->
   <Navbar :menu="Navigation"></Navbar>
-  <Transition name="fade">
-    <main class="main main-recipe-card" v-if="isRecipeCardVisible">
-      <RecipeCardOpened :item="localRecipes[indexOfRecipe]" @closeRecipeCard="closeRecipeCard" />
-    </main>
-  </Transition>
   <main class="main main-menu" v-if="!isRecipeCardVisible">
-    <TransitionGroup appear name="fade">
-      <div key="calendar-and-week" class="calendar-and-week">
-        <CalendarController @export-this-week="importThisWeek" />
-        <div class="week">
-          <DayOfWeek v-for="day in weekToExport" :day="day" @showModalRecipeCard="showModalRecipeCard"
-            @deleteMeal="deleteMeal" />
-        </div>
+    <div key="calendar-and-week" class="calendar-and-week">
+      <CalendarController @export-this-week="importThisWeek" />
+      <div class="week">
+        <DayOfWeek v-for="day in weekToExport" :day="day" @showModalRecipeCard="showModalRecipeCard"
+          @deleteMeal="deleteMeal" />
       </div>
-      <div class="recipes-list" key="recipes-list">
-        <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
-        <div class="list">
-          <TransitionGroup name="list">
-            <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :short="true"
-              @showModalRecipeCard="showModalRecipeCard" @showAddToMenu="showAddToMenu" />
-          </TransitionGroup>
-        </div>
+    </div>
+    <div class="recipes-list" key="recipes-list">
+      <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
+      <div class="list">
+        <TransitionGroup name="list">
+          <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :wideCard="true"
+            @showModalRecipeCard="showModalRecipeCard" @showAddToMenu="showAddToMenu" />
+        </TransitionGroup>
       </div>
-    </TransitionGroup>
+    </div>
   </main>
   <NavbarFooterMobile></NavbarFooterMobile>
 </template>
@@ -289,15 +270,6 @@ export default {
   padding-bottom: 50px;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 
 .list-enter-active,
 .list-leave-active {

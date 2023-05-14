@@ -169,8 +169,8 @@ export default {
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        width: 24px;
-        height: 24px;
+        min-width: 24px;
+        min-height: 24px;
     }
 }
 

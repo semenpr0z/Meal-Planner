@@ -5,12 +5,9 @@ import searchIngredients from '@/components/search-ingredients.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
 import ButtonUi from '@/components/ui-kit/Button-ui.vue';
 import addToMenu from '@/components/addToMenu.vue';
-import RecipeCardOpened from '@/components/Recipe-cardOpened.vue'
 
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import { useUserStore } from '@/stores/UserStore.js'
-import RecipesDataService from '@/services/RecipesDataService'
-import OrderDataService from '@/services/OrderDataService'
 
 export default {
   data() {
@@ -57,27 +54,11 @@ export default {
     searchIngredients,
     RecipeСardVue,
     ButtonUi,
-    addToMenu,
-    RecipeCardOpened
-  },
-  beforeMount() {
-    this.updateRecipes()
+    addToMenu
   },
   methods: {
-    showModalRecipeCard(id) {
-      this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
-      this.isRecipeCardVisible = true;
-    },
     closeRecipeCard() {
       this.isRecipeCardVisible = false;
-    },
-    async updateRecipes() {
-      if (this.recipesStore.recipes.length === 0) {
-        await this.recipesStore.updateRecipes()
-        this.localRecipes = this.recipesStore.recipes
-      } else {
-        this.localRecipes = this.recipesStore.recipes
-      }
     },
     searchGet(value) {
       if (value === '' && this.search === '') {
@@ -106,7 +87,17 @@ export default {
     recipesList() {
       return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1)).slice(0, this.visibleRecipes)
     }
-  }
+  },
+  created() {
+    this.recipesStore.$subscribe(store => {
+      console.log('1')
+      this.localRecipes = this.recipesStore.recipes
+
+    })
+  },
+  async beforeMount() {
+    this.localRecipes = this.recipesStore.recipes;
+  },
 };
 </script>
 
@@ -115,18 +106,12 @@ export default {
     <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
   </Transition>
   <Navbar :menu="Navigation"></Navbar>
-  <Transition name="fade">
-  <main class="main" v-if="isRecipeCardVisible">
-    <RecipeCardOpened :item="localRecipes[indexOfRecipe]" @closeRecipeCard="closeRecipeCard" />
-  </main>
-  </Transition>
   <main class="main" v-if="!isRecipeCardVisible">
     <TransitionGroup appear name="fade">
-      <searchIngredients class="search" @search-get="searchGet" key="search"/>
+      <searchIngredients class="search" @search-get="searchGet" key="search" />
       <div class="wrapper-recipes-list" key="wrapper-recipes-list">
         <TransitionGroup name="list">
-          <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id"
-            @showModalRecipeCard="showModalRecipeCard" @showAddToMenu="showAddToMenu" />
+          <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" @showAddToMenu="showAddToMenu" />
         </TransitionGroup>
       </div>
       <ButtonUi key="btn-more" class="button-more-recipes" text="Посмотреть еще" color="gray" method="moreRecipes"
@@ -147,11 +132,12 @@ export default {
 .wrapper-recipes-list {
   margin-top: 58px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   padding-bottom: 24px;
 }
-.button-more-recipes{
+
+.button-more-recipes {
   margin-bottom: 20px;
 }
 
@@ -174,5 +160,12 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+
+@media (max-width: 1200px) {
+  .wrapper-recipes-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>

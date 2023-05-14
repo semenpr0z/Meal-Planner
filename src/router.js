@@ -3,8 +3,9 @@ import Start from '@/Views/Start.vue';
 import Main from '@/Views/Main.vue';
 import Menu from '@/Views/Menu.vue';
 import Recipes from '@/Views/Recipes.vue';
-import Profile from '@/Views/Profile.vue'
-import Page404 from '@/Views/Page404.vue'
+import Profile from '@/Views/Profile.vue';
+import Page404 from '@/Views/Page404.vue';
+import PageRecipe from '@/Views/PageRecipe.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -28,7 +29,13 @@ const router = createRouter({
         {
             path: '/recipes',
             name: 'Recipes',
-            component: Recipes
+            component: Recipes,
+            
+        },
+        {
+            path: '/recipes/:id',
+            name: 'Recipe',
+            component: PageRecipe
         },
         {
             path: '/profile',
