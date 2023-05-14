@@ -90,7 +90,6 @@ export default {
   },
   created() {
     this.recipesStore.$subscribe(store => {
-      console.log('1')
       this.localRecipes = this.recipesStore.recipes
 
     })

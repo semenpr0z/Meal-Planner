@@ -21,13 +21,3 @@ export const useUserStore = defineStore('userStore', {
         }
     }
 })
-
-// {
-//     "firstName": "qwerty",
-//     "email": "d@mail.ru",
-//     "password": "qwerty",
-//     "sex": "male",
-//     "age": 21,
-//     "creationDate": 1677688801,
-//     "id": "1"
-// }

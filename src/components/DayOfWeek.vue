@@ -5,15 +5,6 @@ import Meal from '@/components/Meal.vue';
 import { useUserStore } from '@/stores/UserStore';
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 
-// {
-// 'name': 'Завтрак',
-// 'availability': false,
-// 'recipe': 'Яичница',
-// 'calorific': '1000 ккал',
-// 'id': 1,
-// 'mealsId': 1
-// }
-
 export default {
     data() {
 
@@ -71,9 +62,7 @@ export default {
             return word.charAt(0).toUpperCase() + word.slice(1);
         },
         showOrders() {
-            console.log(this.orders)
         },
-        // можно сделать computed
         updateMeals() {
             this.mappedMeals = this.meals.map(meal => {
                 let exportMeal = null
@@ -118,10 +107,6 @@ export default {
         deleteMeal(mealId) {
             this.$emit('deleteMeal', mealId)
         }
-    },
-    mounted() {
-        // loadMeals()
-        //this.showOrders()
     },
     beforeUpdate() {
         this.updateMeals()

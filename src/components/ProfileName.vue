@@ -21,7 +21,6 @@ export default {
     },
     methods: {
         logOut(){
-            console.log('logOut')
             localStorage.removeItem("user");
             this.userStore.user = null
             router.push('/main')

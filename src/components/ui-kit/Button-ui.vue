@@ -40,11 +40,9 @@ export default {
       this.$emit('moreRecipes');
     },
     auth() {
-      console.log('ok')
       this.$emit('auth')
     },
     determinate() {
-      console.log('ok')
       if (this.method === 'showNextStep') {
         this.showNextStep()
       }

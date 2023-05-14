@@ -93,28 +93,22 @@ export default {
         next() {
             if (this.indexOfWeek < this.month[this.indexOfMonth].length - 1 && this.indexOfWeek >= 0) {
                 this.toNextWeek()
-                console.log('следующая неделя')
             } else {
                 this.toNextMonth()
-                console.log('следующий месяц')
             }
             this.indexOfSelectedDay = 0
         },
         previous() {
             if (this.indexOfWeek <= this.month[this.indexOfMonth].length - 1 && this.indexOfWeek > 0) {
                 this.toPreviousWeek()
-                console.log('прошлая неделя')
             } else {
-                // console.log(this.indexOfWeek + '<' + (this.month[this.indexOfMonth].length - 1) + '&&' + this.indexOfWeek + '>' + 0)
                 this.toPreviousMonth()
-                console.log('прошлый месяц')
 
             }
             this.indexOfSelectedDay = 0
         },
         toNextMonth() {
             if (this.indexOfMonth == 2) {
-                console.log('месяцы закончились')
             } else {
                 this.indexOfMonth += 1
                 if (JSON.stringify(this.month[this.indexOfMonth - 1][this.month[this.indexOfMonth - 1].length - 1]) == JSON.stringify(this.month[this.indexOfMonth][0])) {
@@ -126,7 +120,6 @@ export default {
         },
         toPreviousMonth() {
             if (this.indexOfMonth == 0) {
-                console.log('месяцы закончились')
             } else {
                 this.indexOfMonth -= 1
 
@@ -182,7 +175,6 @@ export default {
             return this.month[this.indexOfMonth][this.indexOfWeek]
         },
         showSelectedDay() {
-            console.log('формируем неделю')
             const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const formattedDate = formatter.format(this.month[this.indexOfMonth][this.indexOfWeek][this.indexOfSelectedDay]).replace(/\./g, "-");
             const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);

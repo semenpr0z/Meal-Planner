@@ -17,15 +17,9 @@ export default {
         },
         deleteMeal(id) {
             this.$emit('deleteMeal', id)
-        },
-        test(){
-            console.log(this.meal)
         }
     },
-    emits: ['showModalRecipeCard', 'deleteMeal'],
-    mounted(){
-        // this.test()
-    }
+    emits: ['showModalRecipeCard', 'deleteMeal']
 }
 </script>
 

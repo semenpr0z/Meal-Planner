@@ -46,9 +46,7 @@ export default {
             router.push('/recipes')
         },
         findItem(id) {
-            console.log(id)
             this.item = this.recipesStore.recipes.find(item => item.id === id)
-            console.log(this.recipesStore.recipes)
         },
         showAddToMenu(id) {
             this.isAddToMenuVisible = true
@@ -214,9 +212,11 @@ body .background-modal {
         font-weight: 600;
         font-size: 18px;
         line-height: 27px;
+        transition: 0.5s;
 
         &:hover {
             cursor: pointer;
+            background-color: transparent;
         }
     }
 }

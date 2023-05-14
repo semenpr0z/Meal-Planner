@@ -137,7 +137,6 @@ export default {
     },
     searchGet(value) {
       if (value === '' && this.search === '') {
-        console.log('error')
         this.searchValidation = false
       } else {
         this.search = value,
@@ -148,7 +147,6 @@ export default {
       this.userStore.userOrders = this.userStore.userOrders.filter(order => order.id !== mealId)
       this.mappingWeek()
       OrderDataService.delete(mealId)
-      console.log('удалили из базы')
     },
     mappingWeek() {
       this.weekToExport = this.week.map(day => {
@@ -184,7 +182,6 @@ export default {
   },
   created() {
     this.recipesStore.$subscribe(store => {
-      console.log('1')
       this.localRecipes = this.recipesStore.recipes
 
     })

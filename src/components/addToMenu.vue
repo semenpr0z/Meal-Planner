@@ -68,7 +68,6 @@ export default {
       this.updateMenu()
       this.calendarControllerVisible = true,
         this.successVisible = false
-      console.log('ok')
     },
     async updateMenu() {
       let orders = await OrderDataService.getAll()

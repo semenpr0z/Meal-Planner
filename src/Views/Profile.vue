@@ -58,12 +58,6 @@ export default {
 <template>
     <Navbar></Navbar>
     <main class="main" v-if="userStore.user">
-        <!-- <h1>Типа страница профиля</h1>
-        <p>Имя: {{ userStore.user.firstName }}</p>
-        <p>Электронная почта: {{ userStore.user.email }}</p>
-        <p>Пол: {{ userStore.user.sex == 'male' ? 'Мужской' : 'Женский' }}</p>
-        <p>Возраст: {{ userStore.user.age }}</p>
-        <p>Дата регистрации: {{ new Date(userStore.user.creationDate).toLocaleDateString() }}</p> -->
         <ProfileName @deleteProfile="deleteProfile"/>
         <ProfileChange @saveChanges="saveChanges"/>
     </main>
@@ -75,7 +69,7 @@ export default {
 @import '@/assets/styles/global.scss';
 
 .main{
-    margin-top: 65px;
+    margin: 65px auto;
     display: flex;
     flex-direction: row;
     gap: 29px;

@@ -29,7 +29,6 @@ export default {
       if (this.recipesStore.recipes.length === 0) {
         await this.recipesStore.updateRecipes()
         this.localRecipes = this.recipesStore.recipes
-        console.log('App')
 
       } else {
         this.localRecipes = this.recipesStore.recipes

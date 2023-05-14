@@ -30,7 +30,6 @@ export default {
     },
     methods: {
         showModalRecipeCard() {
-            // this.$emit('showModalRecipeCard', this.item.id)
             router.push({ name: 'Recipe', params: { id: this.item.id } });
         },
         showAddToMenu() {

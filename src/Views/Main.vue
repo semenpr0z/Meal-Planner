@@ -81,7 +81,7 @@ export default {
             <h1 class="start__text-button__h1 h-main">PlanMenu</h1>
             <h3 class="start__text-button__h3 h-1">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
             <p class="start__text-button__p h-2">Cпланируем твое меню на неделю? </p>
-            <Button class="start__text-button__btn" text="Спланировать меню" @click="loggedIn" />
+            <Button class="start__text-button__btn" text="Зарегистрироваться" @click="loggedIn" />
           </div>
           <img src="/img/img-iPhone-main.png" class="start__img">
         </div>
@@ -138,7 +138,6 @@ export default {
 
 .wrapper {
   width: 100%;
-  // height: 506px;
   position: relative;
 }
 
