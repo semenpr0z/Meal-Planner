@@ -25,7 +25,7 @@ export default {
         },
         {
           id: 2,
-          text: 'Меню',
+          text: 'Планировщик',
           Link: '/menu',
           active: false
         },

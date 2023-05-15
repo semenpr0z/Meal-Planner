@@ -33,7 +33,7 @@ export default {
         },
         {
           id: 2,
-          text: 'Меню',
+          text: 'Планировщик',
           Link: '/menu',
           active: true
         },
@@ -203,7 +203,7 @@ export default {
       </div>
     </div>
     <div class="recipes-list" key="recipes-list">
-      <searchIngredients class="search" @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
+      <searchIngredients  @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
       <div class="list">
         <TransitionGroup name="list">
           <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :wideCard="true"
@@ -260,6 +260,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   gap: 16px;
   overflow: auto;
   height: auto;
