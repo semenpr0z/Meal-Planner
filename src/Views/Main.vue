@@ -56,6 +56,10 @@ export default {
       if (this.userStore.user) {
         router.push('/menu')
       } else {
+        window.scrollTo({
+          top: 1000,
+          behavior: 'smooth'
+        });
         this.showLogin()
       }
     },
@@ -76,16 +80,17 @@ export default {
   <main class="main main-relative">
     <div class="wrapper">
       <TransitionGroup appear name="fade">
-        <div class="start" v-if="startFormVisible">
+        <section class="start" v-if="startFormVisible">
           <div class="start__text-button">
             <h1 class="start__text-button__h1 h-main">PlanMenu</h1>
-            <h3 class="start__text-button__h3 h-1">планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
+            <h3 class="start__text-button__h3 h-1">Планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
             <p class="start__text-button__p h-2">Cпланируем твое меню на неделю? </p>
             <Button class="start__text-button__btn" text="Зарегистрироваться" @click="loggedIn" />
           </div>
           <img src="/img/img-iPhone-main.png" class="start__img">
-        </div>
-        <LoginForm v-if="loginFormVisible" key="login" @show-registration="showRegistration" class="LoginForm" />
+        </section>
+        <LoginForm v-if="loginFormVisible" key="login" @show-registration="showRegistration" class="LoginForm"
+          id="authtorization" />
 
         <RegistrationForm v-if="registrationFormVisible" key="registration" @show-login="showLogin" />
       </TransitionGroup>
@@ -101,32 +106,36 @@ export default {
       </div>
     </div>
     <TransitionGroup appear name="fade">
-    <div class="benefits" key="benefits">
-      <div class="benefits__benefit">
-        <img class="benefits__benefit__img-convenience" src="/img/img-convenience.png" alt="Удобство">
-        <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p h-1">Удобный календарь на неделю</p>
-          <p class="p-2">Собирайте план сразу из готовых блюд.<br>Календарь нагляден и всегда под
-            рукой!</p>
+      <section class="benefits" key="benefits">
+        <div class="benefits__benefit">
+          <img class="benefits__benefit__img-convenience" src="/img/img-convenience.png" alt="Удобство">
+          <div class="benefits__benefit-text">
+            <p class="benefits__benefit-text-p h-1">Удобный календарь на неделю</p>
+            <p class="p-2">Собирайте план сразу из готовых блюд.<br>Календарь нагляден и всегда под
+              рукой!</p>
+          </div>
         </div>
-      </div>
-      <div class="benefits__benefit">
-        <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p h-1">Сбалансированные рецепты</p>
-          <p class="p-2">Рецепты подобраны с учетом принципов<br> здорового питания и
-            отображением КБЖУ.<br> Готовые блюда позволят питаться правильно легко!</p>
+        <div class="benefits__benefit">
+          <div class="benefits__benefit-text">
+            <p class="benefits__benefit-text-p h-1">Сбалансированные рецепты</p>
+            <p class="p-2">Рецепты подобраны с учетом принципов<br> здорового питания и
+              отображением КБЖУ.<br> Готовые блюда позволят питаться правильно легко!</p>
+          </div>
+          <img class="benefits__benefit__img-balance" src="/img/img-balance.png">
         </div>
-        <img class="benefits__benefit__img-balance" src="/img/img-balance.png">
-      </div>
-      <div class="benefits__benefit">
-        <img class="benefits__benefit__img-optimize" src="/img/img-optimize.png">
-        <div class="benefits__benefit-text">
-          <p class="benefits__benefit-text-p h-1">Оптимизируем расходы</p>
-          <p class="p-2">Уменьшаем еженедельные стихийные траты<br> на продукты за счет
-            грамотного планирования</p>
+        <div class="benefits__benefit">
+          <img class="benefits__benefit__img-optimize" src="/img/img-optimize.png">
+          <div class="benefits__benefit-text">
+            <p class="benefits__benefit-text-p h-1">Оптимизируем расходы</p>
+            <p class="p-2">Уменьшаем еженедельные стихийные траты<br> на продукты за счет
+              грамотного планирования</p>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+      <section class="suggestion" key="suggestion">
+        <p class="h-1">Спланируем твое меню на неделю?</p>
+        <Button text="Зарегистрироваться" @click="loggedIn" />
+      </section>
     </TransitionGroup>
   </main>
   <FooterPromo> </FooterPromo>
@@ -150,13 +159,16 @@ export default {
 
   &__text-button {
     margin-top: 87px;
+
     &__h1 {
       color: var(--Orange);
     }
+
     &__h3 {
       color: var(--Black);
       margin-top: 32px;
     }
+
     &__p {
       display: flex;
       align-items: center;
@@ -206,8 +218,7 @@ export default {
 }
 
 .benefits {
-  margin-top: 151px;
-  padding-bottom: 167px;
+  margin: 151px 0 135px;
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -232,6 +243,13 @@ export default {
       }
     }
   }
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 23px;
 }
 
 .fade-enter-active,
@@ -322,4 +340,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
