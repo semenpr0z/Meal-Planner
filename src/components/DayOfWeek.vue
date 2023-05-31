@@ -139,6 +139,8 @@ export default {
     flex-direction: column;
     gap: 16px;
     height: fit-content;
+    width: 100%;
+    box-sizing: border-box;
 
     &-h2 {
         text-align: center;

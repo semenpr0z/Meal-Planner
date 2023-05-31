@@ -240,23 +240,26 @@ export default {
   padding: 0 64px 64px;
 
 }
-.calendar-and-week{
+
+.calendar-and-week {
   height: 100%;
+  width: calc(50% - 22px);
+  ;
 }
 
 
 .week {
   display: flex;
-  
-  gap: 16px;
-  margin: 24px -10px 0 0 ;
+
+
+  margin: 24px -10px 0 0;
   height: calc(100% - 160px);
   overflow: auto;
 
   &::after {
-  content: '';
-  width: 10px;
-}
+    content: '';
+    width: 10px;
+  }
 }
 
 .recipes-list {
@@ -302,11 +305,12 @@ export default {
 
   .week {
     flex-direction: column;
+    height: 100%;
 
-  &::after {
-  display: none;
-}
-}
+    &::after {
+      display: none;
+    }
+  }
 
   .calendar-and-week {
     width: 100%;
