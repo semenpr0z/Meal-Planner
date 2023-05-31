@@ -54,10 +54,14 @@ export default {
   methods: {
     loggedIn() {
       if (this.userStore.user) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         router.push('/menu')
       } else {
         window.scrollTo({
-          top: 1000,
+          top: 0,
           behavior: 'smooth'
         });
         this.showLogin()
@@ -70,6 +74,15 @@ export default {
     showRegistration() {
       this.loginFormVisible = false;
       this.registrationFormVisible = true
+    }
+  },
+  computed: {
+    textBtn() {
+      if (this.userStore.user) {
+        return 'Спланировать меню'
+      } else {
+        return 'Зарегистрироваться'
+      }
     }
   }
 };
@@ -85,7 +98,7 @@ export default {
             <h1 class="start__text-button__h1 h-main">PlanMenu</h1>
             <h3 class="start__text-button__h3 h-1">Планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
             <p class="start__text-button__p h-2">Cпланируем твое меню на неделю? </p>
-            <Button class="start__text-button__btn" text="Зарегистрироваться" @click="loggedIn" />
+            <Button class="start__text-button__btn" :text="textBtn" @click="loggedIn" />
           </div>
           <img src="/img/img-iPhone-main.png" class="start__img">
         </section>
@@ -134,7 +147,7 @@ export default {
       </section>
       <section class="suggestion" key="suggestion">
         <p class="h-1">Спланируем твое меню на неделю?</p>
-        <Button text="Зарегистрироваться" @click="loggedIn" />
+        <Button :text="textBtn" @click="loggedIn" />
       </section>
     </TransitionGroup>
   </main>
@@ -218,7 +231,7 @@ export default {
 }
 
 .benefits {
-  margin: 151px 0 135px;
+  margin: 151px 0 100px;
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -250,6 +263,8 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 23px;
+  padding: 35px 0;
+  margin-bottom: 100px;
 }
 
 .fade-enter-active,
@@ -273,21 +288,6 @@ export default {
       margin: 0;
       height: max-content;
 
-      &__h1 {
-        font-size: 45px;
-        line-height: 68px;
-      }
-
-      &__h3 {
-        font-size: 22px;
-        line-height: 33px;
-      }
-
-      &__p {
-        font-size: 18px;
-        line-height: 27px;
-      }
-
       &__btn {
         margin-top: 24px;
       }
@@ -300,29 +300,6 @@ export default {
     &__benefit {
       gap: 19px;
 
-      &:nth-child(odd) {
-        justify-content: flex-start;
-      }
-
-      &-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 12.5px;
-
-        &-p {
-          font-weight: 600;
-          font-size: 24px;
-          line-height: 36px;
-          color: var(--Black);
-
-          &-min {
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 27px;
-          }
-        }
-      }
 
       &__img-convenience {
         width: 307px;
@@ -337,6 +314,70 @@ export default {
       &__img-optimize {
         width: 348px;
         height: 228.93px;
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .benefits{
+    margin: 30px 0 24px;
+    gap: 39px;
+
+  }
+  .suggestion{
+    margin-bottom: 24px;
+    width: 100%;
+    align-items: normal;
+    p{
+      text-align: center;
+    }
+  }
+  .start {
+    &__img {
+      display: none;
+    }
+
+    &__text-button {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .benefits {
+    
+    &__benefit {
+      align-items: center;
+      gap: 8px;
+
+      &__img-convenience {
+        width: 140px;
+        height: 93.33px;
+      }
+
+      &__img-balance {
+        width: 140px;
+        height: 93.33px;
+      }
+
+      &__img-optimize {
+        width: 140px;
+        height: 93.33px;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .benefits{
+    &__benefit{
+      align-items: flex-start;
+      flex-direction: column;
+      &:nth-child(even){
+        flex-direction: column-reverse;
       }
     }
   }

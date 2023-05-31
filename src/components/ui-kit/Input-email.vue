@@ -1,24 +1,33 @@
 <script>
-import { useUserStore } from '@/stores/UserStore.js'
 
 export default {
     data() {
         return {
+            email: this.value
         }
     },
-    setup() {
-        const userStore = useUserStore();
-        return {
-            userStore
+    props: {
+        invalid: {
+            required: false
+        },
+        value: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    methods: {
+        updateEmail() {
+            this.$emit('updateEmail', this.email);
+        }
+    },
 }
 </script>
 
 <template>
     <div class="input-form">
-        <span class="span-3 input-name">E-mail</span>
-        <input :class="['input', 'span-3']" type="email" placeholder="example@example.com" name="email" v-model="userStore.userDataOnChange.email">
+        <span class="span-2 input-name">E-mail</span>
+        <input :class="['input', 'span-3', { 'input-invalid': invalid }]" @input="updateEmail" type="email"
+            placeholder="example@example.com" name="email" v-model="email">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>
@@ -54,6 +63,10 @@ export default {
         display: flex;
         align-items: center;
         color: var(--Text_gray);
+    }
+
+    &-invalid {
+        border: 2px solid #D02500;
     }
 
     &::placeholder {

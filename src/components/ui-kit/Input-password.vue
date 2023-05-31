@@ -1,34 +1,33 @@
 <script>
-import { useUserStore } from '@/stores/UserStore.js'
 
 export default {
     data() {
         return {
-        }
-    },
-    setup() {
-        const userStore = useUserStore();
-        return {
-            userStore
+            password: this.value
         }
     },
     props: {
-        data: {
-            default: false
+        invalid: {
+            required: false
+        },
+        value: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    methods: {
+        updatePassword() {
+            this.$emit('updatePassword', this.password);
+        }
+    },
 }
 </script>
 
 <template>
-    <div v-if="data" class="input-form">
-        <span class="span-3 input-name">Введите действующий пароль</span>
-        <input :class="['input', 'span-3']" type="password" placeholder="Пароль" name="password" v-model="userStore.passwordOnCheck">
-        <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
-    </div>
-    <div v-else class="input-form">
-        <span class="span-3 input-name">Пароль</span>
-        <input :class="['input', 'span-3']" type="password" placeholder="Введите пароль" name="password" v-model="userStore.userDataOnChange.password">
+    <div class="input-form">
+        <span class="span-2 input-name">Пароль</span>
+        <input :class="['input', 'span-3', { 'input-invalid': invalid }]" @input="updatePassword" type="password"
+            placeholder="Введите пароль" name="password" v-model="password">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>
@@ -64,6 +63,10 @@ export default {
         display: flex;
         align-items: center;
         color: var(--Text_gray);
+    }
+
+    &-invalid {
+        border: 2px solid #D02500;
     }
 
     &::placeholder {

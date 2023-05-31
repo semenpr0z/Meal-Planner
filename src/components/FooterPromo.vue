@@ -12,10 +12,13 @@ export default {
 <style lang='scss' scoped>
     .footer{
         max-width: 1132px;
-        padding: 40px 0;
+        padding: 40px 16px;
         margin: 0 auto;
         display: flex;
         justify-content: center;
         border-top: 1px solid var(--Orange);;
+        p{
+            text-align: center;
+        }
     }
 </style>

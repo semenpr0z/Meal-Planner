@@ -1,6 +1,7 @@
 <script>
-import Button from '@/components/ui-kit/Button-ui.vue'
-import InputUi from '@/components/ui-kit/Input-ui.vue';
+import Button from '@/components/ui-kit/Button-ui.vue';
+import InputEmail from '@/components/ui-kit/Input-email.vue';
+import InputPassword from '@/components/ui-kit/Input-password.vue'
 
 
 import UserDataService from '../services/UserDataService'
@@ -17,18 +18,20 @@ export default {
             validation: false
         };
     },
-    mounted(){
+    mounted() {
         document.addEventListener('keydown', this.handleKeydown)
     },
-    beforeUnmount(){
+    beforeUnmount() {
         document.removeEventListener('keydown', this.handleKeydown)
     },
     components: {
         Button,
-        InputUi
+        InputEmail,
+        InputPassword
     },
     setup() {
         const userStore = useUserStore();
+
         return {
             userStore
         }
@@ -49,13 +52,11 @@ export default {
                 this.validation = true
             }
         },
-        valueGet(value, type) {
-            if (type === 'email') {
-                this.email = value
-            }
-            if (type === 'password') {
-                this.password = value
-            }
+        updateEmail(email) {
+            this.email = email
+        },
+        updatePassword(password) {
+            this.password = password
         },
         handleKeydown(event) {
             if (event.keyCode === 13) {
@@ -84,12 +85,13 @@ export default {
         </div>
         <div class="login-form">
             <h2 class="login-form__h2 h-1">Вход</h2>
-            <InputUi @valueGet="valueGet" @auth="auth" type="email" method="auth" :valid="validation" />
-            <InputUi @valueGet="valueGet" @auth="auth" type="password" method="auth" :valid="validation" />
+            <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
+            <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation" class="wrapper" />
             <Button class="login-form__button" text="Продолжить" type="submit" @click="auth" method="auth"
                 @auth="auth"></Button>
             <div class="login-form__text-invalid_text-area">
-                <span :class="['span-3', 'login-form__text-invalid', { 'login-form__text-invalid_show': validation }]">Данные
+                <span
+                    :class="['span-3', 'login-form__text-invalid', { 'login-form__text-invalid_show': validation }]">Данные
                     введены неверно, попробуйте снова</span>
             </div>
             <h2 class="text_h2 h-1">Нет аккаунта? <span class="login-form__h2 login-form__h2_btn"
@@ -107,6 +109,10 @@ export default {
     margin-top: 199px;
 }
 
+.wrapper {
+    width: 100%;
+}
+
 .text {
     display: flex;
     flex-direction: column;
@@ -116,6 +122,10 @@ export default {
 
     &__h1 {
         color: var(--Orange);
+    }
+
+    &_h2 {
+        width: 333px;
     }
 
     &__h3 {
@@ -128,10 +138,11 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    width: 421px;
+    width: 334px;
 
     &__h2 {
         color: var(--Orange);
+
 
         &_btn {
             cursor: pointer;
@@ -180,4 +191,23 @@ export default {
         &__h2 {}
     }
 
+}
+
+@media (max-width: 750px) {
+    .wrapper-text-and-login-form {
+        justify-content: center;
+        margin-top: 17px;
+        .text {
+            display: none;
+
+            &_h2 {
+                width: fit-content;
+            }
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 500px;
+        }
+    }
 }</style>

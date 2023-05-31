@@ -2,6 +2,7 @@
 import RecipeCardProperties from "@/components/Recipe-cardProperties.vue"
 import ButtonUI from "@/components/ui-kit/Button-ui.vue"
 import router from '@/router.js'
+import ButtonMiniUi from "./ui-kit/ButtonMini-ui.vue";
 
 export default {
     data() {
@@ -10,9 +11,10 @@ export default {
         };
     },
     components: {
-        RecipeCardProperties,
-        ButtonUI
-    },
+    RecipeCardProperties,
+    ButtonUI,
+    ButtonMiniUi
+},
     props: {
         item: {
             type: Object,
@@ -24,6 +26,10 @@ export default {
             default: false
         },
         wideCard: {
+            type: Boolean,
+            default: false
+        },
+        ultraWideCard: {
             type: Boolean,
             default: false
         }
@@ -41,7 +47,8 @@ export default {
 </script>
 
 <template>
-    <div :class="['recipe-card', {'recipe-card_wide' : wideCard == true}]">
+    <div :class="['recipe-card', {'recipe-card_wide' : wideCard}, {'recipe-card_ultra-wide' : ultraWideCard}]">
+        <ButtonMiniUi src="svg/icon-add-to-menu-btn.svg" @click="showAddToMenu"/>
         <header class="recipe-card__header" @click="showModalRecipeCard">
             <img :src="item.image" alt="Фотография блюда" class="recipe-card__header__image">
         </header>
@@ -61,12 +68,24 @@ export default {
 
 <style lang="scss" scoped>
 .recipe-card {
+    position: relative;
     width: 356px;
     background-color: var(--Light_orange_3);
     border-radius: 40px;
+    
+    .btn-mini{
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: none;
+    }
 
     &_wide{
         width: calc(100% - 32px);
+    }
+
+    &_ultra-wide{
+        width: 100%;
     }
 
     &__header {
@@ -109,6 +128,19 @@ export default {
 
     &__footer{
         padding: 0px 24px 24px;
+    }
+}
+
+@media (max-width: 351px) {
+
+    .recipe-card {
+        .btn-mini{
+            display: block;
+        }
+
+        &__footer{
+            display: none;
+        }
     }
 }
 </style>

@@ -1,17 +1,33 @@
 <script>
-import { useUserStore } from '@/stores/UserStore.js'
 
 export default {
-    data(){
-        return{
+    data() {
+        return {
+            sex: this.value
         }
     },
-    setup(){
-        const userStore = useUserStore();
-        return {
-            userStore
+    props: {
+        invalid: {
+            required: false
+        },
+        value: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    methods: {
+        updateSex(value) {
+            // console.log(this.sex)
+            this.$emit('updateSex', value);
+
+        }
+    },
+    watch: {
+        sex(newValue) {
+            // console.log(newValue)
+            this.updateSex(newValue)
+        }
+    },
 }
 </script>
 
@@ -19,11 +35,12 @@ export default {
     <div class="input-form">
         <p class="p-2 input-name input-name-radio">Пол</p>
         <label class="input-label">
-            <input class="input-label-radio" type="radio" name="sex" value="male" v-model="userStore.userDataOnChange.sex">
+            <input class="input-label-radio" type="radio" name="sex" value="male" v-model="sex" :checked="sex === 'male'">
             <p class="p-2">Мужской</p>
         </label>
         <label class="input-label">
-            <input class="input-label-radio" type="radio" name="sex" value="female" v-model="userStore.userDataOnChange.sex">
+            <input class="input-label-radio" type="radio" name="sex" value="female" v-model="sex"
+                :checked="sex === 'female'">
             <p class="p-2">Женский</p>
         </label>
     </div>
@@ -37,6 +54,7 @@ export default {
         flex-direction: row;
         gap: 23px;
     }
+
     &-label {
         display: flex;
         gap: 10px;
@@ -57,26 +75,37 @@ export default {
             border: 2px solid var(--Gray);
             box-shadow: inset 0 0 0 4px var(--White);
             background-color: var(--White);
+
             &:hover {
                 background-color: var(--Gray);
                 border: 2px solid var(--Gray);
 
             }
 
-            &:checked{
+            &:checked {
                 background-color: var(--Orange);
                 border: 2px solid var(--Orange);
             }
 
         }
     }
-    &-name{
+
+    &-name {
         height: 21px;
         display: flex;
         align-items: center;
         color: var(--Text_gray);
-        &-radio{
+
+        &-radio {
             padding-right: 30px;
+        }
+    }
+}
+
+@media (max-width: 750px) {
+    .input {
+        &-form {
+            gap: 16px;
         }
     }
 }

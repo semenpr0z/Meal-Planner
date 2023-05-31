@@ -154,23 +154,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.background-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(148, 148, 148, 0.50);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-}
-
-body .background-modal {
-    overflow-y: hidden;
-    height: 100vh;
-}
 
 .modal-recipe-card-history {
     width: 100%;
@@ -373,5 +356,10 @@ body .background-modal {
             }
         }
     }
+}
+
+
+@media (max-width: 880px) {
+    
 }
 </style>

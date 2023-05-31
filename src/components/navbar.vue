@@ -208,8 +208,11 @@ export default {
 }
 
 @media screen and (max-width: 960px) {
-    .navbar {
-        gap: 110px;
+    .navbar{
+        padding: 8px 25px;
+        &-links{
+            max-width: 377px;
+        }
     }
 }
 
@@ -222,4 +225,17 @@ export default {
     .navbar-profile-desktop {
         display: none;
     }
-}</style>
+
+    .navbar-profile{
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .navbar {
+        padding: 16px;
+        &-logo{
+            justify-content: flex-start;
+        }
+    }
+}
+</style>

@@ -8,7 +8,6 @@ import addToMenu from '@/components/addToMenu.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
 import searchIngredients from '@/components/search-ingredients.vue'
 
-
 import { getDateRange } from '@/utils/dateUtils.js';
 import { getMonthWeeks } from '@/utils/datesUtils.js';
 import moment from 'moment';
@@ -61,7 +60,10 @@ export default {
       isRecipeCardVisible: false,
       localRecipes: [],
       search: '',
-      weekToExport: null,
+      weekToExport: {
+        "day": new Date,
+        "meals": []
+      },
       searchValidation: true
     };
   },
@@ -149,23 +151,30 @@ export default {
       OrderDataService.delete(mealId)
     },
     mappingWeek() {
-      this.weekToExport = this.week.map(day => {
-        const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const formattedDate = formatter.format(day).replace(/\./g, "-");
-        const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
-        if (order) {
-          return {
-            "day": day,
-            "meals": order
-          }
-        } else {
-          return { "day": day }
+      // console.log(this.week)
+      const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const formattedDate = formatter.format(this.week).replace(/\./g, "-");
+      const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
+      if (order) {
+        this.weekToExport = {
+          "day": this.week,
+          "meals": order
         }
-      })
+      } else {
+        this.weekToExport = {
+          "day": day,
+          "meals": []
+        }
+      }
+    },
+    setRecipesListHeight() {
+      const calendarAndWeekHeight = this.$refs.calendarAndWeek.offsetHeight;
+      const recipesListElement = document.querySelector('.recipes-list');
+      recipesListElement.style.height = `${calendarAndWeekHeight}px`;
     }
   },
   async beforeMount() {
-      this.localRecipes = this.recipesStore.recipes;
+    this.localRecipes = this.recipesStore.recipes;
   },
   setup() {
     const recipesStore = useRecipesStore();
@@ -198,12 +207,11 @@ export default {
     <div key="calendar-and-week" class="calendar-and-week">
       <CalendarController @export-this-week="importThisWeek" />
       <div class="week">
-        <DayOfWeek v-for="day in weekToExport" :day="day" @showModalRecipeCard="showModalRecipeCard"
-          @deleteMeal="deleteMeal" />
+        <DayOfWeek :day="weekToExport" @showModalRecipeCard="showModalRecipeCard" @deleteMeal="deleteMeal" />
       </div>
     </div>
     <div class="recipes-list" key="recipes-list">
-      <searchIngredients  @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
+      <searchIngredients @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
       <div class="list">
         <TransitionGroup name="list">
           <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :wideCard="true"
@@ -219,10 +227,12 @@ export default {
 .main-menu {
   display: flex;
   flex-direction: row;
-  gap: 32px;
+  justify-content: space-between;
+  gap: 24px;
   align-items: flex-start;
+  // min-height: calc(100vh - 112px);
+  // max-height: calc(100vh - 112px);
   height: 100vh;
-  position: relative;
   padding-top: 32px;
 }
 
@@ -230,19 +240,23 @@ export default {
   padding: 0 64px 64px;
 
 }
-
-.wrapper {
-  width: 548px;
-  height: 141px;
-  background: var(--Light_orange_2);
-  border-radius: 40px;
+.calendar-and-week{
+  height: 100%;
 }
+
 
 .week {
   display: flex;
-  flex-direction: column;
+  
   gap: 16px;
-  margin: 24px 0;
+  margin: 24px -10px 0 0 ;
+  height: calc(100% - 160px);
+  overflow: auto;
+
+  &::after {
+  content: '';
+  width: 10px;
+}
 }
 
 .recipes-list {
@@ -250,9 +264,9 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px;
-  position: absolute;
-  right: 64px;
+  // max-height: calc(100vh - 120px);
   height: 100%;
+  max-height: 200vh;
   overflow: auto;
 }
 
@@ -263,20 +277,44 @@ export default {
   align-items: center;
   gap: 16px;
   overflow: auto;
-  height: auto;
+  height: 100%;
   width: 550px;
   padding-bottom: 50px;
 }
 
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
+
+@media (max-width: 1263px) {
+  .calendar-and-week {
+    width: calc(50% - 12px);
+  }
+
+  .wrapper-list {
+    width: calc(50% - 12px);
+  }
+
+  .list {
+    width: 100%;
+  }
 }
 
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
+@media (max-width: 810px) {
+
+  .week {
+    flex-direction: column;
+
+  &::after {
+  display: none;
+}
+}
+
+  .calendar-and-week {
+    width: 100%;
+    height: 100%;
+  }
+
+  .recipes-list {
+    display: none;
+  }
 }
 </style>

@@ -110,7 +110,7 @@ export default {
       <searchIngredients class="search" @search-get="searchGet" key="search" />
       <div class="wrapper-recipes-list" key="wrapper-recipes-list">
         <TransitionGroup name="list">
-          <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" @showAddToMenu="showAddToMenu" />
+          <RecipeСardVue v-for="item in recipesList" :item="item" :ultraWideCard="true" :key="item.id" @showAddToMenu="showAddToMenu" />
         </TransitionGroup>
       </div>
       <ButtonUi key="btn-more" class="button-more-recipes" text="Посмотреть еще" color="gray" method="moreRecipes"
@@ -165,6 +165,13 @@ export default {
 @media (max-width: 1200px) {
   .wrapper-recipes-list {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 786px) {
+  .wrapper-recipes-list {
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 }
 </style>

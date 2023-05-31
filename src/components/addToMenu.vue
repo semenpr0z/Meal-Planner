@@ -38,36 +38,35 @@ export default {
             this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
           }
           this.week = week
-          this.mappingWeek()
+          // this.mappingWeek()
         }
       } else {
         this.week = week
-        this.mappingWeek()
+        // this.mappingWeek()
       }
     },
-    mappingWeek() {
-      this.weekToExport = this.week.map(day => {
-        const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const formattedDate = formatter.format(day).replace(/\./g, "-");
-        const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
-        if (order) {
-          return {
-            "day": day,
-            "meals": order
-          }
-        } else {
-          return { "day": day }
-        }
-      })
-    },
+    // mappingWeek() {
+    //   this.weekToExport = this.week.map(day => {
+    //     const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    //     const formattedDate = formatter.format(day).replace(/\./g, "-");
+    //     const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
+    //     if (order) {
+    //       return {
+    //         "day": day,
+    //         "meals": order
+    //       }
+    //     } else {
+    //       return { "day": day }
+    //     }
+    //   })
+    // },
     moveToSuccess() {
       this.calendarControllerVisible = false,
         this.successVisible = true
     },
     closeSuccess() {
       this.updateMenu()
-      this.calendarControllerVisible = true,
-        this.successVisible = false
+      this.closeAddToMenu()
     },
     async updateMenu() {
       let orders = await OrderDataService.getAll()
@@ -113,16 +112,18 @@ export default {
 
 .addToMenu {
   position: fixed;
-  top: calc(50% - 143.5px);
+  top: 50%;
   left: calc(50% - 150px);
   width: 306px;
-  height: 306px;
+  height: auto;
+  min-height: 300px;
   background-color: var(--White);
   z-index: 3;
   display: flex;
   flex-direction: column;
   border: 3px solid var(--Gray);
   border-radius: 30px;
+  transform: translateY(-50%);
 }
 
 .wrapper-calendar {

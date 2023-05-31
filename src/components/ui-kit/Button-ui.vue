@@ -151,4 +151,13 @@ export default {
   &:hover {
     cursor: pointer;
   }
-}</style>
+}
+
+@media (max-width: 840px) {
+  .button-ui {
+    &_short{
+      padding: 14px 16px;
+    }
+  }
+}
+</style>

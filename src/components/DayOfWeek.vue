@@ -54,7 +54,10 @@ export default {
     props: {
         day: {
             type: Object,
-            required: true
+            default: {
+                "day": new Date(),
+                "meals": []
+            }
         }
     },
     methods: {
@@ -116,28 +119,14 @@ export default {
 </script>
 
 <template>
-    <div class=" day day-hidden" v-if="!hiddenDay">
-        <div class="day-hidden__btn-and-text" @click="() => { hiddenDay = true }">
-            <button class="day-hidden__btn-and-text__btn">
-                <img src="/svg/icon-add.svg" alt="Раскрыть">
-            </button>
-            <h2 class="h-2 day-h2 day-hidden__btn-and-text__h2">{{ capitalizeFirstLetter(new Intl.DateTimeFormat("ru", {
-                weekday: "long"
-            }).format(day.day)) + (day.meals.length ? " (" + day.meals.length + ")" : '') }}</h2>
-        </div>
-    </div>
-    <div class="day" v-else="hiddenDay">
-        <div class="day-hidden__btn-and-text" @click="() => { hiddenDay = false }">
-            <button class="day-hidden__btn-and-text__btn">
-                <img src="/svg/icon-remove.svg" alt="Раскрыть">
-            </button>
-            <h2 class="h-2 day-h2 day-hidden__btn-and-text__h2">{{ capitalizeFirstLetter(new Intl.DateTimeFormat("ru", {
+    <div class="day">
+        <div class="day__text">
+
+            <h2 class="h-2 day-h2 day__text__h2">{{ capitalizeFirstLetter(new Intl.DateTimeFormat("ru", {
                 weekday: "long"
             }).format(day.day)) }}</h2>
         </div>
-        <!-- <p>{{ new Intl.DateTimeFormat("ru", { day: "numeric", month: "numeric" }).format(day.day) }}</p> -->
-        <Meal v-for="meal in mappedMeals" :meal="meal" @showModalRecipeCard="showModalRecipeCard"
-            @deleteMeal="deleteMeal" />
+        <Meal v-for="meal in mappedMeals" :meal="meal" @deleteMeal="deleteMeal" />
     </div>
 </template>
 
@@ -146,38 +135,38 @@ export default {
     border: 3px solid var(--Gray);
     border-radius: 50px;
     padding: 24px 32px;
-    width: 480px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    height: fit-content;
 
     &-h2 {
         text-align: center;
     }
 
-    &-hidden {
-        &__btn-and-text {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+    &__text {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &__btn {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 0%;
+            border: none;
+            background-color: transparent;
 
             &:hover {
                 cursor: pointer;
             }
-
-            &__btn {
-                width: 24px;
-                height: 24px;
-                position: absolute;
-                left: 0%;
-                border: none;
-                background-color: transparent;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
         }
     }
-}</style>
+}
+</style>

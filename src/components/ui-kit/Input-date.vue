@@ -1,25 +1,33 @@
 <script>
-import { useUserStore } from '@/stores/UserStore.js'
 
 export default {
     data() {
         return {
+            date_of_birth: this.value
         }
     },
-    setup() {
-        const userStore = useUserStore();
-        return {
-            userStore
+    props: {
+        invalid: {
+            required: false
+        },
+        value: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    methods: {
+        updateDateOfBirth() {
+            this.$emit('updateDateOfBirth', this.date_of_birth);
+        }
+    },
 }
 </script>
 
 <template>
     <div class="input-form">
-        <span class="span-3 input-name">Дата рождения</span>
-        <input :class="['input', 'span-3', {'input-empty' : userStore.userDataOnChange.date_of_birth.length == 0}]" type="date" name="age" min="1935-01-01" max="2015-12-31"
-            v-model="userStore.userDataOnChange.date_of_birth">
+        <span class="span-2 input-name">Дата рождения</span>
+        <input :class="['input', 'span-3', {'input-empty' : date_of_birth.length == 0}]" type="date" name="age" min="1935-01-01" max="2015-12-31"
+            v-model="date_of_birth" @input="updateDateOfBirth">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>

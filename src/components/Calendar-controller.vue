@@ -2,8 +2,10 @@
 import moment from 'moment';
 import { getMonthWeeks } from '@/utils/datesUtils.js';
 import { useUserStore } from '@/stores/UserStore.js';
+import { useRecipesStore } from '@/stores/RecipesStore.js'
 
 import MiniMeal from '@/components/MiniMeal.vue';
+import ButtonUI from '@/components/ui-kit/Button-ui.vue'
 export default {
     data() {
 
@@ -60,13 +62,16 @@ export default {
         }
     },
     components: {
-        MiniMeal
+        MiniMeal,
+        ButtonUI
     },
     setup() {
 
         const userStore = useUserStore();
+        const recipesStore = useRecipesStore();
         return {
-            userStore
+            userStore,
+            recipesStore
         }
     },
     props: {
@@ -151,20 +156,29 @@ export default {
                 }
             }
         },
-        exportThisWeek() {
-            this.$emit('exportThisWeek', this.exportWeek)
-        },
-        capitalizeFirstLetter(word) {
-            return word.charAt(0).toUpperCase() + word.slice(1);
+        exportThisWeek(index) {
+            if (index) {
+                // console.log(this.exportWeek[index]);
+                this.$emit('exportThisWeek', this.exportWeek[index])
+            } else {
+                this.$emit('exportThisWeek', this.exportWeek[0])
+            }
         },
         selectDay(index) {
             this.indexOfSelectedDay = index
+            if (!this.miniCalendar) {
+                this.changeIndexOfDay(index)
+                this.exportThisWeek(index)
+            }
         },
-        moveToSuccess(){
+        moveToSuccess() {
             this.$emit('moveToSuccess')
+        },
+        changeIndexOfDay(index) {
+            this.$emit('changeIndexOfDay', index)
         }
     },
-    emits: ['exportThisWeek', 'moveToSuccess'],
+    emits: ['exportThisWeek', 'moveToSuccess', 'changeIndexOfDay'],
     mounted() {
         this.getCurrentWeek()
         this.exportThisWeek()
@@ -178,13 +192,21 @@ export default {
             const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const formattedDate = formatter.format(this.month[this.indexOfMonth][this.indexOfWeek][this.indexOfSelectedDay]).replace(/\./g, "-");
             const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
+            // console.log(order)
             if (order.length > 0) {
                 let mappedMeals = this.meals.map(meal => {
                     let mealsId = order.filter(order => meal.mealsId == order.mealsId)
+                    console.log(meal)
                     if (mealsId.length) {
+                        let mealsNames = mealsId.map(meal => {
+                            console.log(meal)
+                            let recipe = this.recipesStore.recipes.find(recipe => recipe.id === meal.dishesId)
+                            return recipe.name
+                        })
                         return {
                             'name': meal.name,
                             'mealsId': meal.mealsId,
+                            'mealsNames': mealsNames,
                             'amount': mealsId.length,
                             'date': formattedDate,
                             'dishesId': this.dishesId
@@ -194,13 +216,15 @@ export default {
                             'name': meal.name,
                             'mealsId': meal.mealsId,
                             'date': formattedDate,
-                            'dishesId': this.dishesId
+                            'dishesId': this.dishesId,
+                            'mealsNames': [],
                         }
                     }
                 })
 
-
+                console.log(mappedMeals)
                 return mappedMeals
+
 
             } else {
                 let mappedMeals = this.meals.map(meal => {
@@ -208,7 +232,8 @@ export default {
                         'name': meal.name,
                         'mealsId': meal.mealsId,
                         'date': formattedDate,
-                        'dishesId': this.dishesId
+                        'dishesId': this.dishesId,
+                        'mealsNames': [],
                     }
                 }
                 )
@@ -240,14 +265,17 @@ export default {
         <div class="calendar-controller__footer">
             <ul class="calendar-controller__footer_ul">
                 <TransitionGroup appear name="fade">
-                    <li v-for="day in showCurrentWeek" :key="day" class="calendar-controller__footer_ul_li">
-                        <span class="span-2">{{ new Intl.DateTimeFormat("ru", {
-                            weekday:
-                                "short"
-                        }).format(day).toUpperCase() }}</span>
-                        <p class="p-1">{{ new Intl.DateTimeFormat("ru", {
-                            day: "numeric"
-                        }).format(day) }}</p>
+                    <li v-for="(day, index) in showCurrentWeek" :key="day" class="calendar-controller__footer_ul_li"
+                        @click="() => { selectDay(index) }">
+                        <span :class="['span-2', 'calendar-controller-mini__footer_ul_li-span']">{{
+                            new Intl.DateTimeFormat("ru", {
+                                weekday:
+                                    "short"
+                            }).format(day).toUpperCase() }}</span>
+                        <p :class="['p-1', 'p', { 'active': indexOfSelectedDay == index }]">{{ new Intl.DateTimeFormat("ru",
+                            {
+                                day: "numeric"
+                            }).format(day) }}</p>
                     </li>
                 </TransitionGroup>
             </ul>
@@ -270,22 +298,24 @@ export default {
                 <TransitionGroup appear name="fade">
                     <li v-for="(day, index) in showCurrentWeek" :key="day" class="calendar-controller-mini__footer_ul_li"
                         @click="() => { selectDay(index) }">
-                        <span
-                            :class="['span-3', 'calendar-controller-mini__footer_ul_li-span', { 'active': indexOfSelectedDay == index }]">{{
-                                capitalizeFirstLetter(new
-                                    Intl.DateTimeFormat("ru", {
-                                        weekday:
-                                            "short"
-                                    }).format(day)) }}</span>
-                        <p class="span-3">{{ new Intl.DateTimeFormat("ru", {
-                            day: "numeric"
-                        }).format(day) }}</p>
+                        <span class="span-3 week-day">{{
+                            new
+                                Intl.DateTimeFormat("ru", {
+                                    weekday:
+                                        "short"
+                                }).format(day).toUpperCase() }}</span>
+                        <p
+                            :class="['span-3', 'calendar-controller-mini__footer_ul_li-span', { 'active': indexOfSelectedDay == index }]">
+                            {{ new Intl.DateTimeFormat("ru", {
+                                day: "numeric"
+                            }).format(day) }}</p>
                     </li>
                 </TransitionGroup>
             </ul>
             <ul class="calendar-controller-mini__day-meals">
-                <MiniMeal v-for="meal in showSelectedDay" :meal="meal" @move-to-success="moveToSuccess"/>
+                <MiniMeal v-for="meal in showSelectedDay" :meal="meal" @move-to-success="moveToSuccess" />
             </ul>
+            <ButtonUI text="Подтвердить" @click="moveToSuccess" />
         </div>
     </div>
 </template>
@@ -293,7 +323,7 @@ export default {
 <style lang="scss" scoped>
 .calendar-controller {
     padding: 24px 32px;
-    background: var(--Light_orange_2);
+    background: var(--Light_orange);
     border-radius: 40px;
 
     &__header {
@@ -315,12 +345,15 @@ export default {
 
     &__footer {
         padding-top: 16px;
+        width: 100%;
 
         &_ul {
             display: flex;
             list-style: none;
-            gap: 55px;
-            width: 484px;
+            justify-content: space-between;
+            
+            // gap: 43px;
+            width: 100%;
             overflow: hidden;
 
             &_li {
@@ -328,7 +361,30 @@ export default {
                 flex-direction: column;
                 align-items: center;
                 gap: 8px;
-                width: 22px;
+                width: 32px;
+
+                .active {
+                    background-color: var(--White);
+                    border-radius: 50%;
+                }
+
+                &:hover>.p {
+                    background-color: var(--White);
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                .p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                    transition: all 0.4s;
+                    border-radius: 50%;
+                }
             }
         }
     }
@@ -364,13 +420,13 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 16px;
+        gap: 24px;
 
         &_ul {
             display: flex;
             list-style: none;
-            justify-content: center;
-            width: 230px;
+            justify-content: space-between;
+            width: 100%;
             overflow: hidden;
             gap: 1px;
 
@@ -381,17 +437,32 @@ export default {
 
                 width: 32px;
 
+                .active {
+                    background-color: var(--Light_orange);
+                    border-radius: 50%;
+                }
+
+                .week-day{
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
                 &-span {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     width: 32px;
                     height: 32px;
+                    transition: ease 0.4s;
+                    border-radius: 50%;
                 }
 
                 &:hover>&-span {
-                    background-color: var(--Light_orange_2);
-                    border-radius: 50%;
+                    background-color: var(--Light_orange);
+
                 }
 
                 &:hover {
@@ -401,17 +472,13 @@ export default {
         }
     }
 
-    .active {
-        background-color: var(--Light_orange_2);
-        border-radius: 50%;
-    }
-
     &__day-meals {
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 }
+
 
 .fade-enter-active,
 .fade-leave-active {

@@ -1,9 +1,14 @@
 <script>
 import Button from '@/components/ui-kit/Button-ui.vue'
+import InputEmail from '@/components/ui-kit/Input-email.vue';
+import InputPassword from '@/components/ui-kit/Input-password.vue'
 import UserDataService from '../services/UserDataService'
 import InputUi from '@/components/ui-kit/Input-ui.vue';
 import { useUserStore } from '@/stores/UserStore.js'
 import router from '@/router.js'
+import InputName from '@/components/ui-kit/Input-name.vue';
+import InputDate from '@/components/ui-kit/Input-date.vue';
+import InputRadio from '@/components/ui-kit/Input-radio.vue';
 
 export default {
     data() {
@@ -11,10 +16,10 @@ export default {
             id: null,
             email: '',
             password: '',
-            firstName: '',
-            age: '',
+            first_name: '',
+            date_of_birth: '',
             sex: '',
-            validState: false,
+            validation: false,
             nextStep: true,
             user: null,
             format: 'yyyy-MM-dd'
@@ -34,28 +39,49 @@ export default {
     },
     components: {
         Button,
-        InputUi
+        InputUi,
+        InputEmail,
+        InputPassword,
+        InputName,
+        InputDate,
+        InputRadio
     },
     methods: {
+        updateEmail(email) {
+            this.email = email
+        },
+        updatePassword(password) {
+            this.password = password
+        },
+        updateName(name) {
+            this.first_name = name
+        },
+        updateDateOfBirth(date) {
+            this.date_of_birth = date
+        },
+        updateSex(sex) {
+            console.log(sex)
+            this.sex = sex
+        },
         showLogin() {
             this.$emit('showLogin');
         },
         showNextStep() {
             if (this.nextStep == true) {
                 if (this.email.length == 0 || this.password.length == 0) {
-                    this.validState = true
+                    this.validation = true
                 } else {
                     this.nextStep = false
                 }
             }
         },
         async saveUser() {
-            if (this.email.length != 0 && this.password.length != 0 && this.firstName.length != 0 && this.age.length != 0 && this.sex.length != 0) {
+            if (this.email.length != 0 && this.password.length != 0 && this.first_name.length != 0 && this.date_of_birth.length != 0) {
                 this.user = {
                     email: this.email,
                     password: this.password,
-                    first_name: this.firstName,
-                    date_of_birth: this.age,
+                    first_name: this.first_name,
+                    date_of_birth: this.date_of_birth,
                     sex: this.sex
                 };
                 UserDataService.create(this.user)
@@ -70,24 +96,14 @@ export default {
                     console.log('Ошибка регистрации')
                 }
             } else {
-                this.validState = true
-            }
-        },
-        valueGet(value, type) {
-            if (type === 'email') {
-                this.email = value
-            }
-            else if (type === 'password') {
-                this.password = value
-            }
-            else if (type === 'firstName') {
-                this.firstName = value
-            }
-            else if (type === 'age') {
-                this.age = value
-            }
-            else if (type === 'sex') {
-                this.sex = value
+                console.log({
+                    email: this.email,
+                    password: this.password,
+                    first_name: this.first_name,
+                    date_of_birth: this.date_of_birth,
+                    sex: this.sex
+                })
+                this.validation = true
             }
         },
         handleKeydown(event) {
@@ -103,25 +119,25 @@ export default {
     watch: {
         email(newValue, prevValue) {
             if (newValue.length == 0) {
-                this.validState = true
+                this.validation = true
             } else {
-                this.validState = false
+                this.validation = false
             }
         },
         password(newValue, prevValue) {
             if (newValue.length == 0) {
-                this.validState = true
+                this.validation = true
             } else {
-                this.validState = false
+                this.validation = false
             }
         },
-        firstName(newValue, prevValue) {
+        first_name(newValue, prevValue) {
             if (newValue.length == 0) {
-                this.validState = true
+                this.validation = true
             } else {
-                this.validState = false
+                this.validation = false
             }
-        }
+        },
     },
     emits: ['showLogin']
 }
@@ -137,22 +153,25 @@ export default {
         <div class="registration-form">
             <h2 class="registration-form__h2 h-1">Регистрация</h2>
             <div class=" registration-form wrapper-first-step" v-if="nextStep">
-                <InputUi @valueGet="valueGet" @auth="showNextStep" type="email" method="showNextStep" :valid="validState" />
-                <InputUi @valueGet="valueGet" @auth="showNextStep" type="password" method="showNextStep"
-                    :valid="validState" />
+                <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
+                <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation" class="wrapper" />
                 <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep"
-                    method="showNextStep"/>
+                    method="showNextStep" />
                 <span
-                    :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validState }]">Данные
+                    :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validation }]">Данные
                     введены неверно, попробуйте снова</span>
             </div>
             <div class="registration-form wrapper-second-step" v-else>
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser" :valid="validState" />
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="age" method="saveUser" :valid="validState"/>
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser" :valid="validState" />
+                <InputName :value="first_name" @updateName="updateName" :invalid="validation" class="wrapper" />
+                <InputDate :value="date_of_birth" @updateDateOfBirth="updateDateOfBirth" class="wrapper" />
+                <InputRadio :value="sex" @updateSex="updateSex" class="wrapper" />
+
+                <!-- <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser" :valid="validState" />
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="age" method="saveUser" :valid="validState" />
+                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser" :valid="validState" /> -->
                 <Button class="registration-form__button" text="Войти" type="submit" value="Save" @click="saveUser" />
                 <span
-                    :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validState }]">Данные
+                    :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validation }]">Данные
                     введены неверно, попробуйте снова</span>
             </div>
         </div>
@@ -182,7 +201,7 @@ export default {
     display: flex;
     gap: 47px;
     margin-top: 199px;
-    height: 334px;
+    height: 385px;
 
     &_margin {
         margin-top: 149px;
@@ -214,9 +233,14 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    width: 334px;
 
     &__h2 {
         color: var(--Orange);
+    }
+
+    .wrapper {
+        width: 100%;
     }
 
     &__text-invalid {
@@ -225,6 +249,27 @@ export default {
 
         &_show {
             display: block;
+        }
+    }
+}
+
+
+@media screen and (max-width: 750px) {
+    .wrapper-text-and-registration-form {
+        margin-top: 17px;
+        justify-content: center;
+
+        .text {
+            display: none;
+        }
+
+        .registration-form {
+            width: 100%;
+            max-width: 500px;
+
+            .wrapper {
+                justify-content: center;
+            }
         }
     }
 }

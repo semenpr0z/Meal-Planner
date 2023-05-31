@@ -1,24 +1,33 @@
 <script>
-import { useUserStore } from '@/stores/UserStore.js'
 
 export default {
     data() {
         return {
+            first_name: this.value
         }
     },
-    setup() {
-        const userStore = useUserStore();
-        return {
-            userStore
+    props: {
+        invalid: {
+            required: false
+        },
+        value: {
+            type: String,
+            default: ''
         }
-    }
+    },
+    methods: {
+        updateName() {
+            this.$emit('updateName', this.first_name);
+        }
+    },
 }
 </script>
 
 <template>
     <div class="input-form">
-        <span class="span-3 input-name">Имя</span>
-        <input :class="['input', 'span-3']" type="text" placeholder="Например: Аркадий" name="text" v-model="userStore.userDataOnChange.first_name">
+        <span class="span-2 input-name">Имя</span>
+        <input :class="['input', 'span-3', { 'input-invalid': invalid }]" type="text" placeholder="Например: Аркадий"
+            name="text" v-model="first_name" @input="updateName">
         <span class="input-span span-3">Поле заполнено неверно, попробуйте снова</span>
     </div>
 </template>
@@ -40,12 +49,14 @@ export default {
     &:placeholder-shown {
         color: var(--Gray);
     }
-    &-span{
+
+    &-span {
         color: #D02500;
         display: none;
         margin-top: 8px;
         padding-left: 24px;
     }
+
     &-name {
         padding: 0 0 8px 32px;
         height: 24px;
@@ -68,7 +79,7 @@ export default {
         border: 2px solid #D02500;
     }
 
-    &:invalid:not(:placeholder-shown) + &-span {
+    &:invalid:not(:placeholder-shown)+&-span {
         display: block;
     }
 }
