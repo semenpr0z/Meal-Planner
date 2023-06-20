@@ -30,7 +30,29 @@ export default {
                     }
                 ]
             },
-            password: ''
+            password: '',
+            name: 'Ароматные кексы с ликером',
+            image: "https://www.povarenok.ru/data/cache/2021jan/15/50/2821371_67078-300x0.jpg",
+            link: "https://www.povarenok.ru/recipes/show/169900/",
+            ingredients: [
+                {
+                    "name": "Мука пшеничная",
+                    "id": 1,
+                    "amount": "190 г"
+                }
+            ],
+            calorific: "277.6",
+            time: 15,
+            complexity: "сложная",
+            protein: "2.1",
+            fats: "5.2",
+            carbohydrates: "30.5",
+            recipe: [
+                {
+                    "text": "Соединим сухие компоненты муку и разрыхлитель",
+                    "id": 1
+                }
+            ]
         }
     },
     methods: {
@@ -56,12 +78,40 @@ export default {
         },
         sendRecipe(event) {
             event.preventDefault();
-            if (this.password === "mealplanner2023") {
-                console.log(this.recipe)
-                RecipesDataService.createOne(this.recipe)
-            } else {
-                alert("Брат, введи пароль")
-            }
+            console.log({
+                    "name": this.name,
+                    "image": this.image,
+                    "link": this.link,
+                    "ingredients": this.ingredients,
+                    "properties": {
+                        "calorific": this.calorific +' Ккал',
+                        "time": this.time,
+                        "complexity": this.complexity,
+                        "protein": this.protein + ' г',
+                        "fats": this.fats + ' г',
+                        "carbohydrates": this.carbohydrates + ' г',
+                    },
+                    "recipe": this.recipe
+                })
+            // if (this.password === "mealplanner2023") {
+            //     RecipesDataService.createOne({
+            //         "name": this.name,
+            //         "image": this.image,
+            //         "link": this.link,
+            //         "ingredients": this.ingredients,
+            //         "properties": {
+            //             "calorific": this.calorific +' Ккал',
+            //             "time": this.time,
+            //             "complexity": this.complexity,
+            //             "protein": this.protein + ' г',
+            //             "fats": this.fats + ' г',
+            //             "carbohydrates": this.carbohydrates + ' г',
+            //         },
+            //         "recipe": this.recipe
+            //     })
+            // } else {
+            //     alert("Брат, введи пароль")
+            // }
         }
     }
 }
@@ -77,25 +127,32 @@ export default {
         </p>
         <form class="form">
             <label class="input-label" for="name">Название рецепта<input type="text" id="name"
-                    v-model="recipe.name"></label>
-            <label class="input-label" for="img">Ссылка на картинку(в конце рецепта кликаете на картинку и вас перебросит на
-                страницу картинки(нужна ссылка этой страницы))<input type="text" id="img" v-model="recipe.image"></label>
+                    v-model="name"></label>
+            <label class="input-label" for="img">Ссылка на картинку(в конце рецепта кликаете на картинку правой
+                кнопкой(открыть изображение в новой вкладке) и вас перебросит на
+                страницу картинки(нужна ссылка этой страницы))<input type="text" id="img" v-model="image"></label>
             <label class="input-label" for="link">Ссылка на сам рецепт<input type="text" id="link"
-                    v-model="recipe.link"></label>
-            <label class="input-label" for="calorific">Калорийность<input type="text" id="calorific"
-                    v-model="recipe.properties.calorific"></label>
+                    v-model="link"></label>
+            <label class="input-label" for="calorific">Калорийность <div><input type="number" id="calorific"
+                    v-model="calorific">Ккал</div></label>
             <label class="input-label" for="time">Время приготовления<input type="number" id="time"
-                    v-model="recipe.properties.time"></label>
-            <label class="input-label" for="complexity">Сложность (маленькими буквами)<input type="text" id="complexity"
-                    v-model="recipe.properties.complexity"></label>
-            <label class="input-label" for="protein">Белки<input type="text" id="protein"
-                    v-model="recipe.properties.protein"></label>
-            <label class="input-label" for="fats">Жиры<input type="text" id="fats" v-model="recipe.properties.fats"></label>
-            <label class="input-label" for="carbohydrates">Углеводы <input type="text" id="carbohydrates"
-                    v-model="recipe.properties.carbohydrates"></label>
+                    v-model="time"></label>
+            <label class="input-label" for="complexity">
+                Сложность:
+                <select id="complexity" v-model="complexity">
+                    <option value="сложная">Сложная</option>
+                    <option value="средняя">Средняя</option>
+                    <option value="низкая">Низкая</option>
+                </select>
+            </label>
+            <label class="input-label" for="protein">Белки<div><input type="number" id="protein"
+                    v-model="protein">г</div></label>
+            <label class="input-label" for="fats">Жиры <div><input type="number" id="fats" v-model="fats">г</div></label>
+            <label class="input-label" for="carbohydrates">Углеводы <div><input type="number" id="carbohydrates"
+                    v-model="carbohydrates">г</div></label>
             <div class="input-list">
                 <h2>Список ингредиентов</h2>
-                <div v-for="ingredient in  recipe.ingredients ">
+                <div v-for="ingredient in  ingredients ">
                     <label class="input-label"> Название ингредиента (примеры в самом вводном поле) <input type="text"
                             v-model="ingredient.name"> </label>
                     <label class=" input-label">Количество<input type="text" v-model="ingredient.amount"></label>
@@ -105,8 +162,8 @@ export default {
             </div>
             <div class="input-list">
                 <h2>Шаги рецепта</h2>
-                <div v-for="step in  recipe.recipe ">
-                    <label class="input-label"> Название ингредиента (примеры в самом вводном поле) <textarea
+                <div v-for="step in  recipe ">
+                    <label class="input-label"> Текст шага (примеры в самом вводном поле) <textarea
                             v-model="step.text"></textarea> </label>
                 </div>
                 <button @click="addNewStep">Добавить шаг</button>
@@ -139,6 +196,7 @@ export default {
             display: flex;
             flex-direction: column;
             gap: 5px;
+            width: 100%;
         }
 
         &-list {
@@ -146,11 +204,15 @@ export default {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%;
         }
     }
 
     .password {
         margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .btn {
