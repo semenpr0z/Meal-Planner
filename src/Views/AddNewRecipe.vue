@@ -78,7 +78,8 @@ export default {
         },
         sendRecipe(event) {
             event.preventDefault();
-            console.log({
+            if (this.password === "mealplanner2023") {
+                RecipesDataService.createOne({
                     "name": this.name,
                     "image": this.image,
                     "link": this.link,
@@ -93,25 +94,9 @@ export default {
                     },
                     "recipe": this.recipe
                 })
-            // if (this.password === "mealplanner2023") {
-            //     RecipesDataService.createOne({
-            //         "name": this.name,
-            //         "image": this.image,
-            //         "link": this.link,
-            //         "ingredients": this.ingredients,
-            //         "properties": {
-            //             "calorific": this.calorific +' Ккал',
-            //             "time": this.time,
-            //             "complexity": this.complexity,
-            //             "protein": this.protein + ' г',
-            //             "fats": this.fats + ' г',
-            //             "carbohydrates": this.carbohydrates + ' г',
-            //         },
-            //         "recipe": this.recipe
-            //     })
-            // } else {
-            //     alert("Брат, введи пароль")
-            // }
+            } else {
+                alert("Брат, введи пароль")
+            }
         }
     }
 }
