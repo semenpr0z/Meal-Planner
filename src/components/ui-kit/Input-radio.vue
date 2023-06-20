@@ -17,14 +17,12 @@ export default {
     },
     methods: {
         updateSex(value) {
-            // console.log(this.sex)
             this.$emit('updateSex', value);
 
         }
     },
     watch: {
         sex(newValue) {
-            // console.log(newValue)
             this.updateSex(newValue)
         }
     },

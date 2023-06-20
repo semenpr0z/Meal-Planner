@@ -70,6 +70,7 @@ export default {
   padding: 14px 58px;
   border-radius: 30px;
   transition: 0.5s;
+  min-width: fit-content;
 
   &_orange {
     background: var(--Orange);

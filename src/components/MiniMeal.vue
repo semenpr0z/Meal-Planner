@@ -23,7 +23,6 @@ export default {
                     'dishesId': this.meal.dishesId,
                     'mealsId': this.meal.mealsId.toString(),
                 }
-                console.log(newOrder)
                 OrderDataService.create(newOrder)
                 this.userStore.userOrders.push(newOrder)
             }

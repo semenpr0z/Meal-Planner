@@ -158,7 +158,6 @@ export default {
         },
         exportThisWeek(index) {
             if (index) {
-                // console.log(this.exportWeek[index]);
                 this.$emit('exportThisWeek', this.exportWeek[index])
             } else {
                 this.$emit('exportThisWeek', this.exportWeek[0])
@@ -192,14 +191,11 @@ export default {
             const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const formattedDate = formatter.format(this.month[this.indexOfMonth][this.indexOfWeek][this.indexOfSelectedDay]).replace(/\./g, "-");
             const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
-            // console.log(order)
             if (order.length > 0) {
                 let mappedMeals = this.meals.map(meal => {
                     let mealsId = order.filter(order => meal.mealsId == order.mealsId)
-                    console.log(meal)
                     if (mealsId.length) {
                         let mealsNames = mealsId.map(meal => {
-                            console.log(meal)
                             let recipe = this.recipesStore.recipes.find(recipe => recipe.id === meal.dishesId)
                             return recipe.name
                         })
@@ -221,8 +217,6 @@ export default {
                         }
                     }
                 })
-
-                console.log(mappedMeals)
                 return mappedMeals
 
 

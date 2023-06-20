@@ -6,6 +6,7 @@ import Recipes from '@/Views/Recipes.vue';
 import Profile from '@/Views/Profile.vue';
 import Page404 from '@/Views/Page404.vue';
 import PageRecipe from '@/Views/PageRecipe.vue';
+import AddNewRecipe from '@/Views/AddNewRecipe.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -49,6 +50,11 @@ const router = createRouter({
             path: '/:pathMatch(.*)*',
             name: '404',
             component: Page404
+        },
+        {
+            path: '/addingrecipes',
+            name: 'NewRecipes',
+            component: AddNewRecipe
         }
     ]
 })

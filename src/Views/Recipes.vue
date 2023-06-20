@@ -5,6 +5,8 @@ import searchIngredients from '@/components/search-ingredients.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
 import ButtonUi from '@/components/ui-kit/Button-ui.vue';
 import addToMenu from '@/components/addToMenu.vue';
+import Filters from '@/components/Filters.vue';
+import FilterList from '@/components/FilterList.vue';
 
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import { useUserStore } from '@/stores/UserStore.js'
@@ -14,7 +16,6 @@ export default {
     return {
       localRecipes: [],
       indexOfRecipe: 0,
-      isRecipeCardVisible: false,
       isAddToMenuVisible: false,
       Navigation: [
         {
@@ -37,7 +38,8 @@ export default {
         }
       ],
       search: '',
-      visibleRecipes: 6
+      visibleRecipes: 6,
+      filtersIsOpened: false
     };
   },
   setup() {
@@ -54,12 +56,11 @@ export default {
     searchIngredients,
     RecipeСardVue,
     ButtonUi,
-    addToMenu
+    addToMenu,
+    Filters,
+    FilterList
   },
   methods: {
-    closeRecipeCard() {
-      this.isRecipeCardVisible = false;
-    },
     searchGet(value) {
       if (value === '' && this.search === '') {
         console.log('error')
@@ -81,11 +82,20 @@ export default {
     async closeAddToMenu() {
       this.isAddToMenuVisible = false;
       document.body.style.removeProperty("overflow-y")
+    },
+    openCloseFilters() {
+      this.filtersIsOpened = !this.filtersIsOpened
     }
   },
   computed: {
     recipesList() {
-      return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1)).slice(0, this.visibleRecipes)
+      return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1)).filter(item => {
+        if (this.recipesStore.complexityFilter === "") {
+          return true; // Вернуть true, чтобы элемент проходил фильтр по сложности
+        } else {
+          return item.properties.complexity === this.recipesStore.complexityFilter;
+        }
+      }).slice(0, this.visibleRecipes)
     }
   },
   created() {
@@ -105,17 +115,24 @@ export default {
     <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
   </Transition>
   <Navbar :menu="Navigation"></Navbar>
-  <main class="main" v-if="!isRecipeCardVisible">
+  <main class="main" v-if="!filtersIsOpened">
     <TransitionGroup appear name="fade">
-      <searchIngredients class="search" @search-get="searchGet" key="search" />
+      <searchIngredients class="search" @search-get="searchGet" @open-filters="openCloseFilters" key="search" />
+      <FilterList key="filter-list" />
       <div class="wrapper-recipes-list" key="wrapper-recipes-list">
         <TransitionGroup name="list">
-          <RecipeСardVue v-for="item in recipesList" :item="item" :ultraWideCard="true" :key="item.id" @showAddToMenu="showAddToMenu" />
+          <RecipeСardVue v-for="item in recipesList" :item="item" :ultraWideCard="true" :key="item.id"
+            @showAddToMenu="showAddToMenu" />
         </TransitionGroup>
       </div>
       <ButtonUi key="btn-more" class="button-more-recipes" text="Посмотреть еще" color="gray" method="moreRecipes"
         @more-recipes="moreRecipes" @click="moreRecipes" v-if="recipesList.length < localRecipes.length" />
     </TransitionGroup>
+  </main>
+  <main class="main" v-else-if="filtersIsOpened">
+    <Transition name="fade">
+      <Filters @close-filters="openCloseFilters" />
+    </Transition>
   </main>
   <NavbarFooterMobile></NavbarFooterMobile>
 </template>

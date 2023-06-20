@@ -93,7 +93,7 @@ export default {
                         <div class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
                             <img src="/svg/icon-time.svg" alt="Время приготовления" class="properties-item__img">
                             <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
-                                item.properties.time
+                                item.properties.time + ' мин'
                             }}</span>
                         </div>
                         <div class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
@@ -133,7 +133,7 @@ export default {
                 </div>
             </div>
             <div class="modal-recipe-card-middle__information modal-recipe-card-middle__information_right">
-                <span class="modal-recipe-card-middle__information__text__item__span h-2">Ингридиенты на 4 порции:</span>
+                <span class="modal-recipe-card-middle__information__text__item__span h-2">Ингредиенты на 4 порции:</span>
                 <ol class="modal-recipe-card-middle__information__text__ingredients-wrapper">
                     <li class="modal-recipe-card-middle__information__text__item__span p-1"
                         v-for="item in item.ingredients">-

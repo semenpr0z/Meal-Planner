@@ -47,6 +47,13 @@ export default {
         InputRadio
     },
     methods: {
+        previousStep(){
+            if(!this.nextStep){
+                this.nextStep = !this.nextStep
+            }else{
+                this.$emit('showLogin');
+            }
+        },
         updateEmail(email) {
             this.email = email
         },
@@ -60,11 +67,7 @@ export default {
             this.date_of_birth = date
         },
         updateSex(sex) {
-            console.log(sex)
             this.sex = sex
-        },
-        showLogin() {
-            this.$emit('showLogin');
         },
         showNextStep() {
             if (this.nextStep == true) {
@@ -96,13 +99,6 @@ export default {
                     console.log('Ошибка регистрации')
                 }
             } else {
-                console.log({
-                    email: this.email,
-                    password: this.password,
-                    first_name: this.first_name,
-                    date_of_birth: this.date_of_birth,
-                    sex: this.sex
-                })
                 this.validation = true
             }
         },
@@ -151,6 +147,7 @@ export default {
             <h3 class="text__h3 h-1">планировщик меню на неделю,<br>где собраны твои любимые рецепты</h3>
         </div>
         <div class="registration-form">
+            <button class="btn-back" @click="previousStep"><img src="/svg/icon-arrow-back.svg" alt="Назад"></button>
             <h2 class="registration-form__h2 h-1">Регистрация</h2>
             <div class=" registration-form wrapper-first-step" v-if="nextStep">
                 <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
@@ -162,13 +159,11 @@ export default {
                     введены неверно, попробуйте снова</span>
             </div>
             <div class="registration-form wrapper-second-step" v-else>
+
                 <InputName :value="first_name" @updateName="updateName" :invalid="validation" class="wrapper" />
                 <InputDate :value="date_of_birth" @updateDateOfBirth="updateDateOfBirth" class="wrapper" />
                 <InputRadio :value="sex" @updateSex="updateSex" class="wrapper" />
 
-                <!-- <InputUi @valueGet="valueGet" @auth="saveUser" type="text" method="saveUser" :valid="validState" />
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="age" method="saveUser" :valid="validState" />
-                <InputUi @valueGet="valueGet" @auth="saveUser" type="sex" method="saveUser" :valid="validState" /> -->
                 <Button class="registration-form__button" text="Войти" type="submit" value="Save" @click="saveUser" />
                 <span
                     :class="['span-3', 'registration-form__text-invalid', { 'registration-form__text-invalid_show': validation }]">Данные
@@ -176,10 +171,6 @@ export default {
             </div>
         </div>
     </div>
-    <!-- <div class="login-offer">
-                                <h3 class="login-offer__h3">Вернуться к авторизации</h3>
-                                <Button class="login-offer__button" @click="showLogin" text="Авторизация"></Button>
-                            </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -230,10 +221,20 @@ export default {
 
 .registration-form {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     gap: 24px;
     width: 334px;
+
+    .btn-back{
+        position: absolute;
+        left: 0;
+        top: 5px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
 
     &__h2 {
         color: var(--Orange);

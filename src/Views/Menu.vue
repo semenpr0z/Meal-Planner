@@ -151,7 +151,6 @@ export default {
       OrderDataService.delete(mealId)
     },
     mappingWeek() {
-      // console.log(this.week)
       const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
       const formattedDate = formatter.format(this.week).replace(/\./g, "-");
       const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);

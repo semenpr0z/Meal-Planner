@@ -26,10 +26,10 @@ export default {
             }
         },
         openFilters() {
-            alert('Эта функция еще в разработке')
+            this.$emit('openFilters')
         }
     },
-    emits: ['searchGet'],
+    emits: ['searchGet', 'openFilters'],
     watch: {
         search(newValue, prevValue) {
             if (newValue.length != 0) {
@@ -117,7 +117,6 @@ export default {
     }
 
     &__icon-wrapper {
-        display: none;
         margin-left: 13px;
         width: 24px;
         height: 24px;
@@ -129,6 +128,10 @@ export default {
     .btn-mini {
         display: none
     }
+}
+
+.opened{
+    height: auto;
 }
 
 .invalid {
@@ -161,4 +164,5 @@ export default {
         }
 
     }
-}</style>
+}
+</style>

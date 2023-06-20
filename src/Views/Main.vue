@@ -34,7 +34,8 @@ export default {
       ],
       startFormVisible: true,
       loginFormVisible: false,
-      registrationFormVisible: false
+      registrationFormVisible: false,
+      test: true
     };
   },
   setup() {
@@ -74,6 +75,10 @@ export default {
     showRegistration() {
       this.loginFormVisible = false;
       this.registrationFormVisible = true
+    },
+    backToLogin(){
+      this.loginFormVisible = true;
+      this.registrationFormVisible = false;
     }
   },
   computed: {
@@ -92,8 +97,7 @@ export default {
   <Navbar :menu="Navigation"></Navbar>
   <main class="main main-relative">
     <div class="wrapper">
-      <TransitionGroup appear name="fade">
-        <section class="start" v-if="startFormVisible">
+        <section class="start" v-if="startFormVisible" key="start">
           <div class="start__text-button">
             <h1 class="start__text-button__h1 h-main">PlanMenu</h1>
             <h3 class="start__text-button__h3 h-1">Планировщик меню на неделю, <br>где собраны твои любимые рецепты</h3>
@@ -102,11 +106,10 @@ export default {
           </div>
           <img src="/img/img-iPhone-main.png" class="start__img">
         </section>
-        <LoginForm v-if="loginFormVisible" key="login" @show-registration="showRegistration" class="LoginForm"
-          id="authtorization" />
 
-        <RegistrationForm v-if="registrationFormVisible" key="registration" @show-login="showLogin" />
-      </TransitionGroup>
+        <LoginForm v-else-if="loginFormVisible" key="login" @show-registration="showRegistration" class="LoginForm"
+          id="authtorization" />
+        <RegistrationForm v-else-if="registrationFormVisible" key="registration" id="registation" @show-login="backToLogin" />
     </div>
     <div class="background-images">
       <div class="background-images__img-wrapper">
@@ -265,18 +268,6 @@ export default {
   gap: 23px;
   padding: 35px 0;
   margin-bottom: 100px;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  position: absolute;
 }
 
 @media screen and (max-width: 960px) {

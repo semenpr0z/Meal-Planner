@@ -11,7 +11,7 @@ export default {
         required: true
     },
     time: {
-        type: String,
+        type: Number,
         required: true
     },
     complexity:{
@@ -33,7 +33,7 @@ export default {
     </div>
     <div class="properties-item">
         <span class="span-1">{{!wideProperties ? 'Время' : 'Время приготовления'}}</span>
-        <span class="properties-item__span span-3">{{ time }}</span>
+        <span class="properties-item__span span-3">{{ time + ' мин' }}</span>
     </div>
     <div class="properties-item">
         <span class="span-1">Сложность</span>
