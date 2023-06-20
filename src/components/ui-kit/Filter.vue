@@ -20,7 +20,7 @@ export default {
 <template>
     <button class="btn" :class="{ 'checked': checked }">
         <span class="span-3">{{ text }}</span>
-        <img v-if="deletability" src="/svg/icon-close.svg/" alt="Удалить">
+        <img v-if="deletability" src="/svg/icon-close.svg" alt="Удалить">
     </button>
 </template>
 
