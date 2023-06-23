@@ -4,32 +4,32 @@ import RecipesDataService from '@/services/RecipesDataService'
 export default {
     data() {
         return {
-            recipe: {
-                "name": "Ароматные кексы с ликером",
-                "image": "https://www.povarenok.ru/data/cache/2021jan/15/50/2821371_67078-300x0.jpg",
-                "link": "https://www.povarenok.ru/recipes/show/169900/",
-                "ingredients": [
-                    {
-                        "name": "Мука пшеничная",
-                        "id": 1,
-                        "amount": "190 г"
-                    }
-                ],
-                "properties": {
-                    "calorific": "277.6 Ккал",
-                    "time": 15,
-                    "complexity": "сложная",
-                    "protein": "2.1 г",
-                    "fats": "5.2 г",
-                    "carbohydrates": "30.5 г"
-                },
-                "recipe": [
-                    {
-                        "text": "Соединим сухие компоненты муку и разрыхлитель",
-                        "id": 1
-                    }
-                ]
-            },
+            // recipe: {
+            //     "name": "Ароматные кексы с ликером",
+            //     "image": "https://www.povarenok.ru/data/cache/2021jan/15/50/2821371_67078-300x0.jpg",
+            //     "link": "https://www.povarenok.ru/recipes/show/169900/",
+            //     "ingredients": [
+            //         {
+            //             "name": "Мука пшеничная",
+            //             "id": 1,
+            //             "amount": "190 г"
+            //         }
+            //     ],
+            //     "properties": {
+            //         "calorific": "277.6 Ккал",
+            //         "time": 15,
+            //         "complexity": "сложная",
+            //         "protein": "2.1 г",
+            //         "fats": "5.2 г",
+            //         "carbohydrates": "30.5 г"
+            //     },
+            //     "recipe": [
+            //         {
+            //             "text": "Соединим сухие компоненты муку и разрыхлитель",
+            //             "id": 1
+            //         }
+            //     ]
+            // },
             password: '',
             name: 'Ароматные кексы с ликером',
             image: "https://www.povarenok.ru/data/cache/2021jan/15/50/2821371_67078-300x0.jpg",
@@ -58,10 +58,10 @@ export default {
     methods: {
         addNewIngredient(event) {
             event.preventDefault();
-            this.recipe.ingredients.push({
+            this.ingredients.push({
                 'name': '',
                 'amount': '',
-                'id': this.recipe.ingredients.length + 1
+                'id': this.ingredients.length + 1
             })
         },
         deleteLastIngredient(event) {
@@ -70,7 +70,8 @@ export default {
         },
         addNewStep(event) {
             event.preventDefault();
-            this.recipe.recipe.push({ 'text': '', 'id': this.recipe.recipe.length + 1 })
+            this.recipe.push({ 'text': '', 'id': this.recipe.length + 1 })
+            console.log(this.recipe)
         },
         deleteLastStep(event) {
             event.preventDefault();

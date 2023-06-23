@@ -89,20 +89,24 @@ export default {
             <div class="modal-recipe-card-middle__information">
                 <img class="modal-recipe-card-middle__information__image" :src="item.image" alt="Изображение блюда">
                 <div class="modal-recipe-card-middle__information__text">
+                    <h3 class="h-1 mobile">{{ item.name }}</h3>
                     <div class="modal-recipe-card-middle__information__text_wrapper">
-                        <div class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
+                        <div
+                            class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
                             <img src="/svg/icon-time.svg" alt="Время приготовления" class="properties-item__img">
                             <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
                                 item.properties.time + ' мин'
                             }}</span>
                         </div>
-                        <div class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
+                        <div
+                            class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
                             <img src="/svg/icon-dish.svg" alt="Сложность приготовления" class="properties-item__img">
                             <span class="modal-recipe-card-middle__information__text__item__span p-1">Сложность {{
                                 item.properties.complexity }}</span>
                         </div>
                     </div>
                     <div class="modal-recipe-card-middle__information__text__line"></div>
+                    <p class="h-2 mobile">В расчете на 100 г</p>
                     <div class="modal-recipe-card-middle__information__text_wrapper">
                         <p class="p-1">В расчете на 100 г</p>
                         <div class="modal-recipe-card-middle__information__text__item">
@@ -135,9 +139,10 @@ export default {
             <div class="modal-recipe-card-middle__information modal-recipe-card-middle__information_right">
                 <span class="modal-recipe-card-middle__information__text__item__span h-2">Ингредиенты на 4 порции:</span>
                 <ol class="modal-recipe-card-middle__information__text__ingredients-wrapper">
-                    <li class="modal-recipe-card-middle__information__text__item__span p-1"
-                        v-for="item in item.ingredients">-
-                        {{ item.name }} - {{ item.amount }}</li>
+                    <li class="modal-recipe-card-middle__information__text__item__span" v-for="item in item.ingredients">
+                        <p class="p-1">— {{ item.name }}</p>
+                        <p>{{ item.amount }}</p>
+                    </li>
                 </ol>
             </div>
         </div>
@@ -154,7 +159,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
 .modal-recipe-card-history {
     width: 100%;
     height: 24px;
@@ -249,18 +253,23 @@ export default {
             width: 243px;
             gap: 13px;
 
+            .mobile {
+                display: none;
+            }
+
             &_wrapper {
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
                 width: 201px;
-                p{
+
+                p {
                     text-align: center;
                 }
             }
 
             &__line {
-                height: 3px;
+                min-height: 3px;
                 width: 100%;
                 background-color: var(--Gray);
             }
@@ -270,9 +279,11 @@ export default {
                 justify-content: space-between;
                 align-items: center;
                 gap: 10px;
-                &_top{
+
+                &_top {
                     justify-content: flex-start;
                 }
+
                 &-wrapper {
                     display: flex;
                     justify-content: space-between;
@@ -280,9 +291,11 @@ export default {
 
                 &__span {
                     color: var(--Black);
+                    display: flex;
+                    justify-content: space-between;
                 }
 
-                .name{
+                .name {
                     color: var(--Orange);
                 }
             }
@@ -307,6 +320,7 @@ export default {
                     list-style: none;
                     margin: 0;
                     height: 192px;
+                    padding-right: 22px;
                 }
             }
         }
@@ -359,7 +373,111 @@ export default {
 }
 
 
-@media (max-width: 880px) {
-    
+@media (max-width: 930px) {
+    .modal-recipe-card-middle {
+        flex-direction: column;
+
+        &__information {
+            width: 100%;
+            justify-content: space-between;
+
+            &__image {
+                width: calc(100% - 300px);
+            }
+
+            &__text {
+                gap: 12px;
+
+                &__ingredients-wrapper {
+                    height: auto;
+                }
+            }
+
+            &_right {
+                box-sizing: border-box;
+                height: auto;
+                max-height: fit-content;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 600px) {
+    .main {
+        padding: 0;
+    }
+
+    .modal-recipe-card-history {
+        display: none;
+    }
+
+    .modal-recipe-card-top {
+        display: none;
+    }
+
+    .modal-recipe-card-middle {
+
+        &__information {
+            flex-direction: column;
+            height: auto;
+            gap: 0px;
+            border: none;
+
+            &_right {
+                gap: 8px;
+            }
+
+            &__image {
+                width: 100%;
+                border-radius: 40px 40px 0 0;
+            }
+
+            &__text {
+                width: 100%;
+                padding: 13px 16px;
+                box-sizing: border-box;
+                align-items: flex-start;
+
+                .mobile {
+                    display: block;
+                }
+
+                &_wrapper {
+                    width: 100%;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+
+                    p {
+                        display: none;
+                    }
+
+                }
+
+                &__item {
+                    flex-direction: column;
+
+                    &_top {
+                        flex-direction: row;
+                    }
+                }
+
+                &__line {
+                    display: none;
+                }
+
+                &__ingredients {
+
+                    &-wrapper {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-recipe-card-bottom {
+        border: none;
+    }
 }
 </style>
