@@ -88,22 +88,6 @@ export default {
 
 <template>
     <div class="filters">
-        <!-- <div class="filters_wrapper_row">
-            <div class="filters__item">
-                <p class="p-1">Время приготовления</p>
-                <div class="filters__item__btn_wrapper">
-                    <Filter text="До 15 минут" :checked="time[0] == 0 && time[1] == 15"
-                        @click="toggleFilter([0, 15], 'time')" />
-                    <Filter text="До 30 минут" :checked="time[0] == 16 && time[1] == 30"
-                        @click="toggleFilter([16, 30], 'time')" />
-                    <Filter text="До 1 часа" :checked="time[0] == 31 && time[1] == 60"
-                        @click="toggleFilter([31, 60], 'time')" />
-                    <Filter text="От 1 часа" :checked="time[0] == 61 && time[1] == 1000"
-                        @click="toggleFilter([61, 1000], 'time')" />
-                </div>
-            </div>
-            <button @click="closeFilters" class="btn-close"><img src="/svg/icon-close.svg" alt="Закрыть"></button>
-        </div> -->
         <div class="filters_wrapper_row">
             <div class="filters__item">
                 <p class="p-1">Сложность</p>
@@ -116,9 +100,10 @@ export default {
                         @click="toggleFilter('сложная', 'complexity')" />
                 </div>
             </div>
+            <button @click="closeFilters" class="btn-close"><img src="/svg/icon-close.svg" alt="Закрыть"></button>
         </div>
 
-        <div class="filters_wrapper_row">
+        <div class="filters_wrapper_row filters_wrapper_row_column">
             <p class="p-1">Время приготовления(минут)</p>
             <div class="info-text">
                 <p class="p-2">от {{ time[0] }}</p>
@@ -156,8 +141,8 @@ export default {
         justify-content: space-between;
         width: 100%;
 
-        .info-text{
-            display: flex;  
+        .info-text {
+            display: flex;
             gap: 10px;
         }
 
@@ -202,9 +187,26 @@ export default {
         position: relative;
         background: var(--Gray);
         border-radius: 5px;
-        &::before{
-            height: 17px;
-            width: 17px;
+
+        &::before {
+            display: block;
+            position: absolute;
+            top: -6px;
+            border-radius: 50%;
+            content: '';
+            height: 18px;
+            width: 18px;
+            background-color: var(--Gray);
+        }
+        &::after {
+            display: block;
+            position: absolute;
+            top: -6px;
+            right: 0;
+            border-radius: 50%;
+            content: '';
+            height: 18px;
+            width: 18px;
             background-color: var(--Gray);
         }
     }
@@ -232,13 +234,17 @@ export default {
     }
 
     input[type="range"]::-webkit-slider-thumb {
-        height: 17px;
-        width: 17px;
+        height: 18px;
+        width: 18px;
         border-radius: 50%;
         background: var(--Orange);
         pointer-events: auto;
         -webkit-appearance: none;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        &:hover{
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+        }
     }
 
     input[type="range"]::-moz-range-thumb {
@@ -260,10 +266,12 @@ export default {
 }
 
 @media (max-width: 850px) {
-    .filters{
+    .filters {
         &_wrapper_row {
-            flex-direction: column;
-            gap: 10px;
+            &_column {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     }
 }
@@ -286,5 +294,4 @@ export default {
             width: 100%;
         }
     }
-}
-</style>
+}</style>
