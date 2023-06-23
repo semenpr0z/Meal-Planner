@@ -17,18 +17,30 @@ export default {
     },
     components: { Filter },
     computed: {
-        timeFilter(){
-            return 'Время приготовления: до ' + this.recipesStore.timeFilter
+        timeFilter() {
+            if (this.recipesStore.timeFilter[0] === 0 && this.recipesStore.timeFilter[1] === 180) {
+                return false
+            } else if (this.recipesStore.timeFilter[0] === 0 && this.recipesStore.timeFilter[1] !== 180) {
+                return 'Время приготовления: до ' + this.recipesStore.timeFilter[1] + ' минут'
+            } else if (this.recipesStore.timeFilter[0] !== 0 && this.recipesStore.timeFilter[1] === 180) { 
+                return 'Время приготовления: от ' + this.recipesStore.timeFilter[0] + ' минут' 
+            } else {
+                return 'Время приготовления: от ' + this.recipesStore.timeFilter[0] + ' до ' + this.recipesStore.timeFilter[1] + ' минут'
+            }   
         },
-        complexityFilter(){
-            return 'Сложность приготовления: ' + this.recipesStore.complexityFilter
+        complexityFilter() {
+            if (this.recipesStore.complexityFilter) {
+                return 'Сложность приготовления: ' + this.recipesStore.complexityFilter
+            } else {
+                false
+            }
         },
     },
     methods: {
         deleteFilter(type) {
             switch (type) {
                 case 'time':
-                    this.recipesStore.timeFilter = '';
+                    this.recipesStore.timeFilter = [0, 180];
                     break;
                 case 'complexity':
                     this.recipesStore.complexityFilter = '';
@@ -43,11 +55,11 @@ export default {
 
 <template>
     <ul class="filter-list">
-        <li v-if="recipesStore.timeFilter">
-            <Filter :text="timeFilter" checked="true" deletability="true" @click="deleteFilter('time')" />
+        <li v-if="timeFilter">
+            <Filter :text="timeFilter" :checked="true" :deletability="true" @click="deleteFilter('time')" />
         </li>
-        <li v-if="recipesStore.complexityFilter">
-            <Filter :text="complexityFilter" checked="true" deletability="true" @click="deleteFilter('complexity')" />
+        <li v-if="complexityFilter">
+            <Filter :text="complexityFilter" :checked="true" :deletability="true" @click="deleteFilter('complexity')" />
         </li>
 
     </ul>

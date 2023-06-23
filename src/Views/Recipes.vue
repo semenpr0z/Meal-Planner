@@ -89,13 +89,17 @@ export default {
   },
   computed: {
     recipesList() {
-      return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1)).filter(item => {
-        if (this.recipesStore.complexityFilter === "") {
-          return true; // Вернуть true, чтобы элемент проходил фильтр по сложности
-        } else {
-          return item.properties.complexity === this.recipesStore.complexityFilter;
-        }
-      }).slice(0, this.visibleRecipes)
+      return this.localRecipes
+        .filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1))
+        .filter(item => {
+          if (this.recipesStore.complexityFilter === "") {
+            return true; // Вернуть true, чтобы элемент проходил фильтр по сложности
+          } else {
+            return item.properties.complexity === this.recipesStore.complexityFilter;
+          }
+        })
+        .filter(item => { return item.properties.time >= this.recipesStore.timeFilter[0] && item.properties.time <= this.recipesStore.timeFilter[1] })
+        .slice(0, this.visibleRecipes)
     }
   },
   created() {

@@ -4,7 +4,7 @@ import RecipeDataService from '@/services/RecipesDataService'
 export const useRecipesStore = defineStore("RecipesStore", {
   state: () => ({
     recipes: [],
-    timeFilter: '',
+    timeFilter: [0, 180],
     complexityFilter: ''
   }),
   getters: {},
