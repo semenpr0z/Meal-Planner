@@ -104,7 +104,7 @@ export default {
         </div>
 
         <div class="filters_wrapper_row filters_wrapper_row_column">
-            <p class="p-1">Время приготовления(минут)</p>
+            <p class="p-1">Время приготовления (минут)</p>
             <div class="info-text">
                 <p class="p-2">от {{ time[0] }}</p>
                 <p class="p-2">до {{ time[1] }}</p>
@@ -198,6 +198,7 @@ export default {
             width: 18px;
             background-color: var(--Gray);
         }
+
         &::after {
             display: block;
             position: absolute;
@@ -242,7 +243,8 @@ export default {
         -webkit-appearance: none;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
         cursor: pointer;
-        &:hover{
+
+        &:hover {
             box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
         }
     }
@@ -290,8 +292,18 @@ export default {
     .filters {
         height: calc(100vh - 170px);
 
+
+        &_wrapper_row {
+            align-items: flex-start;
+            .wrapper-slider-progress {
+                margin-top: 10px;
+                max-width: 100%;
+            }
+        }
+
         .btn-accept {
             width: 100%;
         }
     }
-}</style>
+}
+</style>

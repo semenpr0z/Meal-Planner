@@ -2,6 +2,7 @@
 import Navbar from '@/components/navbar.vue';
 import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
 import addToMenu from '@/components/addToMenu.vue'
+import ButtonMiniUi from '@/components/ui-kit/ButtonMini-ui.vue';
 import { useRecipesStore } from '@/stores/RecipesStore.js'
 import { useUserStore } from '@/stores/UserStore.js'
 import OrderDataService from '@/services/OrderDataService.js'
@@ -39,12 +40,14 @@ export default {
     components: {
         Navbar,
         NavbarFooterMobile,
-        addToMenu
+        addToMenu,
+        ButtonMiniUi
     },
     methods: {
         returnPreviousPage() {
             router.push('/recipes')
         },
+        
         findItem(id) {
             this.item = this.recipesStore.recipes.find(item => item.id === id)
         },
@@ -62,6 +65,11 @@ export default {
         },
     },
     created() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
         if (this.recipesStore.recipes.length) {
             this.findItem(this.$route.params.id)
         };
@@ -76,408 +84,510 @@ export default {
     <addToMenu v-if="isAddToMenuVisible" :item="item" @closeAddToMenu="closeAddToMenu" />
     <Navbar></Navbar>
     <main class="main">
-        <div class="modal-recipe-card-history">
+        <div class="recipe-card-history">
             <span class="span-2 span_inactive" @click="returnPreviousPage">Рецепты</span>
             <img src="/svg/icon-arrow-history.svg" alt="">
             <span class="span-2 span_active">{{ item.name }}</span>
         </div>
-        <div class="modal-recipe-card-top">
-            <h3 class="modal-recipe-card-top__h3 h-1">{{ item.name }}</h3>
-            <button class="modal-recipe-card-top__btn" @click="showAddToMenu">Добавить в меню</button>
+        <div class="recipe-card-header">
+            <h3 class="recipe-card-header__name h-1">{{ item.name }}</h3>
+            <button class="recipe-card-header__btn" @click="showAddToMenu">Добавить в меню</button>
         </div>
-        <div class="modal-recipe-card-middle">
-            <div class="modal-recipe-card-middle__information">
-                <img class="modal-recipe-card-middle__information__image" :src="item.image" alt="Изображение блюда">
-                <div class="modal-recipe-card-middle__information__text">
-                    <h3 class="h-1 mobile">{{ item.name }}</h3>
-                    <div class="modal-recipe-card-middle__information__text_wrapper">
-                        <div
-                            class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
-                            <img src="/svg/icon-time.svg" alt="Время приготовления" class="properties-item__img">
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
-                                item.properties.time + ' мин'
-                            }}</span>
+        <div class="recipe-card__middle-wrapper">
+            <div class="properties border">
+                <ButtonMiniUi class="btn-mobile mobile back" src="/svg/icon-back.svg/" @click="returnPreviousPage" />
+                <ButtonMiniUi class="btn-mobile mobile add" src="/svg/icon-add-to-menu-btn.svg/" @click="showAddToMenu" />
+                <img class="image" :src="item.image" alt="Изображение блюда">
+                <h3 class="mobile mobile__name h-1">{{ item.name }}</h3>
+                <div class="wrapper">
+                    <div class="time-and-complexity">
+                        <div class="time-and-complexity__item">
+                            <img src="/svg/icon-time.svg" alt="Время приготовления" class="img">
+                            <span class="p-1 black-text">{{ item.properties.time + ' мин' }}</span>
                         </div>
-                        <div
-                            class="modal-recipe-card-middle__information__text__item modal-recipe-card-middle__information__text__item_top">
-                            <img src="/svg/icon-dish.svg" alt="Сложность приготовления" class="properties-item__img">
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">Сложность {{
-                                item.properties.complexity }}</span>
+                        <div class="time-and-complexity__item">
+                            <img src="/svg/icon-dish.svg" alt="Сложность приготовления" class="img">
+                            <span class="p-1 black-text">Сложность {{ item.properties.complexity }}</span>
                         </div>
                     </div>
-                    <div class="modal-recipe-card-middle__information__text__line"></div>
-                    <p class="h-2 mobile">В расчете на 100 г</p>
-                    <div class="modal-recipe-card-middle__information__text_wrapper">
-                        <p class="p-1">В расчете на 100 г</p>
-                        <div class="modal-recipe-card-middle__information__text__item">
-                            <span class="p-1 name">Ккал</span>
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
+                    <p class="h-2 black-text mobile">В расчете на 100 г</p>
+                    <div class="other-properties">
+                        <p class="p-1 black-text text">В расчете на 100 г</p>
+                        <div class="wrapper-items">
+                            <span class="span-1 name">Ккал</span>
+                            <span class="black-text p-1">{{
                                 item.properties.calorific.split(' ')[0]
                             }}</span>
                         </div>
-                        <div class="modal-recipe-card-middle__information__text__item">
-                            <span class="p-1 name">Белки</span>
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
+                        <div class="wrapper-items">
+                            <span class="span-1 name">Белки</span>
+                            <span class="black-text p-1">{{
                                 item.properties.protein
                             }}</span>
                         </div>
-                        <div class="modal-recipe-card-middle__information__text__item">
-                            <span class="p-1 name">Жиры</span>
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
+                        <div class="wrapper-items">
+                            <span class="span-1 name">Жиры</span>
+                            <span class="black-text p-1">{{
                                 item.properties.fats
                             }}</span>
                         </div>
-                        <div class="modal-recipe-card-middle__information__text__item">
-                            <span class="p-1 name">Углеводы</span>
-                            <span class="modal-recipe-card-middle__information__text__item__span p-1">{{
+                        <div class="wrapper-items">
+                            <span class="span-1 name">Углеводы</span>
+                            <span class="black-text p-1">{{
                                 item.properties.carbohydrates
                             }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-recipe-card-middle__information modal-recipe-card-middle__information_right">
-                <span class="modal-recipe-card-middle__information__text__item__span h-2">Ингредиенты на 4 порции:</span>
-                <ol class="modal-recipe-card-middle__information__text__ingredients-wrapper">
-                    <li class="modal-recipe-card-middle__information__text__item__span" v-for="item in item.ingredients">
-                        <p class="p-1">— {{ item.name }}</p>
-                        <p>{{ item.amount }}</p>
+            <div class="ingredients border">
+                <span class="black-text h-2 text-header">Ингредиенты на 4 порции:</span>
+                <ol class="list-ingredients">
+                    <li class="list-item" v-for="item in item.ingredients">
+                        <p class="list-item__name p-1">— {{ item.name }}</p>
+                        <p class="list-item__amount p-2">{{ item.amount }}</p>
                     </li>
                 </ol>
             </div>
         </div>
-        <div class="modal-recipe-card-bottom">
-            <span class="modal-recipe-card-middle__information__text__item__span h-2">Рецепт:</span>
-            <ol class="modal-recipe-card-bottom__to-do-list">
-                <li class="modal-recipe-card-bottom__to-do-list__li" v-for="item in item.recipe">
-                    <span class="modal-recipe-card-bottom__to-do-list__li_weight-text p-1">Шаг {{ item.id }}:</span>
-                    <span class="modal-recipe-card-bottom__to-do-list__li_text p-2"> {{ item.text }}</span>
-                </li>
-            </ol>
+        <div class="recipe-card__bottom-wrapper">
+            <div class="recipe-list border">
+                <span class="recipe-list__header black-text h-2">Рецепт:</span>
+                <ol class="recipe-list__ol">
+                    <li class="recipe-list__item" v-for="item in item.recipe">
+                        <span class="step p-1 black-text">Шаг {{ item.id }}:</span>
+                        <span class="text-step p-2 black-text"> {{ item.text }}</span>
+                    </li>
+                </ol>
+            </div>
         </div>
     </main>
 </template>
 
 <style lang="scss" scoped>
-.modal-recipe-card-history {
-    width: 100%;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 17px;
-
-    .span_inactive {
-        color: var(--Text_gray);
-        cursor: pointer;
-    }
-
-    .span_active {
-        color: var(--Orange);
-    }
+.mobile {
+    display: none;
 }
 
-
-.modal-recipe-card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 24px;
-
-    &__h3 {
-        margin: 0;
-    }
-
-    &__btn {
-        color: var(--Orange);
-        padding: 13px 39px;
-        background-color: var(--Light_orange_2);
-        outline: none;
-        border: 2px solid var(--Orange);
-        border-radius: 30px;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 27px;
-        transition: 0.5s;
-
-        &:hover {
-            cursor: pointer;
-            background-color: transparent;
-        }
-    }
+.border {
+    border: 3px solid var(--Gray);
+    border-radius: 40px;
 }
 
-.modal-recipe-card-middle {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 24px;
-    gap: 10px;
-    width: 100%;
+.black-text {
+    color: var(--Black);
+}
 
-    &__information {
-        width: 544px;
-        height: 294px;
-        background-color: transparent;
+.recipe-card {
+    &-history {
+        width: 100%;
+        height: 24px;
         display: flex;
-        gap: 32px;
-        border-radius: 40px;
-        border: 3px solid var(--Gray);
+        align-items: center;
+        gap: 8px;
+        margin-top: 17px;
 
-        &_right {
-            flex-direction: column;
-            justify-content: flex-start;
-            width: 480px;
-            height: 226px;
-            max-height: 300px;
-            gap: 16px;
-            padding: 24px 32px 44px;
-        }
-
-        &__image {
-            width: 259px;
-            height: 300px;
-            object-fit: cover;
-            object-position: 30% 50%;
-            border-radius: 40px;
-            margin-top: -3px;
-            margin-left: -3px;
-            z-index: 2;
-        }
-
-        &__text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 0 24px;
-            width: 243px;
-            gap: 13px;
-
-            .mobile {
-                display: none;
+        .span {
+            &_inactive {
+                color: var(--Text_gray);
+                cursor: pointer;
             }
 
-            &_wrapper {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                width: 201px;
+            &_active {
+                color: var(--Orange);
+            }
+        }
+    }
 
-                p {
-                    text-align: center;
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 24px;
+
+        &__name {
+            margin: 0;
+        }
+
+        &__btn {
+            color: var(--Orange);
+            padding: 13px 39px;
+            background-color: var(--Light_orange_2);
+            outline: none;
+            border: 2px solid var(--Orange);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 27px;
+            transition: 0.5s;
+
+            &:hover {
+                cursor: pointer;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &__middle-wrapper {
+        display: flex;
+        margin-top: 24px;
+        max-height: 300px;
+        width: 100%;
+        justify-content: space-between;
+        gap: 24px;
+
+        .properties {
+            box-sizing: border-box;
+            display: flex;
+            width: 550px;
+            justify-content: space-between;
+            position: relative;
+
+            .btn-mobile {
+                position: absolute;
+                top: 23px;
+            }
+
+            .add {
+                right: 16px;
+
+            }
+
+            .back {
+                left: 16px;
+                background-color: var(--Light_orange_3);
+            }
+
+            .image {
+                object-fit: cover;
+                object-position: 30% 50%;
+                border-radius: 40px;
+                margin-left: -3px;
+                margin-top: -3px;
+                height: calc(100% + 6px);
+                width: 259px;
+            }
+
+            .wrapper {
+                margin-right: 22px;
+
+                .time-and-complexity {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px 0 10px 10px;
+                    box-sizing: border-box;
+                    width: 244px;
+                    height: max-content;
+                    gap: 12px;
+                    border-bottom: 3px solid var(--Gray);
+
+                    &__item {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+
+                        .img {
+                            width: 24px;
+                            height: 24px;
+                        }
+
+                    }
+                }
+
+                .other-properties {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                    padding: 13px 0 20px 10px;
+
+                    .text {
+                        text-align: center;
+                    }
+
+                    .wrapper-items {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .name {
+                            color: var(--Orange);
+                        }
+                    }
                 }
             }
+        }
 
-            &__line {
-                min-height: 3px;
-                width: 100%;
-                background-color: var(--Gray);
+        .ingredients {
+            padding: 24px 32px;
+            width: 518px;
+            box-sizing: border-box;
+
+            .text-header {
+                height: 48px;
+                display: block;
+            }
+
+            .list-ingredients {
+                height: calc(100% - 48px);
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                overflow: auto;
+                padding: 0;
+                list-style: none;
+                margin: 0;
+                padding-right: 22px;
+
+                .list-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    &__name {
+                        max-width: 210px;
+                    }
+
+                    &__amount {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+
+    &__bottom-wrapper {
+        margin: 24px 0 24px;
+        width: 100%;
+
+        .recipe-list {
+            padding: 24px 32px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            &__ol {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
             }
 
             &__item {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 10px;
-
-                &_top {
-                    justify-content: flex-start;
-                }
-
-                &-wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                &__span {
-                    color: var(--Black);
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                .name {
-                    color: var(--Orange);
-                }
-            }
-
-            &__btn {
-                background-color: transparent;
-                border: none;
-                padding: 0;
-            }
-
-            &__ingredients {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-
-                &-wrapper {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                    overflow: auto;
-                    padding: 0;
-                    list-style: none;
-                    margin: 0;
-                    height: 192px;
-                    padding-right: 22px;
-                }
-            }
-        }
-    }
-}
-
-.properties-item__img {
-    width: 24px;
-    height: 24px;
-}
-
-.modal-recipe-card-bottom {
-    margin: 16px 0;
-    background-color: transparent;
-    padding: 24px 32px;
-    height: auto;
-    width: calc(100% - 64px);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 40px;
-    border: 3px solid var(--Gray);
-
-    &__to-do-list {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        overflow: auto;
-
-        &__li {
-            display: flex;
-
-            &_weight-text {
-                width: 75px;
-                color: var(--Black);
-            }
-
-            &_text {
-                font-weight: 400;
-                font-size: 18px;
-                line-height: 22px;
-                color: var(--Black);
-                width: 966px;
-            }
-        }
-    }
-}
-
-
-@media (max-width: 930px) {
-    .modal-recipe-card-middle {
-        flex-direction: column;
-
-        &__information {
-            width: 100%;
-            justify-content: space-between;
-
-            &__image {
-                width: calc(100% - 300px);
-            }
-
-            &__text {
                 gap: 12px;
 
-                &__ingredients-wrapper {
-                    height: auto;
+                .step {
+                    min-width: 70px;
                 }
-            }
-
-            &_right {
-                box-sizing: border-box;
-                height: auto;
-                max-height: fit-content;
             }
         }
     }
 }
 
 
+@media (max-width: 1060px) {
+    .recipe-card {
+
+        &__middle-wrapper {
+            flex-direction: column;
+            max-height: 100%;
+
+            .properties {
+                width: 100%;
+                height: 300px;
+                gap: 24px;
+
+                .image {
+                    width: 65%;
+                }
+            }
+
+            .ingredients {
+                width: 100%;
+
+                .list-ingredients {
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 750px) {
+    .recipe-card__middle-wrapper .properties .image {
+        width: 47%;
+    }
+}
+
 @media (max-width: 600px) {
+    .mobile {
+        display: block;
+
+        &__name {
+            padding: 0 16px;
+        }
+    }
+
     .main {
         padding: 0;
     }
 
-    .modal-recipe-card-history {
-        display: none;
+    .border {
+        border: none;
     }
 
-    .modal-recipe-card-top {
-        display: none;
-    }
+    .recipe-card {
+        &-history {
+            display: none;
+        }
 
-    .modal-recipe-card-middle {
+        &-header {
+            display: none;
+        }
 
-        &__information {
-            flex-direction: column;
-            height: auto;
-            gap: 0px;
-            border: none;
+        &__middle-wrapper {
+            .properties {
+                flex-direction: column;
+                height: 100%;
 
-            &_right {
-                gap: 8px;
-            }
-
-            &__image {
-                width: 100%;
-                border-radius: 40px 40px 0 0;
-            }
-
-            &__text {
-                width: 100%;
-                padding: 13px 16px;
-                box-sizing: border-box;
-                align-items: flex-start;
-
-                .mobile {
-                    display: block;
+                .btn-mobile {
+                    display: flex;
                 }
 
-                &_wrapper {
+                .image {
                     width: 100%;
-                    flex-direction: row;
-                    justify-content: space-evenly;
+                    height: 212px;
+                    border-radius: 40px 40px 0 0;
+                }
 
-                    p {
-                        display: none;
+                .wrapper {
+                    padding: 0 16px;
+                    margin: 0;
+
+                    .time-and-complexity {
+                        flex-direction: row;
+                        width: 100%;
+                        justify-content: space-evenly;
+                        border-bottom: none;
+                        padding: 0 0 10px;
                     }
 
+                    .other-properties {
+                        flex-direction: row;
+                        justify-content: space-evenly;
+
+                        .text {
+                            display: none;
+                        }
+
+                        .wrapper-items {
+                            flex-direction: column;
+                            gap: 10px;
+                            box-sizing: border-box;
+                            align-items: center;
+                            padding: 17px 22px 18px;
+                            background-color: var(--Light_orange_3);
+                            border-radius: 20px
+                        }
+                    }
+                }
+            }
+
+            .ingredients {
+                padding: 24px 16px;
+
+                .text-header {
+                    height: 28px;
+                    margin-bottom: 8px;
+                }
+
+                .list-ingredients {
+                    padding: 25px 16px 14px 21px;
+                    border-radius: 20px;
+                    background-color: var(--Light_orange_3);
+                }
+            }
+        }
+
+        &__bottom-wrapper {
+            padding: 0 16px;
+            box-sizing: border-box;
+
+            .recipe-list {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 0;
+
+                &__ol {
+                    padding: 24px 16px;
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                    border-radius: 20px;
+                    background-color: var(--Light_orange_3);
                 }
 
                 &__item {
-                    flex-direction: column;
+                    display: flex;
+                    gap: 12px;
 
-                    &_top {
-                        flex-direction: row;
-                    }
-                }
-
-                &__line {
-                    display: none;
-                }
-
-                &__ingredients {
-
-                    &-wrapper {
-                        padding: 0;
+                    .step {
+                        min-width: 70px;
                     }
                 }
             }
         }
     }
+}
 
-    .modal-recipe-card-bottom {
-        border: none;
+@media (max-width: 480px) {
+    .recipe-card {
+
+        &__middle-wrapper {
+            .properties {
+                flex-direction: column;
+                height: 100%;
+                gap: 15px;
+
+                .image {
+                    width: 100%;
+                    height: 212px;
+                    border-radius: 40px 40px 0 0;
+                }
+
+                .wrapper {
+
+
+                    .other-properties {
+                        gap: 7px;
+                        justify-content: space-between;
+                        padding: 13px 0 0;
+
+                        .wrapper-items {
+                            padding: 10px 13px 11px;
+                            max-width: 67px;
+                        }
+                    }
+                }
+            }
+
+            .ingredients {
+                .list-ingredients {
+                    .list-item {
+                        &__name {
+                            max-width: 150px;
+                        }
+
+
+                    }
+                }
+            }
+        }
     }
 }
 </style>

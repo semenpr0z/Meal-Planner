@@ -160,7 +160,8 @@ export default {
 
         .btn-mini {
             display: flex;
-            margin-left: -24px;
+            margin-left: -25px;
+            min-width: 50px;
         }
 
     }

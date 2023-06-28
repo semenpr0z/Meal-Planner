@@ -2,13 +2,15 @@
 import Button from '@/components/ui-kit/Button-ui.vue'
 import InputEmail from '@/components/ui-kit/Input-email.vue';
 import InputPassword from '@/components/ui-kit/Input-password.vue'
-import UserDataService from '../services/UserDataService'
+import UserDataService from '@/services/UserDataService'
+import { isValidPassword } from '@/services/validators/passwordValidator.js'
 import InputUi from '@/components/ui-kit/Input-ui.vue';
 import { useUserStore } from '@/stores/UserStore.js'
 import router from '@/router.js'
 import InputName from '@/components/ui-kit/Input-name.vue';
 import InputDate from '@/components/ui-kit/Input-date.vue';
 import InputRadio from '@/components/ui-kit/Input-radio.vue';
+import PasswordValidator from '@/components/PasswordValidation.vue';
 
 export default {
     data() {
@@ -22,7 +24,8 @@ export default {
             validation: false,
             nextStep: true,
             user: null,
-            format: 'yyyy-MM-dd'
+            format: 'yyyy-MM-dd',
+            validPassword: false
         };
     },
     setup() {
@@ -44,13 +47,14 @@ export default {
         InputPassword,
         InputName,
         InputDate,
-        InputRadio
+        InputRadio,
+        PasswordValidator
     },
     methods: {
-        previousStep(){
-            if(!this.nextStep){
+        previousStep() {
+            if (!this.nextStep) {
                 this.nextStep = !this.nextStep
-            }else{
+            } else {
                 this.$emit('showLogin');
             }
         },
@@ -71,7 +75,7 @@ export default {
         },
         showNextStep() {
             if (this.nextStep == true) {
-                if (this.email.length == 0 || this.password.length == 0) {
+                if (this.email.length == 0 || !this.validPassword ) {
                     this.validation = true
                 } else {
                     this.nextStep = false
@@ -135,7 +139,17 @@ export default {
             }
         },
     },
-    emits: ['showLogin']
+    emits: ['showLogin'],
+    computed: {
+        validationOptionsPassword() {
+            if (isValidPassword(this.password).find(option => option.status == true)) {
+                this.validPassword = false
+            } else {
+                this.validPassword = true
+            }
+            return isValidPassword(this.password)
+        }
+    }
 }
 
 </script>
@@ -151,7 +165,9 @@ export default {
             <h2 class="registration-form__h2 h-1">Регистрация</h2>
             <div class=" registration-form wrapper-first-step" v-if="nextStep">
                 <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
-                <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation" class="wrapper" />
+                <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation && validPassword"
+                    class="wrapper" />
+                <PasswordValidator :passwordOptions="validationOptionsPassword"/>
                 <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep"
                     method="showNextStep" />
                 <span
@@ -192,7 +208,6 @@ export default {
     display: flex;
     gap: 47px;
     margin-top: 199px;
-    height: 385px;
 
     &_margin {
         margin-top: 149px;
@@ -227,7 +242,7 @@ export default {
     gap: 24px;
     width: 334px;
 
-    .btn-back{
+    .btn-back {
         position: absolute;
         left: 0;
         top: 5px;

@@ -6,7 +6,9 @@ import CalendarController from '@/components/Calendar-controller.vue';
 import DayOfWeek from '@/components/DayOfWeek.vue';
 import addToMenu from '@/components/addToMenu.vue';
 import RecipeСardVue from '@/components/Recipe-сard.vue';
-import searchIngredients from '@/components/search-ingredients.vue'
+import searchIngredients from '@/components/search-ingredients.vue';
+import Filters from '@/components/Filters.vue';
+import FilterList from '@/components/FilterList.vue';
 
 import { getDateRange } from '@/utils/dateUtils.js';
 import { getMonthWeeks } from '@/utils/datesUtils.js';
@@ -64,7 +66,8 @@ export default {
         "day": new Date,
         "meals": []
       },
-      searchValidation: true
+      searchValidation: true,
+      filtersIsOpened: false
     };
   },
   components: {
@@ -75,7 +78,9 @@ export default {
     DayOfWeek,
     addToMenu,
     RecipeСardVue,
-    searchIngredients
+    searchIngredients,
+    Filters,
+    FilterList
   },
   methods: {
     previousMonth() {
@@ -134,9 +139,6 @@ export default {
       this.indexOfRecipe = this.localRecipes.findIndex(x => x.id == id);
       this.isRecipeCardVisible = true;
     },
-    closeRecipeCard() {
-      this.isRecipeCardVisible = false;
-    },
     searchGet(value) {
       if (value === '' && this.search === '') {
         this.searchValidation = false
@@ -170,6 +172,9 @@ export default {
       const calendarAndWeekHeight = this.$refs.calendarAndWeek.offsetHeight;
       const recipesListElement = document.querySelector('.recipes-list');
       recipesListElement.style.height = `${calendarAndWeekHeight}px`;
+    },
+    openCloseFilters() {
+      this.filtersIsOpened = !this.filtersIsOpened
     }
   },
   async beforeMount() {
@@ -202,7 +207,7 @@ export default {
   <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
   <!-- </Transition> -->
   <Navbar :menu="Navigation"></Navbar>
-  <main class="main main-menu" v-if="!isRecipeCardVisible">
+  <main class="main main-menu" v-if="!filtersIsOpened">
     <div key="calendar-and-week" class="calendar-and-week">
       <CalendarController @export-this-week="importThisWeek" />
       <div class="week">
@@ -210,7 +215,9 @@ export default {
       </div>
     </div>
     <div class="recipes-list" key="recipes-list">
-      <searchIngredients @search-get="searchGet" :button="true" :searchValidation="searchValidation" />
+      <searchIngredients @search-get="searchGet" :button="true" :searchValidation="searchValidation"
+        @open-filters="openCloseFilters" />
+      <FilterList key="filter-list" />
       <div class="list">
         <TransitionGroup name="list">
           <RecipeСardVue v-for="item in recipesList" :item="item" :key="item.id" :wideCard="true"
@@ -218,6 +225,11 @@ export default {
         </TransitionGroup>
       </div>
     </div>
+  </main>
+  <main class="main" v-else-if="filtersIsOpened">
+    <Transition name="fade">
+      <Filters @close-filters="openCloseFilters" />
+    </Transition>
   </main>
   <NavbarFooterMobile></NavbarFooterMobile>
 </template>
@@ -229,8 +241,6 @@ export default {
   justify-content: space-between;
   gap: 24px;
   align-items: flex-start;
-  // min-height: calc(100vh - 112px);
-  // max-height: calc(100vh - 112px);
   height: 100vh;
   padding-top: 32px;
 }
@@ -266,7 +276,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px;
-  // max-height: calc(100vh - 120px);
   height: 100%;
   max-height: 200vh;
   overflow: auto;
@@ -304,7 +313,8 @@ export default {
 
   .week {
     flex-direction: column;
-    height: 100%;
+    margin: 24px 0 0 0;
+    height: auto;
 
     &::after {
       display: none;

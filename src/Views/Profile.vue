@@ -1,12 +1,10 @@
 <script>
 import Navbar from '@/components/navbar.vue';
 import NavbarFooterMobile from '@/components/navbar-footer-mobile.vue';
+import ProfileInfo from '@/components/Profile-Info.vue';
 
 import { useUserStore } from '@/stores/UserStore.js'
 import router from '@/router.js'
-import ProfileName from '@/components/ProfileName.vue';
-import ProfileChange from '@/components/ProfileChange.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
 
 export default {
     data() {
@@ -16,12 +14,10 @@ export default {
         };
     },
     components: {
-    Navbar,
-    NavbarFooterMobile,
-    ProfileName,
-    ProfileChange,
-    ConfirmationModal
-},
+        Navbar,
+        NavbarFooterMobile,
+        ProfileInfo
+    },
     setup() {
         const userStore = useUserStore();
         return {
@@ -29,23 +25,23 @@ export default {
         }
     },
     methods: {
-        Start(){
-            if(!this.userStore.user){
+        Start() {
+            if (!this.userStore.user) {
                 alert('Вы не авторизованы! Авторизуйтесь на главной странице.')
                 router.push('/main')
             }
         },
-        deleteProfile(){
+        deleteProfile() {
             this.showConfirmation('delete')
         },
-        saveChanges(){
+        saveChanges() {
             this.showConfirmation('save')
         },
-        showConfirmation(action){
+        showConfirmation(action) {
             this.action = action
             this.confirmationVisible = true
         },
-        closeConfirmation(){
+        closeConfirmation() {
             this.confirmationVisible = false
         }
     },
@@ -57,18 +53,16 @@ export default {
 
 <template>
     <Navbar></Navbar>
-    <main class="main" v-if="userStore.user">
-        <ProfileName @deleteProfile="deleteProfile"/>
-        <ProfileChange @saveChanges="saveChanges"/>
+    <main class="main">
+        <ProfileInfo v-if="userStore.user" :user="userStore.user"/>
     </main>
-    <ConfirmationModal v-if="confirmationVisible" @closeConfirmation="closeConfirmation"/>
     <NavbarFooterMobile></NavbarFooterMobile>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/global.scss';
 
-.main{
+.main {
     margin: 65px auto;
     display: flex;
     flex-direction: row;

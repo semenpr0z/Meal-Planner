@@ -32,9 +32,6 @@ export default {
 
     <div key="meal-2" class="wrapper-meal-and-recipe" v-if="meal.availability">
         <div class="meal">
-            <!-- <button class="meal__btn">
-                    <img src="/svg/icon-remove.svg" alt="Удалить">
-                </button> -->
             <p class="p-1 meal__name">{{ meal.name }}</p>
         </div>
         <div class="recipe" v-for="recipe in meal.meals">
@@ -92,6 +89,12 @@ export default {
         &__name{
             width: 190px;
         }
+    }
+}
+
+@media (max-width: 330px) {
+    .recipe{
+        gap: 4px;
     }
 }
 

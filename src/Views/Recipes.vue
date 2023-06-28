@@ -100,6 +100,15 @@ export default {
         })
         .filter(item => { return item.properties.time >= this.recipesStore.timeFilter[0] && item.properties.time <= this.recipesStore.timeFilter[1] })
         .slice(0, this.visibleRecipes)
+    },
+    showMoreRecipes() {
+      if (this.recipesList.length > 5 ) {
+        if (this.recipesList.length < this.localRecipes.length) {
+          return true
+        }
+      } else {
+        return false;
+      }
     }
   },
   created() {
@@ -130,7 +139,7 @@ export default {
         </TransitionGroup>
       </div>
       <ButtonUi key="btn-more" class="button-more-recipes" text="Посмотреть еще" color="gray" method="moreRecipes"
-        @more-recipes="moreRecipes" @click="moreRecipes" v-if="recipesList.length < localRecipes.length" />
+        @more-recipes="moreRecipes" @click="moreRecipes" v-if="showMoreRecipes" />
     </TransitionGroup>
   </main>
   <main class="main" v-else-if="filtersIsOpened">

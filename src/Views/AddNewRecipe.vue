@@ -69,6 +69,7 @@ export default {
                     },
                     "recipe": this.recipe
                 })
+                alert('Брат, рецепт отправлен, иди проверяй!')
             } else {
                 alert("Брат, введи пароль")
             }

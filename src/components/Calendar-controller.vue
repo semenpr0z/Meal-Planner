@@ -345,8 +345,6 @@ export default {
             display: flex;
             list-style: none;
             justify-content: space-between;
-            
-            // gap: 43px;
             width: 100%;
             overflow: hidden;
 

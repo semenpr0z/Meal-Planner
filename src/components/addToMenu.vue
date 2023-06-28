@@ -38,28 +38,11 @@ export default {
             this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
           }
           this.week = week
-          // this.mappingWeek()
         }
       } else {
         this.week = week
-        // this.mappingWeek()
       }
     },
-    // mappingWeek() {
-    //   this.weekToExport = this.week.map(day => {
-    //     const formatter = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    //     const formattedDate = formatter.format(day).replace(/\./g, "-");
-    //     const order = this.userStore.userOrders.filter(order => order.dishesDate === formattedDate);
-    //     if (order) {
-    //       return {
-    //         "day": day,
-    //         "meals": order
-    //       }
-    //     } else {
-    //       return { "day": day }
-    //     }
-    //   })
-    // },
     moveToSuccess() {
       this.calendarControllerVisible = false,
         this.successVisible = true
