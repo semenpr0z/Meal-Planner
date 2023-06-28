@@ -95,8 +95,8 @@ export default {
         </div>
         <div class="recipe-card__middle-wrapper">
             <div class="properties border">
-                <ButtonMiniUi class="btn-mobile mobile back" src="/svg/icon-back.svg/" @click="returnPreviousPage" />
-                <ButtonMiniUi class="btn-mobile mobile add" src="/svg/icon-add-to-menu-btn.svg/" @click="showAddToMenu" />
+                <ButtonMiniUi class="btn-mobile mobile back" src="/svg/icon-back.svg" @click="returnPreviousPage" />
+                <ButtonMiniUi class="btn-mobile mobile add" src="/svg/icon-add-to-menu-btn.svg" @click="showAddToMenu" />
                 <img class="image" :src="item.image" alt="Изображение блюда">
                 <h3 class="mobile mobile__name h-1">{{ item.name }}</h3>
                 <div class="wrapper">

@@ -60,7 +60,7 @@ export default {
             <input type="text"
                 :class="['search-ingridients-wrapper__input', { 'invalid': validSearch == false || searchValidation == false }, 'span-1']"
                 placeholder="Введите название блюда" v-model="search">
-            <ButtonMiniUi src="/svg/icon-loop.svg/" alt="Найти" @click="validatingSearch" />
+            <ButtonMiniUi src="/svg/icon-loop.svg" alt="Найти" @click="validatingSearch" />
             <ButtonUi
                 :class="[{ 'search-ingridients-wrapper__margin-button': button == false || searchValidation == false }, { 'search-ingridients-wrapper__margin-button-short': button == true }, 'btn']"
                 @click="validatingSearch" :short-button="button"></ButtonUi>
