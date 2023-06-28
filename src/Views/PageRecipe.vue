@@ -162,6 +162,7 @@ export default {
             </div>
         </div>
     </main>
+    <NavbarFooterMobile></NavbarFooterMobile>
 </template>
 
 <style lang="scss" scoped>
