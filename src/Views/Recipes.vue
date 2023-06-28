@@ -99,11 +99,15 @@ export default {
           }
         })
         .filter(item => { return item.properties.time >= this.recipesStore.timeFilter[0] && item.properties.time <= this.recipesStore.timeFilter[1] })
-        .slice(0, this.visibleRecipes)
+    },
+    slicedRecipesList() {
+      return this.recipesList.slice(0, this.visibleRecipes)
     },
     showMoreRecipes() {
-      if (this.recipesList.length > 5 ) {
-        if (this.recipesList.length < this.localRecipes.length) {
+      if (this.recipesList.length > 6) {
+        if (this.recipesList.length <= this.visibleRecipes) {
+          return false
+        } else {
           return true
         }
       } else {
@@ -134,7 +138,7 @@ export default {
       <FilterList key="filter-list" />
       <div class="wrapper-recipes-list" key="wrapper-recipes-list">
         <TransitionGroup name="list">
-          <RecipeСardVue v-for="item in recipesList" :item="item" :ultraWideCard="true" :key="item.id"
+          <RecipeСardVue v-for="item in slicedRecipesList" :item="item" :ultraWideCard="true" :key="item.id"
             @showAddToMenu="showAddToMenu" />
         </TransitionGroup>
       </div>

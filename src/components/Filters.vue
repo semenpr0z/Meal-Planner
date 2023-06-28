@@ -92,8 +92,8 @@ export default {
             <div class="filters__item">
                 <p class="p-1">Сложность</p>
                 <div class="filters__item__btn_wrapper">
-                    <Filter text="Легкая" :checked="complexity === 'легкая'"
-                        @click="toggleFilter('легкая', 'complexity')" />
+                    <Filter text="Легкая" :checked="complexity === 'низкая'"
+                        @click="toggleFilter('низкая', 'complexity')" />
                     <Filter text="Средняя" :checked="complexity === 'средняя'"
                         @click="toggleFilter('средняя', 'complexity')" />
                     <Filter text="Сложная" :checked="complexity === 'сложная'"
