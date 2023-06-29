@@ -170,7 +170,7 @@ export default {
                 <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
                 <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation && validPassword"
                     class="wrapper" />
-                <PasswordValidator :passwordOptions="validationOptionsPassword"/>
+                <PasswordValidator v-if="passwordTouched" :passwordOptions="validationOptionsPassword"/>
                 <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep"
                     method="showNextStep" />
                 <span
