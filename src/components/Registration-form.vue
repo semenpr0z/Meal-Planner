@@ -25,7 +25,8 @@ export default {
             nextStep: true,
             user: null,
             format: 'yyyy-MM-dd',
-            validPassword: false
+            validPassword: false,
+            passwordTouched: false
         };
     },
     setup() {
@@ -126,9 +127,11 @@ export default {
         },
         password(newValue, prevValue) {
             if (newValue.length == 0) {
-                this.validation = true
+                this.validation = true;
+                this.passwordTouched = false
             } else {
-                this.validation = false
+                this.validation = false;
+                this.passwordTouched = true
             }
         },
         first_name(newValue, prevValue) {

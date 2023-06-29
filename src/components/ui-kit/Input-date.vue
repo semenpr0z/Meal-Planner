@@ -41,6 +41,7 @@ export default {
     transition: 0.3s;
     width: calc(100% - 52px);
     color: var(--Black);
+    -webkit-appearance: none;
 
     &-form {
         display: flex;

@@ -128,9 +128,7 @@ export default {
 </script>
 
 <template>
-  <Transition name="fade">
-    <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
-  </Transition>
+  <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
   <Navbar :menu="Navigation"></Navbar>
   <main class="main" v-if="!filtersIsOpened">
     <TransitionGroup appear name="fade">

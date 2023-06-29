@@ -190,7 +190,16 @@ export default {
   },
   computed: {
     recipesList() {
-      return this.localRecipes.filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1))
+      return this.localRecipes
+        .filter(item => (item.name.toUpperCase().indexOf(this.search.toUpperCase()) !== -1))
+        .filter(item => {
+          if (this.recipesStore.complexityFilter === "") {
+            return true; // Вернуть true, чтобы элемент проходил фильтр по сложности
+          } else {
+            return item.properties.complexity === this.recipesStore.complexityFilter;
+          }
+        })
+        .filter(item => { return item.properties.time >= this.recipesStore.timeFilter[0] && item.properties.time <= this.recipesStore.timeFilter[1] })
     }
   },
   created() {
@@ -203,9 +212,7 @@ export default {
 </script>
 
 <template>
-  <!-- <Transition name="fade"> -->
   <addToMenu v-if="isAddToMenuVisible" :item="localRecipes[indexOfRecipe]" @closeAddToMenu="closeAddToMenu" />
-  <!-- </Transition> -->
   <Navbar :menu="Navigation"></Navbar>
   <main class="main main-menu" v-if="!filtersIsOpened">
     <div key="calendar-and-week" class="calendar-and-week">
