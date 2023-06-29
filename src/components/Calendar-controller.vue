@@ -171,7 +171,12 @@ export default {
             }
         },
         moveToSuccess() {
-            this.$emit('moveToSuccess')
+            if (this.userStore.user) {
+                this.$emit('moveToSuccess')
+            }
+            else {
+                alert('Вы не авторизованы! Авторизуйтесь на главной странице.')
+            }
         },
         changeIndexOfDay(index) {
             this.$emit('changeIndexOfDay', index)
@@ -434,7 +439,7 @@ export default {
                     border-radius: 50%;
                 }
 
-                .week-day{
+                .week-day {
                     width: 24px;
                     height: 24px;
                     display: flex;

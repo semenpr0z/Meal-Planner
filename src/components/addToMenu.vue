@@ -54,7 +54,12 @@ export default {
     async updateMenu() {
       let orders = await OrderDataService.getAll()
       this.userStore.userOrders = orders.data.filter(order => { if (order.userId === this.userStore.user.id) { return true; } else { return false; } })
-    }
+    },
+    handleKeyDown(event) {
+      if (event.keyCode === 27) {
+        this.closeAddToMenu();
+      }
+    },
   },
   emits: ['closeAddToMenu'],
   setup() {
@@ -62,6 +67,13 @@ export default {
     return {
       userStore
     }
+  },
+  mounted() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 };
 </script>
