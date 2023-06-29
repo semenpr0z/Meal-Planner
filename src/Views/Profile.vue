@@ -63,9 +63,10 @@ export default {
 @import '@/assets/styles/global.scss';
 
 .main {
-    margin: 65px auto;
+    margin: 65px auto 0;
     display: flex;
     flex-direction: row;
     gap: 29px;
+    padding-bottom: 65px;
 }
 </style>
