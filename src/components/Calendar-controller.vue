@@ -263,20 +263,21 @@ export default {
         </div>
         <div class="calendar-controller__footer">
             <ul class="calendar-controller__footer_ul">
-                <TransitionGroup appear name="fade">
-                    <li v-for="(day, index) in showCurrentWeek" :key="day" class="calendar-controller__footer_ul_li"
-                        @click="() => { selectDay(index) }">
-                        <span :class="['span-2', 'calendar-controller-mini__footer_ul_li-span']">{{
-                            new Intl.DateTimeFormat("ru", {
-                                weekday:
-                                    "short"
-                            }).format(day).toUpperCase() }}</span>
-                        <p :class="['p-1', 'p', { 'active': indexOfSelectedDay == index }]">{{ new Intl.DateTimeFormat("ru",
-                            {
-                                day: "numeric"
-                            }).format(day) }}</p>
-                    </li>
-                </TransitionGroup>
+                <!-- <TransitionGroup appear name="fade"> -->
+                <li v-for="(day, index) in showCurrentWeek" :key="day"
+                    :class="['calendar-controller__footer_ul_li', { 'active': indexOfSelectedDay == index }]"
+                    @click="() => { selectDay(index) }">
+                    <span :class="['span-2', 'calendar-controller-mini__footer_ul_li-span']">{{
+                        new Intl.DateTimeFormat("ru", {
+                            weekday:
+                                "short"
+                        }).format(day).toUpperCase() }}</span>
+                    <p class="p-1 p">{{ new Intl.DateTimeFormat("ru",
+                        {
+                            day: "numeric"
+                        }).format(day) }}</p>
+                </li>
+                <!-- </TransitionGroup> -->
             </ul>
         </div>
     </div>
@@ -294,22 +295,22 @@ export default {
         </div>
         <div class="calendar-controller-mini__footer">
             <ul class="calendar-controller-mini__footer_ul">
-                <TransitionGroup appear name="fade">
-                    <li v-for="(day, index) in showCurrentWeek" :key="day" class="calendar-controller-mini__footer_ul_li"
-                        @click="() => { selectDay(index) }">
-                        <span class="span-3 week-day">{{
-                            new
-                                Intl.DateTimeFormat("ru", {
-                                    weekday:
-                                        "short"
-                                }).format(day).toUpperCase() }}</span>
-                        <p
-                            :class="['span-3', 'calendar-controller-mini__footer_ul_li-span', { 'active': indexOfSelectedDay == index }]">
-                            {{ new Intl.DateTimeFormat("ru", {
-                                day: "numeric"
-                            }).format(day) }}</p>
-                    </li>
-                </TransitionGroup>
+                <!-- <TransitionGroup appear name="fade"> -->
+                <li v-for="(day, index) in showCurrentWeek" :key="day"
+                    :class="['calendar-controller-mini__footer_ul_li', { 'active': indexOfSelectedDay == index }]"
+                    @click="() => { selectDay(index) }">
+                    <span class="span-3 week-day">{{
+                        new
+                            Intl.DateTimeFormat("ru", {
+                                weekday:
+                                    "short"
+                            }).format(day).toUpperCase() }}</span>
+                    <p class="span-3 calendar-controller-mini__footer_ul_li-span">
+                        {{ new Intl.DateTimeFormat("ru", {
+                            day: "numeric"
+                        }).format(day) }}</p>
+                </li>
+                <!-- </TransitionGroup> -->
             </ul>
             <ul class="calendar-controller-mini__day-meals">
                 <MiniMeal v-for="meal in showSelectedDay" :meal="meal" @move-to-success="moveToSuccess" />
@@ -359,19 +360,14 @@ export default {
                 align-items: center;
                 gap: 8px;
                 width: 32px;
-
-                .active {
-                    background-color: var(--White);
-                    border-radius: 50%;
-                }
-
-                &:hover>.p {
-                    background-color: var(--White);
-                }
+                border-radius: 10px;
+                transition: all 0.4s;
 
                 &:hover {
+                    background-color: var(--White);
                     cursor: pointer;
                 }
+
 
                 .p {
                     display: flex;
@@ -379,9 +375,11 @@ export default {
                     justify-content: center;
                     width: 32px;
                     height: 32px;
-                    transition: all 0.4s;
-                    border-radius: 50%;
                 }
+            }
+
+            .active {
+                background-color: var(--White);
             }
         }
     }
@@ -431,13 +429,8 @@ export default {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-
+                border-radius: 10px;
                 width: 32px;
-
-                .active {
-                    background-color: var(--Light_orange);
-                    border-radius: 50%;
-                }
 
                 .week-day {
                     width: 24px;
@@ -454,17 +447,16 @@ export default {
                     width: 32px;
                     height: 32px;
                     transition: ease 0.4s;
-                    border-radius: 50%;
-                }
-
-                &:hover>&-span {
-                    background-color: var(--Light_orange);
-
                 }
 
                 &:hover {
+                    background-color: var(--Light_orange);
                     cursor: pointer;
                 }
+            }
+
+            .active {
+                background-color: var(--Light_orange);
             }
         }
     }
@@ -477,18 +469,18 @@ export default {
 }
 
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
+// .fade-enter-active,
+// .fade-leave-active {
+//     transition: opacity 0.3s ease, transform 0.3s ease;
+// }
 
-.fade-enter-from {
-    opacity: 0;
-    transform: translateY(-30px);
-}
+// .fade-enter-from {
+//     opacity: 0;
+//     transform: translateY(-30px);
+// }
 
-.fade-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
-}
+// .fade-leave-to {
+//     opacity: 0;
+//     transform: translateY(30px);
+// }
 </style>
