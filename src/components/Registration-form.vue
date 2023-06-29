@@ -4,6 +4,8 @@ import InputEmail from '@/components/ui-kit/Input-email.vue';
 import InputPassword from '@/components/ui-kit/Input-password.vue'
 import UserDataService from '@/services/UserDataService'
 import { isValidPassword } from '@/services/validators/passwordValidator.js'
+import { isValidEmail } from '@/services/validators/emailValidator.js'
+import { isValidRussianName } from '@/services/validators/nameValidator.js'
 import InputUi from '@/components/ui-kit/Input-ui.vue';
 import { useUserStore } from '@/stores/UserStore.js'
 import router from '@/router.js'
@@ -76,7 +78,7 @@ export default {
         },
         showNextStep() {
             if (this.nextStep == true) {
-                if (this.email.length == 0 || !this.validPassword ) {
+                if (!isValidEmail(this.email) || !this.validPassword) {
                     this.validation = true
                 } else {
                     this.nextStep = false
@@ -84,7 +86,7 @@ export default {
             }
         },
         async saveUser() {
-            if (this.email.length != 0 && this.password.length != 0 && this.first_name.length != 0 && this.date_of_birth.length != 0) {
+            if (this.email.length != 0 && this.password.length != 0 && isValidRussianName(this.first_name) && this.date_of_birth.length != 0) {
                 this.user = {
                     email: this.email,
                     password: this.password,
@@ -170,7 +172,7 @@ export default {
                 <InputEmail :value="email" @updateEmail="updateEmail" :invalid="validation" class="wrapper" />
                 <InputPassword :value="password" @updatePassword="updatePassword" :invalid="validation && validPassword"
                     class="wrapper" />
-                <PasswordValidator v-if="passwordTouched" :passwordOptions="validationOptionsPassword"/>
+                <PasswordValidator v-if="passwordTouched" :passwordOptions="validationOptionsPassword" />
                 <Button class="registration-form__button" text="Продолжить" type="submit" value="Save" @click="showNextStep"
                     method="showNextStep" />
                 <span
